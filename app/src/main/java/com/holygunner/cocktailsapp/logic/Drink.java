@@ -63,7 +63,6 @@ public class Drink {
         mIngredients[9] = new Ingredient(strIngredient10, strMeasure10);
     }
 
-
     public int getId() {
         return id;
     }

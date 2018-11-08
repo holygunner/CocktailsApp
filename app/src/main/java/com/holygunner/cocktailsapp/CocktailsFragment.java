@@ -1,5 +1,6 @@
 package com.holygunner.cocktailsapp;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,13 +12,12 @@ import android.view.ViewGroup;
 
 import com.holygunner.cocktailsapp.logic.Drink;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CocktailsFragment extends Fragment {
-
     private RecyclerView mRecyclerView;
-
     private List<Drink> mItems = new ArrayList<>();
 
     public static CocktailsFragment newInstance(){
@@ -33,23 +33,28 @@ public class CocktailsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_cocktails_list, container, false);
         mRecyclerView = v.findViewById(R.id.cocktails_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new WeatherAdapter(mItems));
+//        mRecyclerView.setAdapter(new CocktailsAdapter(mItems));
         return v;
+    }
+
+    private void setupAdapter() {
+        if (isAdded()){
+            mRecyclerView.setAdapter(new CocktailsAdapter(mItems));
+        }
     }
 
     private void setTestItems(){
         String url1 = "Scotch";
         String url2 = "Lemon%20peel";
         String url3 = "Drambuie";
-        CocktailsProviderTask providerTask = new CocktailsProviderTask();
+        CocktailsProviderTask providerTask = new CocktailsProviderTask(this);
         providerTask.execute(url1, url2, url3);
-//        providerTask.
     }
 
-    private class WeatherAdapter extends RecyclerView.Adapter<WeatherHolder> {
+    private class CocktailsAdapter extends RecyclerView.Adapter<WeatherHolder> {
         private List<Drink> mDrinks;
 
-        WeatherAdapter(List<Drink> drinks){
+        CocktailsAdapter(List<Drink> drinks){
             mDrinks = drinks;
         }
 
@@ -85,6 +90,26 @@ public class CocktailsFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
+        }
+    }
+
+    private static class CocktailsProviderTask extends AsyncTask<String, Void, List<Drink>> {
+        private WeakReference<CocktailsFragment> mReference;
+
+        CocktailsProviderTask(CocktailsFragment instance){
+            mReference = new WeakReference<>(instance);
+        }
+
+        @Override
+        protected List<Drink> doInBackground(String... ingredients) {
+            return new CocktailsProvider().selectDrinks(ingredients);
+        }
+
+        @Override
+        protected void onPostExecute(List<Drink> selectedDrinks){
+            CocktailsFragment fragment = mReference.get();
+            fragment.mItems = selectedDrinks;
+            fragment.setupAdapter();
         }
     }
 
