@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.holygunner.cocktailsapp.logic.Bar;
 import com.holygunner.cocktailsapp.logic.Drink;
+import com.holygunner.cocktailsapp.logic.DrinkComparator;
 import com.holygunner.cocktailsapp.logic.Ingredient;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -13,6 +14,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -56,8 +58,14 @@ public class CocktailsProvider {
             Ingredient ingredient = new Ingredient(ingredientName);
             compareBars(bar, ingredient);
         }
+        Collections.sort(chosenDrinks, new DrinkComparator());
         return chosenDrinks;
     }
+
+//    private List<Drink> sortDrinksList(List<Drink> drinks){
+//
+//
+//    }
 
 
     private void compareBars(Bar addedBar, Ingredient chosenIngredient){

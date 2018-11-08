@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.holygunner.cocktailsapp.logic.Drink;
 
@@ -79,12 +80,18 @@ public class CocktailsFragment extends Fragment {
     }
 
     private class WeatherHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView drinkNameTextView;
+        private TextView ingredientsCountTextView;
 
         WeatherHolder(View itemView) {
             super(itemView);
+            drinkNameTextView = itemView.findViewById(R.id.drinkNameTextView);
+            ingredientsCountTextView = itemView.findViewById(R.id.ingredientsCountTextView);
         }
 
-        public void bind(Drink item){
+        public void bind(Drink drink){
+            drinkNameTextView.setText(drink.getName());
+            ingredientsCountTextView.setText(String.valueOf(drink.getChosenIngredients().size()));
         }
 
         @Override
