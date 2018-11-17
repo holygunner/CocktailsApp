@@ -19,13 +19,15 @@ import java.util.List;
 public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<RecyclerViewCategoriesAdapter.CategoryHolder> {
     private List<IngredientsCategory> mIngredientsCategories;
     private IngredientManager mIngredientManager;
+    private IngredientsFragment.DrinksProviderTask mProviderTask;
     private Context mContext;
     private RecyclerView.RecycledViewPool mRecycledViewPool;
     private SnapHelper mSnapHelper;
+    private IngredientsFragment mFragment;
 
-    public RecyclerViewCategoriesAdapter(Context context, IngredientManager ingredientManager,
+    public RecyclerViewCategoriesAdapter(IngredientsFragment fragment, IngredientManager ingredientManager,
                                          List<IngredientsCategory> ingredientsCategories){
-        mContext = context;
+        mFragment = fragment;
         mIngredientManager = ingredientManager;
         mIngredientsCategories = ingredientsCategories;
         mRecycledViewPool = new RecyclerView.RecycledViewPool();
@@ -34,7 +36,7 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
     @NonNull
     @Override
     public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.ingredient_section_card, null);
+        View view = LayoutInflater.from(mFragment.getContext()).inflate(R.layout.ingredient_section_card, null);
         mSnapHelper = new LinearSnapHelper();
         CategoryHolder holder = new CategoryHolder(view);
         holder.mRecyclerView.setRecycledViewPool(mRecycledViewPool);
@@ -46,11 +48,12 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         final String categoryName = mIngredientsCategories.get(position).getCategoryName();
         List<Ingredient> singleCategoryIngredients = mIngredientsCategories.get(position).getIngredients();
         holder.categoryNameTextView.setText(categoryName);
-        DrinksAdapter drinksAdapter = new DrinksAdapter(mContext, singleCategoryIngredients, mIngredientManager);
+        IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(mFragment, singleCategoryIngredients,
+                mIngredientManager, mProviderTask);
         holder.mRecyclerView.setHasFixedSize(true);
         holder.mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,
                 false));
-        holder.mRecyclerView.setAdapter(drinksAdapter);
+        holder.mRecyclerView.setAdapter(ingredientsAdapter);
         holder.mRecyclerView.setOnFlingListener(null);
         mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
     }

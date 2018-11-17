@@ -13,16 +13,21 @@ import com.holygunner.cocktailsapp.models.Ingredient;
 
 import java.util.List;
 
-public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.IngredientHolder> {
+public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientHolder> {
     private Context mContext;
     private List<Ingredient> mIngredients;
     private IngredientManager mIngredientManager;
+    private IngredientsFragment.DrinksProviderTask mProviderTask;
+    private IngredientsFragment mFragment;
 
-    public DrinksAdapter(Context context, List<Ingredient> ingredients,
-                         IngredientManager ingredientManager){
-        mContext = context;
+    public IngredientsAdapter(IngredientsFragment fragment, List<Ingredient> ingredients,
+                              IngredientManager ingredientManager,
+                              IngredientsFragment.DrinksProviderTask providerTask){
+        mFragment = fragment;
+        mContext = mFragment.getContext();
         mIngredients = ingredients;
         mIngredientManager = ingredientManager;
+        mProviderTask = providerTask;
     }
 
     @NonNull
@@ -46,14 +51,17 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.Ingredient
     protected class IngredientHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView ingredientNameTextView;
         private ImageView ingredientImageView;
+        private Ingredient mIngredient;
 
         public IngredientHolder(View itemView) {
             super(itemView);
             ingredientNameTextView = itemView.findViewById(R.id.ingredientNameTextView);
             ingredientImageView = itemView.findViewById(R.id.ingredientImageView);
+            ingredientImageView.setOnClickListener(this);
         }
 
         public void bind(Ingredient ingredient){
+            mIngredient = ingredient;
             ingredientNameTextView.setText(ingredient.getName());
             ingredientImageView.setImageDrawable(mIngredientManager.getIngredientDrawable(ingredient.getCategory(),
                     ingredient.getName()));
@@ -61,7 +69,8 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.Ingredient
 
         @Override
         public void onClick(View v) {
-
+//            new DrinksProviderTask(mFragment).execute(mIngredient.getName());
+            Saver.writeChosenIngredientName(mContext, mIngredient.getName());
         }
     }
 }

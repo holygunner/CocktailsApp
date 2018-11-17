@@ -1,26 +1,26 @@
 package com.holygunner.cocktailsapp.models;
 
 public class Ingredient {
-    private String name;
-    private String category;
-    private String measure;
+    private String mName;
+    private String mCategory;
+    private String mMeasure;
     private boolean isMatched;
 
     public Ingredient(String ingredientName, String ingredientMeasure){
-        this.name = ingredientName;
-        this.measure = ingredientMeasure;
+        this.mName = ingredientName;
+        this.mMeasure = ingredientMeasure;
     }
 
     public Ingredient(String ingredientName){
-        this.name = ingredientName;
+        this.mName = ingredientName;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public String getMeasure() {
-        return measure;
+        return mMeasure;
     }
 
     public boolean isMatched() {
@@ -34,14 +34,14 @@ public class Ingredient {
     @Override
     public boolean equals(Object ingredient) {
         return ingredient instanceof Ingredient
-                && this.name.equals(((Ingredient) ingredient).name);
+                && this.mName.equals(((Ingredient) ingredient).mName);
     }
 
     public String getCategory() {
-        return category;
+        return mCategory;
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.mCategory = category;
     }
 }

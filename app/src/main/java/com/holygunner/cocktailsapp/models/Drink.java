@@ -49,6 +49,12 @@ public class Drink {
         chosenIngredients = new ArrayList<>();
     }
 
+    // demo only
+    public Drink(String name){
+        this.name = name;
+        chosenIngredients = new ArrayList<>();
+    }
+
     private void initIngredients(){
         mIngredients = new Ingredient[10];
         mIngredients[0] = new Ingredient(strIngredient1, strMeasure1);
