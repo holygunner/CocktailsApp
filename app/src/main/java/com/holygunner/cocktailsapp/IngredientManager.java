@@ -18,12 +18,12 @@ public class IngredientManager {
     private Context mContext;
     private AssetManager mAssetManager;
 
-    public IngredientManager(Context context){
+    IngredientManager(Context context){
         mContext = context;
         mAssetManager = mContext.getAssets();
     }
 
-    public List<Ingredient> getIngredientsOfCategory(String category){
+    private List<Ingredient> getIngredientsOfCategory(String category){
         try {
             String[] names = mAssetManager.list(category);
             return namesToIngredients(names, category);
@@ -66,6 +66,7 @@ public class IngredientManager {
             ingredients.remove(indx);
             ingredients.add(0, titleIngredient);
         }
+
         return ingredients;
     }
 

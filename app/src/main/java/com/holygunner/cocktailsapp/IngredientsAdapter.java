@@ -2,6 +2,7 @@ package com.holygunner.cocktailsapp;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,12 +66,22 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             ingredientNameTextView.setText(ingredient.getName());
             ingredientImageView.setImageDrawable(mIngredientManager.getIngredientDrawable(ingredient.getCategory(),
                     ingredient.getName()));
+            setColorFilter(Saver.isIngrediendExists(mContext, ingredient.getName()));
         }
 
         @Override
         public void onClick(View v) {
 //            new DrinksProviderTask(mFragment).execute(mIngredient.getName());
-            Saver.writeChosenIngredientName(mContext, mIngredient.getName());
+
+            setColorFilter(Saver.changeChosenIngredientName(mContext, mIngredient.getName()));
+        }
+
+        private void setColorFilter(boolean isFill){
+            if (isFill){
+                ingredientImageView.setColorFilter(ContextCompat.getColor(mContext, R.color.colorFill));
+            }   else {
+                ingredientImageView.setColorFilter(null);
+            }
         }
     }
 }

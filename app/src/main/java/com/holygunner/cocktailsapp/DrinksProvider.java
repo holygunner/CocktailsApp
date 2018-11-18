@@ -24,12 +24,23 @@ public class DrinksProvider {
     private List<Drink> chosenDrinks;
     private Set<Ingredient> chosenIngredients;
 
-    public DrinksProvider(){
+    DrinksProvider(){
         chosenDrinks = new ArrayList<>();
         chosenIngredients = new HashSet<>();
     }
 
-    public static Bar parseJsonToBar(String url){
+    public List<Drink> selectDrinks(String... ingredients){
+        for (String ingredientName: ingredients){
+            String url = URLBuilder.getCocktailsListUrl(ingredientName);
+            Bar bar = DrinksProvider.parseJsonToBar(url);
+            Ingredient ingredient = new Ingredient(ingredientName);
+            selectBars(bar, ingredient);
+        }
+        Collections.sort(chosenDrinks, new DrinkComparator());
+        return chosenDrinks;
+    }
+
+    private static Bar parseJsonToBar(String url){
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -51,18 +62,7 @@ public class DrinksProvider {
         }
     }
 
-    public List<Drink> selectDrinks(String... ingredients){
-        for (String ingredientName: ingredients){
-            String url = URLBuilder.getCocktailsListUrl(ingredientName);
-            Bar bar = DrinksProvider.parseJsonToBar(url);
-            Ingredient ingredient = new Ingredient(ingredientName);
-            compareBars(bar, ingredient);
-        }
-        Collections.sort(chosenDrinks, new DrinkComparator());
-        return chosenDrinks;
-    }
-
-    private void compareBars(Bar addedBar, Ingredient chosenIngredient){
+    private void selectBars(Bar addedBar, Ingredient chosenIngredient){
         if (saveChosenIngredient(chosenIngredient) && addedBar != null) {
             List<Drink> addedBarList = new ArrayList<>(Arrays.asList(addedBar.drinks));
 
@@ -94,9 +94,6 @@ public class DrinksProvider {
     }
 
     private boolean isChosenIngredientExists(Ingredient ingredient){
-        if (chosenIngredients.contains(ingredient)){
-            return true;
-        }   else
-            return false;
+        return chosenIngredients.contains(ingredient);
     }
 }

@@ -15,13 +15,37 @@ public class Saver {
                 .getStringSet(INGREDIENTS_KEY, new HashSet<String>());
     }
 
-    public static void writeChosenIngredientName(Context context, String ingredientName){
+    public static boolean isIngrediendExists(Context context, String ingredientName){
+        return readChosenIngredientsNames(context).contains(ingredientName);
+    }
+
+    public static boolean changeChosenIngredientName(Context context, String ingredientName){
         Set<String> savedNames = readChosenIngredientsNames(context);
-        boolean isAdded = savedNames.add(ingredientName);
-        if (isAdded) {
-            changeChosenIngredientsNames(context, savedNames);
-            Log.i("TAG", "saved Names size: " + savedNames.size());
+
+        boolean result;
+
+        if (savedNames.contains(ingredientName)){
+            savedNames.remove(ingredientName);
+            result = false;
+        }   else {
+            savedNames.add(ingredientName);
+            result = true;
         }
+        changeChosenIngredientsNames(context, savedNames);
+        return result;
+
+//        boolean isAdded = savedNames.add(ingredientName);
+//        if (isAdded) {
+//            changeChosenIngredientsNames(context, savedNames);
+//            Log.i("TAG", "saved Names size: " + savedNames.size());
+//        }
+    }
+
+    private static void changeChosenIngredientsNames(Context context, Set<String> savedNames){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putStringSet(INGREDIENTS_KEY, savedNames)
+                .apply();
     }
 
     public static void removeChosenIngredientName(Context context, String ingredientName){
@@ -30,12 +54,5 @@ public class Saver {
         if (isRemove) {
             changeChosenIngredientsNames(context, savedNames);
         }
-    }
-
-    private static void changeChosenIngredientsNames(Context context, Set<String> savedNames){
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putStringSet(INGREDIENTS_KEY, savedNames)
-                .apply();
     }
 }
