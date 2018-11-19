@@ -1,4 +1,4 @@
-package com.holygunner.cocktailsapp;
+package com.holygunner.cocktailsapp.save;
 
 import android.content.Context;
 import android.preference.PreferenceManager;

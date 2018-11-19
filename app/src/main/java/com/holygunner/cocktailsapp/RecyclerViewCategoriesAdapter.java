@@ -25,9 +25,10 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
     private SnapHelper mSnapHelper;
     private IngredientsFragment mFragment;
 
-    public RecyclerViewCategoriesAdapter(IngredientsFragment fragment, IngredientManager ingredientManager,
-                                         List<IngredientsCategory> ingredientsCategories){
+    RecyclerViewCategoriesAdapter(IngredientsFragment fragment, IngredientManager ingredientManager,
+                                  List<IngredientsCategory> ingredientsCategories){
         mFragment = fragment;
+        mContext = fragment.getContext();
         mIngredientManager = ingredientManager;
         mIngredientsCategories = ingredientsCategories;
         mRecycledViewPool = new RecyclerView.RecycledViewPool();
@@ -51,8 +52,10 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(mFragment, singleCategoryIngredients,
                 mIngredientManager, mProviderTask);
         holder.mRecyclerView.setHasFixedSize(true);
-        holder.mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,
-                false));
+        LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,
+                false);
+        manager.setInitialPrefetchItemCount(3);
+        holder.mRecyclerView.setLayoutManager(manager);
         holder.mRecyclerView.setAdapter(ingredientsAdapter);
         holder.mRecyclerView.setOnFlingListener(null);
         mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
@@ -63,11 +66,11 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         return mIngredientsCategories.size();
     }
 
-    protected class CategoryHolder extends RecyclerView.ViewHolder{
+    class CategoryHolder extends RecyclerView.ViewHolder{
         private TextView categoryNameTextView;
         private RecyclerView mRecyclerView;
 
-        public CategoryHolder(View itemView) {
+        CategoryHolder(View itemView) {
             super(itemView);
             categoryNameTextView = itemView.findViewById(R.id.category_textView);
             mRecyclerView = itemView.findViewById(R.id.ingredients_recyclerView);
