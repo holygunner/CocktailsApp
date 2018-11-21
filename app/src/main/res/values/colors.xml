@@ -6,4 +6,7 @@
     <color name="colorFill">#af46ff40</color>
     <color name="greyBackground">#eeeeee</color>
     <color name="light_color">#fffbe6</color>
+    <color name="gradient_top_color_blue">#afc1ff</color>
+    <color name="gradient_bellow_color_lilac">#fdc7ff</color>
+    <color name="toolBar_green">#e3767676</color>
 </resources>

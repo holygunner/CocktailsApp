@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/activity_background"
                 android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_from_drinks_list"
+        app:title="Choose the drink"
+        app:titleTextColor="@color/light_color"
+        style="@style/custom_toolbar"/>
 
     <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/header_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_from_drinks_list"
         android:padding="8dp"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <TextView
             android:id="@+id/drink_name_TextView"
             android:text="Cocktail:"
+            android:textStyle="bold"
             android:textColor="@color/light_color"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>
 
         <TextView
             android:id="@+id/ingredients_matches_TextView"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Matched ingredients:"
@@ -38,6 +48,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/header_container"
         android:scrollbars="none"
-        tools:context=".IngredientsActivity"/>
+        tools:context=".DrinksActivity"/>
 
 </RelativeLayout>

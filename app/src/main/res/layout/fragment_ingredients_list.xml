@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/activity_background"
-              android:orientation="vertical">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@drawable/activity_background"
+                android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_from_ingredients_list"
+        app:title="Select your ingredients"
+        app:titleTextColor="@color/light_color"
+        style="@style/custom_toolbar"/>
+
 <android.support.v7.widget.RecyclerView
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ingredients_recycler_view"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    android:clipToPadding="false"
     android:scrollbars="none"
     tools:context=".IngredientsActivity"/>
 
@@ -25,6 +35,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="48dp"
-        android:text="Mix Cocktails!"/>
+        android:text="Show the cocktails"/>
 
 </RelativeLayout>

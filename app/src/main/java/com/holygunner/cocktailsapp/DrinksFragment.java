@@ -1,9 +1,11 @@
 package com.holygunner.cocktailsapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.holygunner.cocktailsapp.models.Drink;
-import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.save.Saver;
 
 import java.lang.ref.WeakReference;
@@ -42,18 +43,6 @@ public class DrinksFragment extends Fragment {
         return v;
     }
 
-    private List<Drink> createTestDrinks(){
-        List<Drink> drinks = new ArrayList<>();
-        Drink drink1 = new Drink("Blue Laguna");
-        drink1.addChosenIngredient(new Ingredient("Blue Curasao"));
-        Drink drink2 = new Drink("Blood Mary");
-        drink2.addChosenIngredient(new Ingredient("Vodka"));
-        drink2.addChosenIngredient(new Ingredient("Tomato"));
-        drinks.add(drink1);
-        drinks.add(drink2);
-        return drinks;
-    }
-
     private void setDrinks(){
         Set<String> namesSet = Saver.readChosenIngredientsNames(getContext());
         String[] ingredients = namesSet.toArray(new String[namesSet.size()]);
@@ -72,11 +61,14 @@ public class DrinksFragment extends Fragment {
     private class DrinksHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView drinkNameTextView;
         private TextView ingredientsMatchesTextView;
+        private CardView drink_CardView;
 
         DrinksHolder(View itemView) {
             super(itemView);
             drinkNameTextView = itemView.findViewById(R.id.drink_name_TextView);
             ingredientsMatchesTextView = itemView.findViewById(R.id.ingredients_matches_TextView);
+            drink_CardView = itemView.findViewById(R.id.drink_CardView);
+            drink_CardView.setOnClickListener(this);
         }
 
         public void bindDrink(Drink drink){
@@ -85,7 +77,10 @@ public class DrinksFragment extends Fragment {
         }
 
         @Override
-        public void onClick(View v) {}
+        public void onClick(View v) {
+            Intent intent = new Intent(getContext(), DrinkRecipeActivity.class);
+            startActivity(intent);
+        }
     }
 
     private class DrinksAdapter extends RecyclerView.Adapter<DrinksHolder>{
@@ -99,7 +94,7 @@ public class DrinksFragment extends Fragment {
         @Override
         public DrinksHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View view = inflater.inflate(R.layout.single_drink_item, parent, false);
+            View view = inflater.inflate(R.layout.drink_item, parent, false);
             return new DrinksHolder(view);
         }
 

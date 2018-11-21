@@ -26,6 +26,7 @@ public class IngredientManager {
     private List<Ingredient> getIngredientsOfCategory(String category){
         try {
             String[] names = mAssetManager.list(category);
+            assert names != null;
             return namesToIngredients(names, category);
         } catch (IOException e) {
             e.printStackTrace();
