@@ -29,15 +29,25 @@ public class DrinksProvider {
         chosenIngredients = new HashSet<>();
     }
 
-    public List<Drink> selectDrinks(String... ingredients){
+    List<Drink> selectDrinks(String... ingredients){
         for (String ingredientName: ingredients){
             String url = URLBuilder.getCocktailsListUrl(ingredientName);
-            Bar bar = DrinksProvider.parseJsonToBar(url);
+            Bar bar = parseJsonToBar(url);
             Ingredient ingredient = new Ingredient(ingredientName);
             selectBars(bar, ingredient);
         }
         Collections.sort(chosenDrinks, new DrinkComparator());
         return chosenDrinks;
+    }
+
+    Drink getDrinkById(Integer drinkId){
+        if (drinkId != null){
+            String url = URLBuilder.getCocktailDetailsUrl(drinkId);
+            Bar bar = parseJsonToBar(url);
+            assert bar != null;
+            return bar.drinks[0];
+        }   else
+            return null;
     }
 
     private static Bar parseJsonToBar(String url){
@@ -51,9 +61,7 @@ public class DrinksProvider {
             Response response = client.newCall(request).execute();
             Gson gson = new Gson();
             String json = response.body().string();
-
             Bar drinks = gson.fromJson(json, Bar.class);
-
             Log.i("TAG", "output: " + json);
             return drinks;
         } catch (IOException e) {

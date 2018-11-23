@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Set;
 
 public class DrinksFragment extends Fragment {
+    public static final String DRINK_ID_KEY = "drink_id_key";
+
     private RecyclerView mRecyclerView;
     private List<Drink> mDrinks = new ArrayList<>();
 
@@ -59,6 +61,7 @@ public class DrinksFragment extends Fragment {
 
 
     private class DrinksHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private Drink mDrink;
         private TextView drinkNameTextView;
         private TextView ingredientsMatchesTextView;
         private CardView drink_CardView;
@@ -72,6 +75,7 @@ public class DrinksFragment extends Fragment {
         }
 
         public void bindDrink(Drink drink){
+            mDrink = drink;
             drinkNameTextView.setText(drink.getName());
             ingredientsMatchesTextView.setText(String.valueOf(drink.getChosenIngredients().size()));
         }
@@ -79,6 +83,7 @@ public class DrinksFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getContext(), DrinkRecipeActivity.class);
+            intent.putExtra(DRINK_ID_KEY, mDrink.getId());
             startActivity(intent);
         }
     }

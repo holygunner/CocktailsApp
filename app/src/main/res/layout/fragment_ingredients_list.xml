@@ -19,6 +19,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:paddingTop="?attr/actionBarSize"
+    android:paddingBottom="96dp"
     android:clipToPadding="false"
     android:scrollbars="none"
     tools:context=".IngredientsActivity"/>
@@ -30,11 +31,13 @@
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textColor="@color/light_color"
-        android:layout_width="160dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="48dp"
-        android:text="Show the cocktails"/>
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Show the drinks"/>
 
 </RelativeLayout>

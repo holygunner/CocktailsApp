@@ -9,7 +9,7 @@ public abstract class URLBuilder {
         return GET_COCKTAILS_LIST_BY_INGREDIENT + underscoresToSpacesIfRequired(ingredientName);
     }
 
-    public static String getCocktailDetailsUrl(String id){
+    public static String getCocktailDetailsUrl(int id){
         return COCKTAIL_BY_ID + id;
     }
 

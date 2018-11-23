@@ -3,6 +3,7 @@ package com.holygunner.cocktailsapp;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.models.IngredientsCategory;
@@ -11,6 +12,7 @@ import com.holygunner.cocktailsapp.values.IngredientsCategoriesNames;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,14 +46,27 @@ public class IngredientManager {
         return allIngredients;
     }
 
+    public void findIngredientDrawable(String fileName){
+        boolean isExists;
+        try {
+            isExists = Arrays.asList(mAssetManager.list("Whiskey")).contains(fileName); // Test only
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Drawable getIngredientDrawable(String folderName, String fileName){
         try {
-            InputStream inputStream = mAssetManager.open(folderName + "/" + fileName + ".png");
+            InputStream inputStream = mAssetManager.open(getRightFileName(folderName, fileName));
             return Drawable.createFromStream(inputStream, null);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private String getRightFileName(String folderName, String fileName){
+        return folderName + "/" + fileName + ".png";
     }
 
     private List<Ingredient> setTitleElemFirstIfExists(List<Ingredient> ingredients, String category){

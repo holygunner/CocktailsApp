@@ -13,13 +13,13 @@ import android.widget.TextView;
 
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.models.IngredientsCategory;
+import com.holygunner.cocktailsapp.values.IngredientsCategoriesNames;
 
 import java.util.List;
 
 public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<RecyclerViewCategoriesAdapter.CategoryHolder> {
     private List<IngredientsCategory> mIngredientsCategories;
     private IngredientManager mIngredientManager;
-    private IngredientsFragment.DrinksProviderTask mProviderTask;
     private Context mContext;
     private RecyclerView.RecycledViewPool mRecycledViewPool;
     private SnapHelper mSnapHelper;
@@ -32,6 +32,8 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         mIngredientManager = ingredientManager;
         mIngredientsCategories = ingredientsCategories;
         mRecycledViewPool = new RecyclerView.RecycledViewPool();
+        mRecycledViewPool.setMaxRecycledViews(R.layout.ingredient_item, IngredientsCategoriesNames.CATEGORIES_NAMES.length);
+
     }
 
     @NonNull
@@ -50,7 +52,7 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         List<Ingredient> singleCategoryIngredients = mIngredientsCategories.get(position).getIngredients();
         holder.categoryNameTextView.setText(categoryName);
         IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(mFragment, singleCategoryIngredients,
-                mIngredientManager, mProviderTask);
+                mIngredientManager);
         holder.mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,
                 false);

@@ -19,17 +19,18 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     private Context mContext;
     private List<Ingredient> mIngredients;
     private IngredientManager mIngredientManager;
-    private IngredientsFragment.DrinksProviderTask mProviderTask;
+//    private IngredientsFragment.DrinksProviderTask mProviderTask;
     private IngredientsFragment mFragment;
 
     public IngredientsAdapter(IngredientsFragment fragment, List<Ingredient> ingredients,
-                              IngredientManager ingredientManager,
-                              IngredientsFragment.DrinksProviderTask providerTask){
+                              IngredientManager ingredientManager){
         mFragment = fragment;
         mContext = mFragment.getContext();
         mIngredients = ingredients;
         mIngredientManager = ingredientManager;
-        mProviderTask = providerTask;
+//        mProviderTask = providerTask;
+
+        mIngredientManager.findIngredientDrawable("Whiskey.png");
     }
 
     @NonNull
@@ -57,7 +58,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         public IngredientHolder(View itemView) {
             super(itemView);
-            ingredientNameTextView = itemView.findViewById(R.id.ingredientNameTextView);
+            ingredientNameTextView = itemView.findViewById(R.id.ingredientWithMeasureTextView);
             ingredientImageView = itemView.findViewById(R.id.ingredientImageView);
             ingredientImageView.setOnClickListener(this);
         }
@@ -72,7 +73,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         @Override
         public void onClick(View v) {
-//            new DrinksProviderTask(mFragment).execute(mIngredient.getName());
+//            new DrinkProviderTask(mFragment).execute(mIngredient.getName());
 
             setColorFilter(Saver.changeChosenIngredientName(mContext, mIngredient.getName()));
         }
