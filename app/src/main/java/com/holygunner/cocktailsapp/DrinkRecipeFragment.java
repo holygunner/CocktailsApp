@@ -186,9 +186,13 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
 
         @Override
         protected void onPostExecute(Drink drink){
+
             DrinkRecipeFragment fragment = mReference.get();
 //            fragment.mDrink = drink;
-            fragment.setupDrinkRecipe(drink);
+
+            if (fragment != null) {
+                fragment.setupDrinkRecipe(drink);
+            }
         }
     }
 }
