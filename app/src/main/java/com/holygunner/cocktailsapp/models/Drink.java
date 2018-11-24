@@ -7,17 +7,17 @@ import java.util.List;
 
 public class Drink {
     @SerializedName("idDrink")
-    private int id; // idDrink
+    private int id;
     @SerializedName("strDrink")
-    private String name; // strDrink
+    private String name;
     @SerializedName("strCategory")
-    private String category; // strCategory
+    private String category;
     @SerializedName("strGlass")
-    private String glass; // strGlass
+    private String glass;
     @SerializedName("strInstructions")
-    private String instruction; // strInstructions
+    private String instruction;
     @SerializedName("strDrinkThumb")
-    private String urlImage; //strDrinkThumb
+    private String urlImage;
     private String strAlcoholic;
 
     private String strIngredient1;

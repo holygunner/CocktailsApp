@@ -2,11 +2,28 @@ package com.holygunner.cocktailsapp.values;
 
 public abstract class IngredientsCategoriesNames {
     public static final String[] CATEGORIES_NAMES =
-            {"Fruit", "Juice", "Syrup", "Milk Products",
-            "Sodas", "Spices", "Coffee & Chocolate",
-                    "General", "Vodka", "Whiskey",
-                    "Liqueurs set 1", "Liqueurs set 2",
-                    "Rum", "Wine & Vermouth", "Beer",
-                    "Brandy", "Cider", "Gin",
-                    "Bitter", "Schnapps", "Other"};
+                        {"Coffee & Chocolate",
+                            "General",
+                            "Milk Products",
+                            "Spices",
+
+                            "Fruit",
+                            "Juice",
+                            "Sodas",
+                            "Syrup",
+
+                            "Beer",
+                            "Cider",
+                            "Liqueurs set 1",
+                            "Liqueurs set 2",
+                            "Wine & Vermouth",
+
+                            "Bitter",
+                            "Brandy",
+                            "Gin",
+                            "Liquors",
+                            "Rum",
+                            "Schnapps",
+                            "Vodka",
+                            "Whiskey"};
 }

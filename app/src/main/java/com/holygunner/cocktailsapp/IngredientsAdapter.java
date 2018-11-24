@@ -1,6 +1,7 @@
 package com.holygunner.cocktailsapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -60,7 +61,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             super(itemView);
             ingredientNameTextView = itemView.findViewById(R.id.ingredientWithMeasureTextView);
             ingredientImageView = itemView.findViewById(R.id.ingredientImageView);
+            ingredientNameTextView.setOnClickListener(this);
             ingredientImageView.setOnClickListener(this);
+
         }
 
         public void bind(Ingredient ingredient){
@@ -73,16 +76,20 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         @Override
         public void onClick(View v) {
-//            new DrinkProviderTask(mFragment).execute(mIngredient.getName());
-
             setColorFilter(Saver.changeChosenIngredientName(mContext, mIngredient.getName()));
         }
 
         private void setColorFilter(boolean isFill){
             if (isFill){
-                ingredientImageView.setColorFilter(ContextCompat.getColor(mContext, R.color.colorFill));
+                ingredientImageView.setColorFilter(ContextCompat.getColor(mContext, R.color.ingredientColorFill));
+                ingredientNameTextView.setTextColor(ContextCompat.getColor(mContext, R.color.light_color));
+                ingredientNameTextView
+                        .setBackground(ContextCompat
+                                .getDrawable(mContext, R.drawable.ingredient_name_background));
             }   else {
                 ingredientImageView.setColorFilter(null);
+                ingredientNameTextView.setTextColor(ContextCompat.getColor(mContext, R.color.textView_color));
+                ingredientNameTextView.setBackgroundResource(0);
             }
         }
     }
