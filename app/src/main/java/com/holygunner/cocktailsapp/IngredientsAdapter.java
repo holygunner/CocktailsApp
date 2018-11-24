@@ -1,7 +1,6 @@
 package com.holygunner.cocktailsapp;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -20,18 +19,13 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     private Context mContext;
     private List<Ingredient> mIngredients;
     private IngredientManager mIngredientManager;
-//    private IngredientsFragment.DrinksProviderTask mProviderTask;
-    private IngredientsFragment mFragment;
 
     public IngredientsAdapter(IngredientsFragment fragment, List<Ingredient> ingredients,
                               IngredientManager ingredientManager){
-        mFragment = fragment;
-        mContext = mFragment.getContext();
+        IngredientsFragment fragment1 = fragment;
+        mContext = fragment1.getContext();
         mIngredients = ingredients;
         mIngredientManager = ingredientManager;
-//        mProviderTask = providerTask;
-
-        mIngredientManager.findIngredientDrawable("Whiskey.png");
     }
 
     @NonNull
@@ -59,7 +53,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         public IngredientHolder(View itemView) {
             super(itemView);
-            ingredientNameTextView = itemView.findViewById(R.id.ingredientWithMeasureTextView);
+            ingredientNameTextView = itemView.findViewById(R.id.ingredientTextView);
             ingredientImageView = itemView.findViewById(R.id.ingredientImageView);
             ingredientNameTextView.setOnClickListener(this);
             ingredientImageView.setOnClickListener(this);

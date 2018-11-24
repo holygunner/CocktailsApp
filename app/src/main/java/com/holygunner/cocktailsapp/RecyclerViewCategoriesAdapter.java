@@ -58,6 +58,8 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         manager.setInitialPrefetchItemCount(3);
         holder.mRecyclerView.setLayoutManager(manager);
         holder.mRecyclerView.setAdapter(ingredientsAdapter);
+//        if (holder.mRecyclerView.getOnFlingListener() == null)
+//            mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
         holder.mRecyclerView.setOnFlingListener(null);
         mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
     }

@@ -46,7 +46,7 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
         mixButton = v.findViewById(R.id.mix_button);
         mixButton.setOnClickListener(this);
         mRecyclerView = v.findViewById(R.id.ingredients_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setHasFixedSize(false);
         mViewPool = new RecyclerView.RecycledViewPool();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);

@@ -15,6 +15,17 @@ public class Saver {
                 .getStringSet(INGREDIENTS_KEY, new HashSet<String>());
     }
 
+    public static Set<String> readChosenIngredientsNamesInLowerCase(Context context){
+        Set<String> origalNames = readChosenIngredientsNames(context);
+        Set<String> lowerCaseNames = new HashSet<>();
+
+        for (String name: origalNames){
+            lowerCaseNames.add(name.toLowerCase());
+        }
+
+        return lowerCaseNames;
+    }
+
     public static boolean isIngredientExists(Context context, String ingredientName){
         return readChosenIngredientsNames(context).contains(ingredientName);
     }

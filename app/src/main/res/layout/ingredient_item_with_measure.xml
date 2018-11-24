@@ -20,7 +20,7 @@
             android:layout_height="128dp"/>
 
         <TextView
-            android:id="@+id/ingredientWithMeasureTextView"
+            android:id="@+id/ingredientTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Vodka: 4 oz"

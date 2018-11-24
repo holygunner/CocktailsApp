@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class IngredientManager {
     private Context mContext;
@@ -46,13 +47,18 @@ public class IngredientManager {
         return allIngredients;
     }
 
-    public void findIngredientDrawable(String fileName){
-        boolean isExists;
+    public String findIngredientCategory(String fileName){
+        String ingredientCategory = "";
         try {
-            isExists = Arrays.asList(mAssetManager.list("Whiskey")).contains(fileName); // Test only
+            for (String category: IngredientsCategoriesNames.CATEGORIES_NAMES){
+                if (Arrays.asList(Objects.requireNonNull(mAssetManager.list(category))).contains(fileName + ".png")){
+                    ingredientCategory = category;
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return ingredientCategory;
     }
 
     public Drawable getIngredientDrawable(String folderName, String fileName){

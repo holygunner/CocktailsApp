@@ -42,31 +42,34 @@ public class Drink {
     private String strMeasure9;
     private String strMeasure10;
 
-    private Ingredient[] mIngredients;
+//    private Ingredient[] mIngredients;
+    private List<Ingredient> mIngredientsList;
     private List<Ingredient> chosenIngredients;
 
     public Drink(){
         chosenIngredients = new ArrayList<>();
     }
 
-    // demo only
-    public Drink(String name){
-        this.name = name;
-        chosenIngredients = new ArrayList<>();
-    }
+//    // demo only
+//    public Drink(String name){
+//        this.name = name;
+//        chosenIngredients = new ArrayList<>();
+//    }
 
     private void initIngredients(){
-        mIngredients = new Ingredient[10];
-        mIngredients[0] = new Ingredient(strIngredient1, strMeasure1);
-        mIngredients[1] = new Ingredient(strIngredient2, strMeasure2);
-        mIngredients[2] = new Ingredient(strIngredient3, strMeasure3);
-        mIngredients[3] = new Ingredient(strIngredient4, strMeasure4);
-        mIngredients[4] = new Ingredient(strIngredient5, strMeasure5);
-        mIngredients[5] = new Ingredient(strIngredient6, strMeasure6);
-        mIngredients[6] = new Ingredient(strIngredient7, strMeasure7);
-        mIngredients[7] = new Ingredient(strIngredient8, strMeasure8);
-        mIngredients[8] = new Ingredient(strIngredient9, strMeasure9);
-        mIngredients[9] = new Ingredient(strIngredient10, strMeasure10);
+        Ingredient[] ingredients = new Ingredient[10];
+        ingredients[0] = new Ingredient(strIngredient1, strMeasure1);
+        ingredients[1] = new Ingredient(strIngredient2, strMeasure2);
+        ingredients[2] = new Ingredient(strIngredient3, strMeasure3);
+        ingredients[3] = new Ingredient(strIngredient4, strMeasure4);
+        ingredients[4] = new Ingredient(strIngredient5, strMeasure5);
+        ingredients[5] = new Ingredient(strIngredient6, strMeasure6);
+        ingredients[6] = new Ingredient(strIngredient7, strMeasure7);
+        ingredients[7] = new Ingredient(strIngredient8, strMeasure8);
+        ingredients[8] = new Ingredient(strIngredient9, strMeasure9);
+        ingredients[9] = new Ingredient(strIngredient10, strMeasure10);
+
+        mIngredientsList = DrinkHelper.convertArrToIngredientList(ingredients);
     }
 
     public int getId() {
@@ -97,27 +100,34 @@ public class Drink {
         return urlImage;
     }
 
-    public Ingredient[] getIngredients() {
-        if (mIngredients == null){
+//    public Ingredient[] getIngredients() {
+//        if (mIngredients == null){
+//            initIngredients();
+//        }
+//        return mIngredients;
+//    }
+
+    public List<Ingredient> getIngredientsList(){
+        if (mIngredientsList == null){
             initIngredients();
         }
-        return mIngredients;
+        return mIngredientsList;
     }
 
-    public int getMatchedIngredientsCount(){
-        int count = 0;
-
-        for (Ingredient ingredient: mIngredients){
-            if (ingredient == null){
-                return count;
-            }
-
-            if (ingredient.isMatched()){
-               count++;
-            }
-        }
-        return count;
-    }
+//    public int getMatchedIngredientsCount(){
+//        int count = 0;
+//
+//        for (Ingredient ingredient: mIngredients){
+//            if (ingredient == null){
+//                return count;
+//            }
+//
+//            if (ingredient.isMatched()){
+//               count++;
+//            }
+//        }
+//        return count;
+//    }
 
     @Override
     public boolean equals(Object object) {

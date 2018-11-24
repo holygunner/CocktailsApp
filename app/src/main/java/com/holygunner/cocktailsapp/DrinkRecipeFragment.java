@@ -1,12 +1,13 @@
 package com.holygunner.cocktailsapp;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,24 +20,28 @@ import android.widget.TextView;
 
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.Ingredient;
+import com.holygunner.cocktailsapp.save.Saver;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class DrinkRecipeFragment extends Fragment implements View.OnClickListener {
     private RecyclerView mRecyclerView;
     private ImageView drinkImageView;
     private ImageButton likeImageButton;
     private CardView recipeCardView;
+    private CardView ingredientsListCardView;
     private TextView drinkNameTextView;
     private TextView drinkRecipeTextView;
     private TextView serveGlassTextView;
+    private IngredientManager mIngredientManager;
     private int drinkId;
     private Drink mDrink;
+    private Set<String> chosenIngredientNames;
 
     public static Fragment newInstance(){
         return new DrinkRecipeFragment();
@@ -45,6 +50,8 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle onSavedInstanceState){
         super.onCreate(onSavedInstanceState);
+        mIngredientManager = new IngredientManager(getContext());
+        chosenIngredientNames = Saver.readChosenIngredientsNamesInLowerCase(getContext());
         setDrink();
     }
 
@@ -58,13 +65,14 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         likeImageButton.setOnClickListener(this);
         likeImageButton.setPressed(true);
         recipeCardView = v.findViewById(R.id.recipe_cardView);
+        ingredientsListCardView = v.findViewById(R.id.ingredients_list_cardView);
         drinkNameTextView = v.findViewById(R.id.drink_name_textView);
         drinkRecipeTextView = v.findViewById(R.id.recipe_textView);
         serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
         serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
         mRecyclerView = v.findViewById(R.id.drink_ingredients_recyclerGridView);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        setupAdapter();
+//        setupAdapter();
         return v;
     }
 
@@ -73,16 +81,18 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         new DrinkProviderTask(this).execute(drinkId);
     }
 
-    private void setupAdapter(){
+    private void setupAdapter(Drink drink){
         if (isAdded()){
-            List<Ingredient> testIngredients = getTestData();
-            mRecyclerView.setAdapter(new IngredientsAdapter(testIngredients));
+            List<Ingredient> ingredients = drink.getIngredientsList();
+            mRecyclerView.setAdapter(new IngredientsAdapter(ingredients));
         }
     }
 
     private void setupDrinkRecipe(Drink drink){
+        setupAdapter(drink);
         downloadAndSetImageView(drink.getUrlImage());
         recipeCardView.setVisibility(View.VISIBLE);
+        ingredientsListCardView.setVisibility(View.VISIBLE);
         drinkNameTextView.setText(drink.getName());
         drinkRecipeTextView.setText(" " + drink.getInstruction());
         serveGlassTextView.setText("Serve: " + drink.getGlass());
@@ -92,18 +102,14 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         final Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                drinkImageView.setImageBitmap(ImageRoundCornersHelper.getRoundedCornerBitmap(bitmap, 32));
+                drinkImageView.setImageBitmap(ImageHelper.getRoundedCornerBitmap(bitmap, 32));
             }
 
             @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-            }
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {}
 
             @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
+            public void onPrepareLoad(Drawable placeHolderDrawable) {}
         };
 
         Picasso.get()
@@ -111,19 +117,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
                 .into(target);
 
         drinkImageView.setTag(target);
-    }
-
-    private List<Ingredient> getTestData(){
-        List<Ingredient> ingredients = new ArrayList<>();
-        Ingredient ingredient1 = new Ingredient("Vodka", "4 oz");
-        Ingredient ingredient2 = new Ingredient("Milk", "5 gr");
-        Ingredient ingredient3 = new Ingredient("Orange Juice", "0.5 L");
-        Ingredient ingredient4 = new Ingredient("Vodka", "3 oz");
-        ingredients.add(ingredient1);
-        ingredients.add(ingredient2);
-        ingredients.add(ingredient3);
-        ingredients.add(ingredient4);
-        return ingredients;
     }
 
     @Override
@@ -163,12 +156,48 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
 
         IngredientsHolder(View itemView) {
             super(itemView);
-            ingredientNameTextView = itemView.findViewById(R.id.ingredientWithMeasureTextView);
+            ingredientImageView = itemView.findViewById(R.id.ingredientImageView);
+            ingredientNameTextView = itemView.findViewById(R.id.ingredientTextView);
         }
 
         void bindIngredient(Ingredient ingredient){
-            ingredientNameTextView.setText(ingredient.getName()
-                    + ": " + ingredient.getMeasure());
+            String category = mIngredientManager
+                    .findIngredientCategory(ingredient
+                            .getName());
+
+            Drawable drawable = mIngredientManager
+                    .getIngredientDrawable(category,
+                            ingredient.getName());
+
+            if (drawable != null) {
+                ingredientImageView.setImageDrawable(drawable);
+            }   else {
+                Picasso.get()
+                        .load(URLBuilder.getMissedIngredientUrl(ingredient.getName()))
+                        .into(ingredientImageView);
+            }
+
+            String text;
+
+            if (!ingredient.getMeasure().equals("\n")) {
+                text = ingredient.getName() + ": " + ingredient.getMeasure();
+            }   else {
+                text = ingredient.getName();
+            }
+
+            ingredientNameTextView.setText(text);
+
+            if (chosenIngredientNames.contains(ingredient.getName().toLowerCase())){
+                Context context = Objects.requireNonNull(getContext());
+//                ingredientImageView.setColorFilter(ContextCompat
+//                        .getColor(context, R.color.ingredientColorFill));
+                ingredientNameTextView.setTextColor(ContextCompat
+                        .getColor(context, R.color.light_color));
+                ingredientNameTextView
+                        .setBackground(ContextCompat
+                                .getDrawable(context,
+                                        R.drawable.ingredient_name_background));
+            }
         }
     }
 
@@ -188,9 +217,10 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         protected void onPostExecute(Drink drink){
 
             DrinkRecipeFragment fragment = mReference.get();
-//            fragment.mDrink = drink;
+
 
             if (fragment != null) {
+                fragment.mDrink = drink;
                 fragment.setupDrinkRecipe(drink);
             }
         }

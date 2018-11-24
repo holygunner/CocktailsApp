@@ -16,4 +16,8 @@ public abstract class URLBuilder {
     private static String underscoresToSpacesIfRequired(String name){
         return name.replace(" ", "_");
     }
+
+    public static String getMissedIngredientUrl(String name){
+        return "https://www.thecocktaildb.com/images/ingredients/" + name + "-Medium.png";
+    }
 }

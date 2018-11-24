@@ -54,7 +54,6 @@ public class DrinksFragment extends Fragment {
 
     private void setupAdapter(){
         if (isAdded()){
-//            mDrinks = createTestDrinks();
             mRecyclerView.setAdapter(new DrinksAdapter(mDrinks));
         }
     }
