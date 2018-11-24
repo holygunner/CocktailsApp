@@ -68,7 +68,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             ingredientNameTextView.setText(ingredient.getName());
             ingredientImageView.setImageDrawable(mIngredientManager.getIngredientDrawable(ingredient.getCategory(),
                     ingredient.getName()));
-            setColorFilter(Saver.isIngrediendExists(mContext, ingredient.getName()));
+            setColorFilter(Saver.isIngredientExists(mContext, ingredient.getName()));
         }
 
         @Override

@@ -33,13 +33,12 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         mIngredientsCategories = ingredientsCategories;
         mRecycledViewPool = new RecyclerView.RecycledViewPool();
         mRecycledViewPool.setMaxRecycledViews(R.layout.ingredient_item, IngredientsCategoriesNames.CATEGORIES_NAMES.length);
-
     }
 
     @NonNull
     @Override
     public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mFragment.getContext()).inflate(R.layout.ingredient_section_card, null);
+        View view = LayoutInflater.from(mFragment.getContext()).inflate(R.layout.ingredient_section_card, parent, false);
         mSnapHelper = new LinearSnapHelper();
         CategoryHolder holder = new CategoryHolder(view);
         holder.mRecyclerView.setRecycledViewPool(mRecycledViewPool);

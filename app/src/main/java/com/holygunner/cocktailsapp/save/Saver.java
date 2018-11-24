@@ -15,7 +15,7 @@ public class Saver {
                 .getStringSet(INGREDIENTS_KEY, new HashSet<String>());
     }
 
-    public static boolean isIngrediendExists(Context context, String ingredientName){
+    public static boolean isIngredientExists(Context context, String ingredientName){
         return readChosenIngredientsNames(context).contains(ingredientName);
     }
 

@@ -26,11 +26,8 @@ import java.util.Set;
 public class IngredientsFragment extends Fragment implements View.OnClickListener{
     private RecyclerView mRecyclerView;
     private RecyclerView.RecycledViewPool mViewPool;
-    private List<Drink> mSelectedDrinks = new ArrayList<>();
-    private List<Ingredient> mIngredients = new ArrayList<>();
     private List<IngredientsCategory> mIngredientsCategories = new ArrayList<>();
     private IngredientManager mIngredientManager;
-//    private DrinksProviderTask mProviderTask;
     private Button mixButton;
 
     public static IngredientsFragment newInstance(){
