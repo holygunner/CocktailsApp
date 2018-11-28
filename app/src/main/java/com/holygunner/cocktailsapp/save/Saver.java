@@ -2,24 +2,50 @@ package com.holygunner.cocktailsapp.save;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
+
+import com.google.gson.Gson;
+import com.holygunner.cocktailsapp.models.Bar;
+
+import org.jetbrains.annotations.Contract;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Saver {
-    private static final String INGREDIENTS_KEY = "ingredients_key";
+    public static final String CHOSEN_INGREDIENTS_KEY = "chosen_ingredients_key";
+    public static final String CHECKED_INGREDIENTS_KEY = "checked_ingredients_key";
+    private static final String SELECTED_BAR_KEY = "selected_bar_key";
 
-    public static Set<String> readChosenIngredientsNames(Context context){
+    public static Set<String> readIngredients(Context context, String key){
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getStringSet(INGREDIENTS_KEY, new HashSet<String>());
+                .getStringSet(key, new HashSet<String>());
+    }
+
+    public static void writeIngredients(Context context, Set<String> ingredients, String key){
+        updIngredients(context, ingredients, key);
+    }
+
+    @Contract("_ -> !null")
+    public static String readSelectedBar(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(SELECTED_BAR_KEY, "");
+    }
+
+    public static void writeSelectedBar(Context context, Bar selectedBar){
+        Gson gson = new Gson();
+        String jsonBar = gson.toJson(selectedBar);
+
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(SELECTED_BAR_KEY, jsonBar)
+                .apply();
     }
 
     public static Set<String> readChosenIngredientsNamesInLowerCase(Context context){
-        Set<String> origalNames = readChosenIngredientsNames(context);
+        Set<String> originalNames = readIngredients(context, CHOSEN_INGREDIENTS_KEY);
         Set<String> lowerCaseNames = new HashSet<>();
 
-        for (String name: origalNames){
+        for (String name: originalNames){
             lowerCaseNames.add(name.toLowerCase());
         }
 
@@ -27,11 +53,11 @@ public class Saver {
     }
 
     public static boolean isIngredientExists(Context context, String ingredientName){
-        return readChosenIngredientsNames(context).contains(ingredientName);
+        return readIngredients(context, CHOSEN_INGREDIENTS_KEY).contains(ingredientName);
     }
 
-    public static boolean changeChosenIngredientName(Context context, String ingredientName){
-        Set<String> savedNames = readChosenIngredientsNames(context);
+    public static boolean changeChosenIngredient(Context context, String ingredientName){
+        Set<String> savedNames = readIngredients(context, Saver.CHOSEN_INGREDIENTS_KEY);
 
         boolean result;
 
@@ -42,28 +68,14 @@ public class Saver {
             savedNames.add(ingredientName);
             result = true;
         }
-        changeChosenIngredientsNames(context, savedNames);
+        updIngredients(context, savedNames, CHOSEN_INGREDIENTS_KEY);
         return result;
-
-//        boolean isAdded = savedNames.add(ingredientName);
-//        if (isAdded) {
-//            changeChosenIngredientsNames(context, savedNames);
-//            Log.i("TAG", "saved Names size: " + savedNames.size());
-//        }
     }
 
-    private static void changeChosenIngredientsNames(Context context, Set<String> savedNames){
+    private static void updIngredients(Context context, Set<String> savedNames, String key){
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putStringSet(INGREDIENTS_KEY, savedNames)
+                .putStringSet(key, savedNames)
                 .apply();
-    }
-
-    public static void removeChosenIngredientName(Context context, String ingredientName){
-        Set<String> savedNames = readChosenIngredientsNames(context);
-        boolean isRemove = savedNames.remove(ingredientName);
-        if (isRemove) {
-            changeChosenIngredientsNames(context, savedNames);
-        }
     }
 }

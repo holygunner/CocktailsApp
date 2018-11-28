@@ -9,8 +9,8 @@ import android.graphics.RectF;
 import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
 
-public abstract class ImageHelper {
-    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+abstract class ImageHelper {
+    static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundFactor) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
                 .getHeight(), Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
@@ -19,12 +19,11 @@ public abstract class ImageHelper {
         final Paint paint = new Paint();
         final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
         final RectF rectF = new RectF(rect);
-        final float roundPx = pixels;
 
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
-        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawRoundRect(rectF, (float) roundFactor, (float) roundFactor, paint);
 
         paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);

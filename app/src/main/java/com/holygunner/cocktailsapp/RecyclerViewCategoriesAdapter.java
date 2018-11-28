@@ -17,7 +17,8 @@ import com.holygunner.cocktailsapp.values.IngredientsCategoriesNames;
 
 import java.util.List;
 
-public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<RecyclerViewCategoriesAdapter.CategoryHolder> {
+public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<RecyclerViewCategoriesAdapter
+        .CategoryHolder> {
     private List<IngredientsCategory> mIngredientsCategories;
     private IngredientManager mIngredientManager;
     private Context mContext;
@@ -32,13 +33,15 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         mIngredientManager = ingredientManager;
         mIngredientsCategories = ingredientsCategories;
         mRecycledViewPool = new RecyclerView.RecycledViewPool();
-        mRecycledViewPool.setMaxRecycledViews(R.layout.ingredient_item, IngredientsCategoriesNames.CATEGORIES_NAMES.length);
+        mRecycledViewPool.setMaxRecycledViews(R.id.ingredients_recyclerView,
+                IngredientsCategoriesNames.CATEGORIES_NAMES.length);
     }
 
     @NonNull
     @Override
     public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mFragment.getContext()).inflate(R.layout.ingredient_section_card, parent, false);
+        View view = LayoutInflater.from(mFragment.getContext()).inflate(R.layout.ingredient_section_card,
+                parent, false);
         mSnapHelper = new LinearSnapHelper();
         CategoryHolder holder = new CategoryHolder(view);
         holder.mRecyclerView.setRecycledViewPool(mRecycledViewPool);
@@ -58,10 +61,10 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         manager.setInitialPrefetchItemCount(3);
         holder.mRecyclerView.setLayoutManager(manager);
         holder.mRecyclerView.setAdapter(ingredientsAdapter);
-//        if (holder.mRecyclerView.getOnFlingListener() == null)
-//            mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
-        holder.mRecyclerView.setOnFlingListener(null);
-        mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
+        if (holder.mRecyclerView.getOnFlingListener() == null)
+            mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
+//        holder.mRecyclerView.setOnFlingListener(null);
+//        mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
     }
 
     @Override

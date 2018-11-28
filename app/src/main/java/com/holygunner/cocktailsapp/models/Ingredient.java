@@ -4,7 +4,6 @@ public class Ingredient {
     private String mName;
     private String mCategory;
     private String mMeasure;
-    private boolean isMatched;
 
     public Ingredient(String ingredientName, String ingredientMeasure){
         this.mName = ingredientName;
@@ -23,18 +22,10 @@ public class Ingredient {
         return mMeasure;
     }
 
-    public boolean isMatched() {
-        return isMatched;
-    }
-
-    public void setMatched(boolean matched) {
-        isMatched = matched;
-    }
-
     @Override
     public boolean equals(Object ingredient) {
         return ingredient instanceof Ingredient
-                && this.mName.equals(((Ingredient) ingredient).mName);
+                && this.mName.toLowerCase().equals(((Ingredient) ingredient).mName.toLowerCase());
     }
 
     public String getCategory() {

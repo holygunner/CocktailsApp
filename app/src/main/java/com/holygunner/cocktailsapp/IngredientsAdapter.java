@@ -20,10 +20,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     private List<Ingredient> mIngredients;
     private IngredientManager mIngredientManager;
 
-    public IngredientsAdapter(IngredientsFragment fragment, List<Ingredient> ingredients,
-                              IngredientManager ingredientManager){
-        IngredientsFragment fragment1 = fragment;
-        mContext = fragment1.getContext();
+    IngredientsAdapter(IngredientsFragment fragment, List<Ingredient> ingredients,
+                       IngredientManager ingredientManager){
+        mContext = fragment.getContext();
         mIngredients = ingredients;
         mIngredientManager = ingredientManager;
     }
@@ -31,7 +30,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @NonNull
     @Override
     public IngredientHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_item, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_item,
+                null);
         return new IngredientHolder(view);
     }
 
@@ -51,7 +51,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         private ImageView ingredientImageView;
         private Ingredient mIngredient;
 
-        public IngredientHolder(View itemView) {
+        IngredientHolder(View itemView) {
             super(itemView);
             ingredientNameTextView = itemView.findViewById(R.id.ingredientTextView);
             ingredientImageView = itemView.findViewById(R.id.ingredientImageView);
@@ -60,7 +60,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         }
 
-        public void bind(Ingredient ingredient){
+        void bind(Ingredient ingredient){
             mIngredient = ingredient;
             ingredientNameTextView.setText(ingredient.getName());
             ingredientImageView.setImageDrawable(mIngredientManager.getIngredientDrawable(ingredient.getCategory(),
@@ -70,7 +70,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         @Override
         public void onClick(View v) {
-            setColorFilter(Saver.changeChosenIngredientName(mContext, mIngredient.getName()));
+            setColorFilter(Saver.changeChosenIngredient(mContext, mIngredient.getName()));
         }
 
         private void setColorFilter(boolean isFill){

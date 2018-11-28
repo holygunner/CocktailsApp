@@ -13,19 +13,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.holygunner.cocktailsapp.models.Bar;
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.save.Saver;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import static com.holygunner.cocktailsapp.save.Saver.CHECKED_INGREDIENTS_KEY;
+import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 public class DrinksFragment extends Fragment {
     public static final String DRINK_ID_KEY = "drink_id_key";
 
     private RecyclerView mRecyclerView;
     private List<Drink> mDrinks = new ArrayList<>();
+    private BarManager mBarManager;
 
     public static DrinksFragment newInstance(){
         return new DrinksFragment();
@@ -46,10 +51,15 @@ public class DrinksFragment extends Fragment {
     }
 
     private void setDrinks(){
-        Set<String> namesSet = Saver.readChosenIngredientsNames(getContext());
-        String[] ingredients = namesSet.toArray(new String[namesSet.size()]);
         // realize callback later if required
-        new DrinksProviderTask(this).execute(ingredients);
+        mBarManager = new BarManager(getContext());
+
+        String[] added = IngredientManager.countAddedIngredients(
+                Saver.readIngredients(getContext(), CHOSEN_INGREDIENTS_KEY),
+                Saver.readIngredients(getContext(), CHECKED_INGREDIENTS_KEY)).toArray(new String[0]);
+
+        new DrinksProviderTask(this)
+                .execute(added);
     }
 
     private void setupAdapter(){
@@ -73,7 +83,7 @@ public class DrinksFragment extends Fragment {
             drink_CardView.setOnClickListener(this);
         }
 
-        public void bindDrink(Drink drink){
+        void bindDrink(Drink drink){
             mDrink = drink;
             drinkNameTextView.setText(drink.getName());
             ingredientsMatchesTextView.setText(String.valueOf(drink.getChosenIngredients().size()));
@@ -113,7 +123,7 @@ public class DrinksFragment extends Fragment {
         }
     }
 
-    protected static class DrinksProviderTask extends AsyncTask<String, Void, List<Drink>> {
+    protected static class DrinksProviderTask extends AsyncTask<String, Void, Bar[]> {
         private WeakReference<DrinksFragment> mReference;
 
         DrinksProviderTask(DrinksFragment instance){
@@ -121,15 +131,17 @@ public class DrinksFragment extends Fragment {
         }
 
         @Override
-        protected List<Drink> doInBackground(String... ingredients) {
-            return new DrinksProvider().selectDrinks(ingredients);
+        protected Bar[] doInBackground(String... ingredients) {
+//            return new RequestProvider().getSelectedBar(ingredients);
+            return new RequestProvider().downloadBars(ingredients);
         }
 
         @Override
-        protected void onPostExecute(List<Drink> selectedDrinks){
+        protected void onPostExecute(Bar[] downloadBars){
             DrinksFragment fragment = mReference.get();
             if (fragment != null) {
-                fragment.mDrinks = selectedDrinks;
+                Bar selectedBar = fragment.mBarManager.getSelectedBar(downloadBars);
+                fragment.mDrinks = Arrays.asList(selectedBar.drinks);
                 fragment.setupAdapter();
             }
         }

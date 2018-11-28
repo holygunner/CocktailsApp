@@ -1,34 +1,25 @@
 package com.holygunner.cocktailsapp;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.holygunner.cocktailsapp.models.Drink;
-import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.models.IngredientsCategory;
-import com.holygunner.cocktailsapp.save.Saver;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class IngredientsFragment extends Fragment implements View.OnClickListener{
     private RecyclerView mRecyclerView;
-    private RecyclerView.RecycledViewPool mViewPool;
     private List<IngredientsCategory> mIngredientsCategories = new ArrayList<>();
     private IngredientManager mIngredientManager;
-    private Button mixButton;
 
     public static IngredientsFragment newInstance(){
         return new IngredientsFragment();
@@ -43,14 +34,13 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_ingredients_list, container, false);
-        mixButton = v.findViewById(R.id.mix_button);
+        Button mixButton = v.findViewById(R.id.mix_button);
         mixButton.setOnClickListener(this);
         mRecyclerView = v.findViewById(R.id.ingredients_recycler_view);
         mRecyclerView.setHasFixedSize(false);
-        mViewPool = new RecyclerView.RecycledViewPool();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setLayoutManager(manager);
         setupAdapter();
         return v;
     }

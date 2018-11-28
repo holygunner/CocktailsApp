@@ -39,7 +39,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     private TextView drinkRecipeTextView;
     private TextView serveGlassTextView;
     private IngredientManager mIngredientManager;
-    private int drinkId;
     private Drink mDrink;
     private Set<String> chosenIngredientNames;
 
@@ -50,7 +49,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle onSavedInstanceState){
         super.onCreate(onSavedInstanceState);
-        mIngredientManager = new IngredientManager(getContext());
+        mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
         chosenIngredientNames = Saver.readChosenIngredientsNamesInLowerCase(getContext());
         setDrink();
     }
@@ -59,8 +58,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         View v = inflater.inflate(R.layout.drink_recipe_layout, container, false);
         drinkImageView = v.findViewById(R.id.drink_imageView);
 
-//        downloadAndSetImageView("https:\\/\\/www.thecocktaildb.com\\/images\\/media\\/drink\\/nl89tf1518947401.jpg");
-//        drinkImageView.setImageResource(R.drawable.drink_test_image);
         likeImageButton = v.findViewById(R.id.like_imageButton);
         likeImageButton.setOnClickListener(this);
         likeImageButton.setPressed(true);
@@ -77,8 +74,8 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     }
 
     private void setDrink(){
-        drinkId = Objects.requireNonNull(getActivity()).getIntent().getIntExtra(DrinksFragment.DRINK_ID_KEY, 0);
-        new DrinkProviderTask(this).execute(drinkId);
+        int drinkId = Objects.requireNonNull(getActivity()).getIntent().getIntExtra(DrinksFragment.DRINK_ID_KEY, 0);
+        new BarProviderTask(this).execute(drinkId);
     }
 
     private void setupAdapter(Drink drink){
@@ -189,8 +186,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
 
             if (chosenIngredientNames.contains(ingredient.getName().toLowerCase())){
                 Context context = Objects.requireNonNull(getContext());
-//                ingredientImageView.setColorFilter(ContextCompat
-//                        .getColor(context, R.color.ingredientColorFill));
                 ingredientNameTextView.setTextColor(ContextCompat
                         .getColor(context, R.color.light_color));
                 ingredientNameTextView
@@ -201,23 +196,21 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    protected static class DrinkProviderTask extends AsyncTask<Integer, Void, Drink> {
+    protected static class BarProviderTask extends AsyncTask<Integer, Void, Drink> {
         private WeakReference<DrinkRecipeFragment> mReference;
 
-        DrinkProviderTask(DrinkRecipeFragment instance){
+        BarProviderTask(DrinkRecipeFragment instance){
             mReference = new WeakReference<>(instance);
         }
 
         @Override
         protected Drink doInBackground(Integer... drinksId) {
-            return new DrinksProvider().getDrinkById(drinksId[0]);
+            return new RequestProvider().getDrinkById(drinksId[0]);
         }
 
         @Override
         protected void onPostExecute(Drink drink){
-
             DrinkRecipeFragment fragment = mReference.get();
-
 
             if (fragment != null) {
                 fragment.mDrink = drink;

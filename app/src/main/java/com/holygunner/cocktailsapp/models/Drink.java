@@ -42,19 +42,12 @@ public class Drink {
     private String strMeasure9;
     private String strMeasure10;
 
-//    private Ingredient[] mIngredients;
     private List<Ingredient> mIngredientsList;
     private List<Ingredient> chosenIngredients;
 
     public Drink(){
         chosenIngredients = new ArrayList<>();
     }
-
-//    // demo only
-//    public Drink(String name){
-//        this.name = name;
-//        chosenIngredients = new ArrayList<>();
-//    }
 
     private void initIngredients(){
         Ingredient[] ingredients = new Ingredient[10];
@@ -100,12 +93,6 @@ public class Drink {
         return urlImage;
     }
 
-//    public Ingredient[] getIngredients() {
-//        if (mIngredients == null){
-//            initIngredients();
-//        }
-//        return mIngredients;
-//    }
 
     public List<Ingredient> getIngredientsList(){
         if (mIngredientsList == null){
@@ -113,21 +100,6 @@ public class Drink {
         }
         return mIngredientsList;
     }
-
-//    public int getMatchedIngredientsCount(){
-//        int count = 0;
-//
-//        for (Ingredient ingredient: mIngredients){
-//            if (ingredient == null){
-//                return count;
-//            }
-//
-//            if (ingredient.isMatched()){
-//               count++;
-//            }
-//        }
-//        return count;
-//    }
 
     @Override
     public boolean equals(Object object) {

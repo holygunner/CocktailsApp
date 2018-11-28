@@ -25,23 +25,22 @@
         android:background="?android:selectableItemBackground"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="2dp">
 
             <TextView
                 android:id="@+id/category_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:textColor="@color/textView_color"
                 android:textStyle="bold"
                 android:textSize="24sp"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ingredients_recyclerView"
