@@ -17,11 +17,13 @@ import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientHolder> {
     private Context mContext;
+    private IngredientsFragment mFragment;
     private List<Ingredient> mIngredients;
     private IngredientManager mIngredientManager;
 
     IngredientsAdapter(IngredientsFragment fragment, List<Ingredient> ingredients,
                        IngredientManager ingredientManager){
+        mFragment = fragment;
         mContext = fragment.getContext();
         mIngredients = ingredients;
         mIngredientManager = ingredientManager;
@@ -57,7 +59,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             ingredientImageView = itemView.findViewById(R.id.ingredientImageView);
             ingredientNameTextView.setOnClickListener(this);
             ingredientImageView.setOnClickListener(this);
-
         }
 
         void bind(Ingredient ingredient){
@@ -71,6 +72,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         @Override
         public void onClick(View v) {
             setColorFilter(Saver.changeChosenIngredient(mContext, mIngredient.getName()));
+            mFragment.setMixButtonVisibility();
         }
 
         private void setColorFilter(boolean isFill){

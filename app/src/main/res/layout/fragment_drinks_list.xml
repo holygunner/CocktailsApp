@@ -13,40 +13,15 @@
         app:titleTextColor="@color/light_color"
         style="@style/custom_toolbar"/>
 
-    <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/header_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar_from_drinks_list"
-        android:padding="8dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-
-        <TextView
-            android:id="@+id/drink_name_TextView"
-            android:text="Cocktail:"
-            android:textStyle="bold"
-            android:textColor="@color/light_color"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-
-        <TextView
-            android:id="@+id/ingredients_matches_TextView"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Matched ingredients:"
-            android:textColor="@color/light_color"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.RecyclerView
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/drinks_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/header_container"
+        android:paddingTop="?attr/actionBarSize"
+        android:paddingBottom="96dp"
+        android:clipToPadding="false"
         android:scrollbars="none"
         tools:context=".DrinksActivity"/>
 

@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_from_drinks_list"
+        android:visibility="invisible"
         android:layout_alignParentEnd="true"/>
 
     <LinearLayout
@@ -49,8 +50,8 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="0.8">
+            android:layout_weight="0.8"
+            android:layout_gravity="center">
 
             <ImageView
                 android:id="@+id/drink_imageView"
@@ -83,29 +84,41 @@
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"/>
 
-                <LinearLayout
-                    android:layout_margin="8dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/recipe_textView"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/textView_color"
+
+                    <ScrollView
+
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"
+                        android:scrollbars="vertical">
 
-                    <TextView
-                        android:id="@+id/serve_glass_textView"
-                        android:layout_marginTop="8dp"
-                        android:textStyle="italic"
-                        android:textColor="@color/textView_color"
-                        android:gravity="center_horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        <LinearLayout
+                            android:padding="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/recipe_textView"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/textView_color"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/serve_glass_textView"
+                            android:layout_marginTop="8dp"
+                            android:textStyle="italic"
+                            android:textColor="@color/textView_color"
+                            android:gravity="center_horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+                    </ScrollView>
+
+
 
             </android.support.v7.widget.CardView>
 

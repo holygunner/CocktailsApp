@@ -8,9 +8,38 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 abstract class ImageHelper {
-    static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundFactor) {
+    private static final float ROUND_FACTOR = 32;
+
+    static Target downloadImage(final String url, final ImageView imageView){
+        final Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                imageView.setImageBitmap(ImageHelper.getRoundedCornerBitmap(bitmap));
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {}
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {}
+        };
+
+        Picasso.get()
+                .load(url)
+                .into(target);
+
+        return target;
+    }
+
+    static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
                 .getHeight(), Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
@@ -23,7 +52,7 @@ abstract class ImageHelper {
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
-        canvas.drawRoundRect(rectF, (float) roundFactor, (float) roundFactor, paint);
+        canvas.drawRoundRect(rectF, ROUND_FACTOR, ROUND_FACTOR, paint);
 
         paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);

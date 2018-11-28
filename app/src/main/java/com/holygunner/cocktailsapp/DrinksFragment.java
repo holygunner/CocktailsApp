@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import com.holygunner.cocktailsapp.models.Bar;
 import com.holygunner.cocktailsapp.models.Drink;
+import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.save.Saver;
 
 import static com.holygunner.cocktailsapp.save.Saver.CHECKED_INGREDIENTS_KEY;
@@ -32,6 +34,7 @@ public class DrinksFragment extends Fragment {
     private List<Drink> mDrinks = new ArrayList<>();
     private BarManager mBarManager;
 
+    @NonNull
     public static DrinksFragment newInstance(){
         return new DrinksFragment();
     }
@@ -72,21 +75,24 @@ public class DrinksFragment extends Fragment {
     private class DrinksHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Drink mDrink;
         private TextView drinkNameTextView;
-        private TextView ingredientsMatchesTextView;
+        private TextView drinkChosenIngrsTextView;
+        private ImageView drinkImageView;
         private CardView drink_CardView;
 
         DrinksHolder(View itemView) {
             super(itemView);
             drinkNameTextView = itemView.findViewById(R.id.drink_name_TextView);
-            ingredientsMatchesTextView = itemView.findViewById(R.id.ingredients_matches_TextView);
+            drinkChosenIngrsTextView = itemView.findViewById(R.id.drink_chosen_ingrs_TextView);
+            drinkImageView = itemView.findViewById(R.id.drink_imageView);
             drink_CardView = itemView.findViewById(R.id.drink_CardView);
             drink_CardView.setOnClickListener(this);
         }
 
         void bindDrink(Drink drink){
             mDrink = drink;
+            drinkImageView.setTag(ImageHelper.downloadImage(drink.getUrlImage(), drinkImageView));
             drinkNameTextView.setText(drink.getName());
-            ingredientsMatchesTextView.setText(String.valueOf(drink.getChosenIngredients().size()));
+            setDrinkChosenIngrsTextView(drink);
         }
 
         @Override
@@ -94,6 +100,16 @@ public class DrinksFragment extends Fragment {
             Intent intent = new Intent(getContext(), DrinkRecipeActivity.class);
             intent.putExtra(DRINK_ID_KEY, mDrink.getId());
             startActivity(intent);
+        }
+
+        private void setDrinkChosenIngrsTextView(Drink drink){
+            StringBuilder text = new StringBuilder();
+
+            for (Ingredient ingr: drink.getChosenIngredients()){
+                text.append(ingr.getName()).append(", ");
+            }
+            text.delete(text.length()-2, text.length()-1);
+            drinkChosenIngrsTextView.setText(text);
         }
     }
 
@@ -132,7 +148,6 @@ public class DrinksFragment extends Fragment {
 
         @Override
         protected Bar[] doInBackground(String... ingredients) {
-//            return new RequestProvider().getSelectedBar(ingredients);
             return new RequestProvider().downloadBars(ingredients);
         }
 

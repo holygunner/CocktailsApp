@@ -39,16 +39,42 @@ class IngredientManager {
 
     static Set<String> countAddedIngredients(Set<String> userChosenIngrs,
                                                @NotNull Set<String> checkedIngrs) {
-        return countMissedIngredients(userChosenIngrs, checkedIngrs, false);
+        return countChangedIngredients(userChosenIngrs, checkedIngrs, false);
     }
 
     static Set<String> countRemovedIngredients(Set<String> userChosenIngrs,
                                                @NotNull Set<String> checkedIngrs) {
-        return countMissedIngredients(userChosenIngrs, checkedIngrs, true);
+        return countChangedIngredients(userChosenIngrs, checkedIngrs, true);
     }
 
-    private static Set<String> countMissedIngredients(Set<String> ingrs1, Set<String> ingrs2,
-                                                     boolean isInvertCompare){
+    Drawable getIngredientDrawable(String folderName, String fileName){
+        try {
+            InputStream inputStream = mAssetManager.open(getRightFileName(folderName, fileName));
+            return Drawable.createFromStream(inputStream, null);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    String findIngredientCategory(String fileName){
+        String ingredientCategory = "";
+        try {
+            for (String category: IngredientsCategoriesNames.CATEGORIES_NAMES){
+                if (Arrays.asList(Objects.requireNonNull(mAssetManager.list(category)))
+                        .contains(fileName + ".png")){
+                    ingredientCategory = category;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ingredientCategory;
+    }
+
+    private static Set<String> countChangedIngredients(Set<String> ingrs1, Set<String> ingrs2,
+                                                       boolean isInvertCompare){
         Set<String> returnIngrs = new HashSet<>();
 
         if (isInvertCompare){
@@ -62,33 +88,7 @@ class IngredientManager {
                 returnIngrs.add(ingr);
             }
         }
-
         return returnIngrs;
-    }
-
-    Drawable getIngredientDrawable(String folderName, String fileName){
-        try {
-            InputStream inputStream = mAssetManager.open(getRightFileName(folderName, fileName));
-            return Drawable.createFromStream(inputStream, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    String findIngredientCategory(String fileName){
-        String ingredientCategory = "";
-        try {
-            for (String category: IngredientsCategoriesNames.CATEGORIES_NAMES){
-                if (Arrays.asList(Objects.requireNonNull(mAssetManager.list(category)))
-                        .contains(fileName.toLowerCase() + ".png")){
-                    ingredientCategory = category;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ingredientCategory;
     }
 
     private List<Ingredient> getIngredientsOfCategory(String category){
