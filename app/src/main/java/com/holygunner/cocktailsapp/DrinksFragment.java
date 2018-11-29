@@ -49,6 +49,9 @@ public class DrinksFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_drinks_list, container, false);
         mRecyclerView = v.findViewById(R.id.drinks_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,
+//                false);
+//        manager.setInitialPrefetchItemCount(3);
         setupAdapter();
         return v;
     }

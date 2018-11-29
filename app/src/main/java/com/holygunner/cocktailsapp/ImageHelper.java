@@ -9,7 +9,6 @@ import android.graphics.RectF;
 import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -39,7 +38,7 @@ abstract class ImageHelper {
         return target;
     }
 
-    static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+    private static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
                 .getHeight(), Config.ARGB_8888);
         Canvas canvas = new Canvas(output);

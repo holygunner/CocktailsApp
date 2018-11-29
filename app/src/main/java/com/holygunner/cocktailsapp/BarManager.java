@@ -86,7 +86,7 @@ class BarManager {
         }
     }
 
-    public List<Drink> checkAndRemoveOldDrinks(Bar checkedBar){
+    private List<Drink> checkAndRemoveOldDrinks(Bar checkedBar){
         Set<String> removedIngrs = IngredientManager.countRemovedIngredients(
                 Saver.readIngredients(mContext, CHOSEN_INGREDIENTS_KEY),
                 Saver.readIngredients(mContext, CHECKED_INGREDIENTS_KEY));

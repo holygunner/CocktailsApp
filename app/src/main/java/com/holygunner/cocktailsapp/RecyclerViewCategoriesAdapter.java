@@ -1,6 +1,5 @@
 package com.holygunner.cocktailsapp;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -21,7 +20,6 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         .CategoryHolder> {
     private List<IngredientsCategory> mIngredientsCategories;
     private IngredientManager mIngredientManager;
-    private Context mContext;
     private RecyclerView.RecycledViewPool mRecycledViewPool;
     private SnapHelper mSnapHelper;
     private IngredientsFragment mFragment;
@@ -29,7 +27,6 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
     RecyclerViewCategoriesAdapter(IngredientsFragment fragment, IngredientManager ingredientManager,
                                   List<IngredientsCategory> ingredientsCategories){
         mFragment = fragment;
-        mContext = fragment.getContext();
         mIngredientManager = ingredientManager;
         mIngredientsCategories = ingredientsCategories;
         mRecycledViewPool = new RecyclerView.RecycledViewPool();
@@ -56,13 +53,16 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(mFragment, singleCategoryIngredients,
                 mIngredientManager);
         holder.mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,
+        LinearLayoutManager manager = new LinearLayoutManager(mFragment.getActivity(), LinearLayoutManager.HORIZONTAL,
                 false);
         manager.setInitialPrefetchItemCount(3);
         holder.mRecyclerView.setLayoutManager(manager);
         holder.mRecyclerView.setAdapter(ingredientsAdapter);
-        if (holder.mRecyclerView.getOnFlingListener() == null)
+
+        if (holder.mRecyclerView.getOnFlingListener() == null) {
             mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
+//            mSnapHelper.onFling()
+        }
 //        holder.mRecyclerView.setOnFlingListener(null);
 //        mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
     }

@@ -10,7 +10,7 @@ import com.squareup.okhttp.Request;
 import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 
-public class RequestProvider {
+class RequestProvider {
     private Gson mGson;
     private OkHttpClient mHttpClient;
 
@@ -62,7 +62,7 @@ public class RequestProvider {
         }
     }
 
-    public Bar parseJsonToDrinksBar(String json){
+    private Bar parseJsonToDrinksBar(String json){
             Bar bar = mGson.fromJson(json, Bar.class);
             Log.i("TAG", "output: " + json);
             return bar;

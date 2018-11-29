@@ -10,4 +10,8 @@ Shake the other ingredients with ice, then carefully pour into the glass.</strin
         ingredient3, ingredient4</string>
     <string name="serve">Serve:</string>
     <string name="gap"/>
+    <string name="ingredient_image">Ingredient image</string>
+    <string name="drink_image">Drink image</string>
+    <string name="show_the_drinks">Show the drinks</string>
+    <string name="like_button">Like button</string>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:background="@drawable/activity_background"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -14,14 +15,15 @@
 
     <ImageButton
         android:id="@+id/like_imageButton"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_below="@id/toolbar_from_drinks_list"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/like_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar_from_drinks_list"
         android:visibility="invisible"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/like_button"/>
 
     <LinearLayout
         android:layout_below="@id/toolbar_from_drinks_list"
@@ -37,8 +39,8 @@
             <TextView
                 android:id="@+id/drink_name_textView"
                 android:gravity="center"
-                android:layout_marginLeft="48dp"
-                android:layout_marginRight="48dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
                 android:textColor="@color/textView_color"
                 android:textStyle="bold"
                 android:textSize="24sp"
@@ -58,7 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:adjustViewBounds="true"/>
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/drink_image"/>
 
         </FrameLayout>
 
@@ -82,9 +85,8 @@
                     android:src="@drawable/card_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY"/>
-
-
+                    android:scaleType="fitXY"
+                    tools:ignore="ContentDescription"/>
 
                     <ScrollView
 
@@ -95,7 +97,7 @@
                         <LinearLayout
                             android:padding="8dp"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical">
 
                         <TextView
@@ -143,7 +145,8 @@
                 android:src="@drawable/card_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                tools:ignore="ContentDescription"/>
 
             <LinearLayout
                 android:layout_marginRight="8dp"
@@ -156,6 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
+                    android:scrollbars="vertical"
                     android:clipToPadding="false"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"/>

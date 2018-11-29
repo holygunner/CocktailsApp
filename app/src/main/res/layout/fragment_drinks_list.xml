@@ -20,9 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize"
-        android:paddingBottom="96dp"
         android:clipToPadding="false"
-        android:scrollbars="none"
+        android:scrollbars="vertical"
         tools:context=".DrinksActivity"/>
 
 </RelativeLayout>

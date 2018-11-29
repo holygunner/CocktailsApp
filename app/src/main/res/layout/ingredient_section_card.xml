@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -15,7 +16,8 @@
         android:src="@drawable/card_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        tools:ignore="ContentDescription"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,8 +49,11 @@
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="160dp"
+        android:splitMotionEvents="false"
+        android:paddingEnd="128dp"
+        android:clipToPadding="false"
         android:layout_gravity="center_vertical"
-        />
+        tools:ignore="RtlSymmetry"/>
 
     </LinearLayout>
 

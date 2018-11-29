@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.save.Saver;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientHolder> {
@@ -21,7 +23,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     private List<Ingredient> mIngredients;
     private IngredientManager mIngredientManager;
 
-    IngredientsAdapter(IngredientsFragment fragment, List<Ingredient> ingredients,
+    IngredientsAdapter(@NotNull IngredientsFragment fragment, List<Ingredient> ingredients,
                        IngredientManager ingredientManager){
         mFragment = fragment;
         mContext = fragment.getContext();
@@ -33,7 +35,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public IngredientHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_item,
-                null);
+                parent, false);
         return new IngredientHolder(view);
     }
 
