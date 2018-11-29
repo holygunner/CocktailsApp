@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
+
 public class DrinkRecipeFragment extends Fragment implements View.OnClickListener {
     private RecyclerView mRecyclerView;
     private ImageView drinkImageView;
@@ -39,6 +42,10 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     private TextView serveGlassTextView;
     private IngredientManager mIngredientManager;
     private Set<String> chosenIngredientNames;
+    private Drink mDrink;
+    private JsonParser mJsonParser;
+
+    private static final String SAVED_DRINK_KEY = "saved_drink_key";
 
     public static Fragment newInstance(){
         return new DrinkRecipeFragment();
@@ -47,18 +54,28 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-//        setRetainInstance(true);
         mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
-        chosenIngredientNames = Saver.readChosenIngredientsNamesInLowerCase(getContext());
-        setDrink();
+        chosenIngredientNames = Saver.readChosenIngredientsNamesInLowerCase(getContext(),
+                CHOSEN_INGREDIENTS_KEY);
+        mJsonParser = new JsonParser();
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle onSavedInstanceState){
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        if (mDrink != null) {
+            savedInstanceState.putCharArray(SAVED_DRINK_KEY,
+                    mJsonParser.serializeDrinkToJsonBar(mDrink).toCharArray());
+        }
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.drink_recipe_layout, container, false);
         drinkImageView = v.findViewById(R.id.drink_imageView);
         likeImageButton = v.findViewById(R.id.like_imageButton);
         likeImageButton.setOnClickListener(this);
-        likeImageButton.setPressed(true);
+//        likeImageButton.setPressed(true);
         recipeCardView = v.findViewById(R.id.recipe_cardView);
         ingredientsListCardView = v.findViewById(R.id.ingredients_list_cardView);
         drinkNameTextView = v.findViewById(R.id.drink_name_textView);
@@ -68,12 +85,28 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         mRecyclerView = v.findViewById(R.id.drink_ingredients_recyclerGridView);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
+        if (savedInstanceState != null){
+            if (savedInstanceState.getCharArray(SAVED_DRINK_KEY) != null) {
+                String json = new String(Objects
+                        .requireNonNull(savedInstanceState.getCharArray(SAVED_DRINK_KEY)));
+                Drink drink = mJsonParser.parseJsonToDrinksBar(json).drinks[0];
+                setupDrinkRecipe(drink);
+            }
+        }   else {
+            loadDrink(v);
+        }
+
         return v;
     }
 
-    private void setDrink(){
+    private void loadDrink(View v){
         int drinkId = Objects.requireNonNull(getActivity()).getIntent().getIntExtra(DrinksFragment.DRINK_ID_KEY, 0);
-        new BarProviderTask(this).execute(drinkId);
+        final ProgressBar progressBar = v.findViewById(R.id.recipe_load_progressBar);
+//        progressBar.setProgress(0);
+        progressBar.setVisibility(View.VISIBLE);
+        BarProviderTask task = new BarProviderTask(this);
+        task.setProgressBar(progressBar);
+        task.execute(drinkId);
     }
 
     private void setupAdapter(Drink drink){
@@ -84,6 +117,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     }
 
     private void setupDrinkRecipe(Drink drink){
+        mDrink = drink;
         setupAdapter(drink);
         ImageHelper.downloadImage(drink.getUrlImage(), drinkImageView);
         recipeCardView.setVisibility(View.VISIBLE);
@@ -98,11 +132,11 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(getContext(),
-                "Drink add to your fav's",
-                Toast.LENGTH_SHORT)
-                .show();
+        Toast toast = ToastBuilder.getDrinkAddedToast(getContext());
+
         likeImageButton.setImageResource(R.drawable.like_button_pressed); // TEST
+
+        toast.show();
     }
 
     private class IngredientsAdapter extends RecyclerView.Adapter<IngredientsHolder>{
@@ -180,11 +214,21 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    protected static class BarProviderTask extends AsyncTask<Integer, Void, Drink> {
+    protected static class BarProviderTask extends AsyncTask<Integer, Integer, Drink> {
         private WeakReference<DrinkRecipeFragment> mReference;
+        private WeakReference<ProgressBar> mProgressBarReference;
 
         BarProviderTask(DrinkRecipeFragment instance){
             mReference = new WeakReference<>(instance);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... param) {
+            super.onProgressUpdate(param);
+            ProgressBar progressBar = mProgressBarReference.get();
+            if (progressBar != null) {
+                progressBar.setProgress(param[0]);
+            }
         }
 
         @Override
@@ -195,6 +239,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         @Override
         protected void onPostExecute(Drink drink){
             DrinkRecipeFragment fragment = mReference.get();
+            mProgressBarReference.get().setVisibility(View.GONE);
 
             if (fragment != null) {
                 if (drink != null) {
@@ -202,12 +247,15 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
                         fragment.setupDrinkRecipe(drink);
                     }
                 }   else {
-                    Toast.makeText(fragment.getContext(),
-                            "Your connection is failed",
-                            Toast.LENGTH_LONG)
-                            .show();
+                    Toast toast = ToastBuilder.getFailedConnectionToast(fragment.getContext());
+                    toast.show();
+                    Objects.requireNonNull(fragment.getActivity()).onBackPressed();
                 }
             }
+        }
+
+        void setProgressBar(ProgressBar progressBar) {
+            mProgressBarReference = new WeakReference<>(progressBar);
         }
     }
 }

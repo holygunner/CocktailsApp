@@ -13,6 +13,16 @@
         app:titleTextColor="@color/light_color"
         style="@style/custom_toolbar"/>
 
+    <ProgressBar
+        android:id="@+id/recipe_load_progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:indeterminate="true"/>
+
     <ImageButton
         android:id="@+id/like_imageButton"
         android:layout_below="@id/toolbar_from_drinks_list"

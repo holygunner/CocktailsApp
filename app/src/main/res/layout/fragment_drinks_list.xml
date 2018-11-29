@@ -13,6 +13,16 @@
         app:titleTextColor="@color/light_color"
         style="@style/custom_toolbar"/>
 
+    <ProgressBar
+        android:id="@+id/drinks_load_progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:indeterminate="true"/>
+
     <android.support.v7.widget.RecyclerView
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/drinks_recycler_view"

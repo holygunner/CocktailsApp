@@ -23,17 +23,17 @@ import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 class BarManager {
     private List<Drink> mSelectedDrinks;
-    private Gson mGson;
+    private JsonParser mJsonParser;
     private Context mContext;
 
     BarManager(Context context){
         mContext = context;
-        mGson = new Gson();
+        mJsonParser = new JsonParser();
     }
 
     Bar getSelectedBar(List<Bar> downloadBars){
         mSelectedDrinks = new ArrayList<>();
-        Bar deserializedBar = parseJsonToDrinksBar(Saver
+        Bar deserializedBar = mJsonParser.parseJsonToDrinksBar(Saver
                 .readSelectedBar(mContext));
 
         if (deserializedBar != null) {
@@ -120,11 +120,5 @@ class BarManager {
             checkedBar.drinks = updDrinks.toArray(new Drink[0]);
         }
         return updDrinks;
-    }
-
-    private Bar parseJsonToDrinksBar(String json){
-        Bar drinks = mGson.fromJson(json, Bar.class);
-        Log.i("TAG", "output: " + json);
-        return drinks;
     }
 }

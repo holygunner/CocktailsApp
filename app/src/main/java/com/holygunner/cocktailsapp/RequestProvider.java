@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.holygunner.cocktailsapp.models.Bar;
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.Ingredient;
+import com.holygunner.cocktailsapp.save.Saver;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import org.jetbrains.annotations.Nullable;
@@ -14,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 class RequestProvider {
-    private Gson mGson;
+    private JsonParser mJsonParser;
     private OkHttpClient mHttpClient;
 
     RequestProvider(){
-        mGson = new Gson();
+        mJsonParser = new JsonParser();
         mHttpClient = new OkHttpClient();
     }
 
@@ -28,7 +29,7 @@ class RequestProvider {
         for (int i = 0; i < ingredients.length; i++){
             String url = URLBuilder.getCocktailsListUrl(ingredients[i]);
             String json = getJsonByRequest(url);
-            Bar bar = parseJsonToDrinksBar(json);
+            Bar bar = mJsonParser.parseJsonToDrinksBar(json);
 
             if (bar != null) {
                 if (bar.drinks.length > 0) {
@@ -40,6 +41,7 @@ class RequestProvider {
                 }
             }
         }
+
         return downloadBars;
     }
 
@@ -47,7 +49,7 @@ class RequestProvider {
     Drink getDrinkById(Integer drinkId){
         if (drinkId != null){
             String url = URLBuilder.getCocktailDetailsUrl(drinkId);
-            Bar bar = parseJsonToDrinksBar(getJsonByRequest(url));
+            Bar bar = mJsonParser.parseJsonToDrinksBar(getJsonByRequest(url));
 
             if (bar == null){
                 return null;
@@ -70,11 +72,5 @@ class RequestProvider {
             e.printStackTrace();
             return "";
         }
-    }
-
-    private Bar parseJsonToDrinksBar(String json){
-            Bar bar = mGson.fromJson(json, Bar.class);
-            Log.i("TAG", "output: " + json);
-            return bar;
     }
 }

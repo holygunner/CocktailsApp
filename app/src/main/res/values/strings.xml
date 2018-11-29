@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Find Drink</string>
+    <string name="app_name">Discover Drinks</string>
     <string name="test_recipe">Rub the rim of the glass with the lime slice to make the salt stick to it.
 Take care to moisten only the outer rim and sprinkle the salt on it.
 The salt should present to the lips of the imbiber and never mix into the cocktail.
@@ -14,4 +14,7 @@ Shake the other ingredients with ice, then carefully pour into the glass.</strin
     <string name="drink_image">Drink image</string>
     <string name="show_the_drinks">Show the drinks</string>
     <string name="like_button">Like button</string>
+    <string name="failed_connection">Failed connection</string>
+    <string name="like_button_pressed_ok">Added to your fav\'s</string>
+    <string name="like_button_pressed_cancel">Removed from your fav\'s</string>
 </resources>
