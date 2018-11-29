@@ -142,7 +142,7 @@ public class DrinksFragment extends Fragment {
         }
     }
 
-    protected static class DrinksProviderTask extends AsyncTask<String, Void, Bar[]> {
+    protected static class DrinksProviderTask extends AsyncTask<String, Void, List<Bar>> {
         private WeakReference<DrinksFragment> mReference;
 
         DrinksProviderTask(DrinksFragment instance){
@@ -150,12 +150,12 @@ public class DrinksFragment extends Fragment {
         }
 
         @Override
-        protected Bar[] doInBackground(String... ingredients) {
+        protected List<Bar> doInBackground(String... ingredients) {
             return new RequestProvider().downloadBars(ingredients);
         }
 
         @Override
-        protected void onPostExecute(Bar[] downloadBars){
+        protected void onPostExecute(List<Bar> downloadBars){
             DrinksFragment fragment = mReference.get();
             if (fragment != null) {
                 Bar selectedBar = fragment.mBarManager.getSelectedBar(downloadBars);

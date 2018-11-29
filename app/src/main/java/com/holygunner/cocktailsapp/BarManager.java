@@ -31,7 +31,7 @@ class BarManager {
         mGson = new Gson();
     }
 
-    Bar getSelectedBar(Bar[] downloadBars){
+    Bar getSelectedBar(List<Bar> downloadBars){
         mSelectedDrinks = new ArrayList<>();
         Bar deserializedBar = parseJsonToDrinksBar(Saver
                 .readSelectedBar(mContext));

@@ -45,8 +45,9 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onCreate(Bundle onSavedInstanceState){
-        super.onCreate(onSavedInstanceState);
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+//        setRetainInstance(true);
         mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
         chosenIngredientNames = Saver.readChosenIngredientsNamesInLowerCase(getContext());
         setDrink();
@@ -196,7 +197,16 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
             DrinkRecipeFragment fragment = mReference.get();
 
             if (fragment != null) {
-                fragment.setupDrinkRecipe(drink);
+                if (drink != null) {
+                    if (fragment.isAdded()) {
+                        fragment.setupDrinkRecipe(drink);
+                    }
+                }   else {
+                    Toast.makeText(fragment.getContext(),
+                            "Your connection is failed",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
             }
         }
     }
