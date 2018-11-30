@@ -24,11 +24,15 @@ import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.save.Saver;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 public class DrinkRecipeFragment extends Fragment implements View.OnClickListener {
@@ -47,6 +51,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
 
     private static final String SAVED_DRINK_KEY = "saved_drink_key";
 
+    @NotNull
     public static Fragment newInstance(){
         return new DrinkRecipeFragment();
     }
@@ -54,6 +59,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+//        setRetainInstance(true);
         mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
         chosenIngredientNames = Saver.readChosenIngredientsNamesInLowerCase(getContext(),
                 CHOSEN_INGREDIENTS_KEY);
@@ -83,7 +89,8 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
         serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
         mRecyclerView = v.findViewById(R.id.drink_ingredients_recyclerGridView);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), getSpanCount()));
 
         if (savedInstanceState != null){
             if (savedInstanceState.getCharArray(SAVED_DRINK_KEY) != null) {
@@ -99,7 +106,17 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         return v;
     }
 
-    private void loadDrink(View v){
+    private int getSpanCount(){
+        int orientation = getResources().getConfiguration().orientation;
+        int spanCount = 2;
+
+        if (orientation == ORIENTATION_PORTRAIT){
+            spanCount = 3;
+        }
+        return spanCount;
+    }
+
+    private void loadDrink(@NotNull View v){
         int drinkId = Objects.requireNonNull(getActivity()).getIntent().getIntExtra(DrinksFragment.DRINK_ID_KEY, 0);
         final ProgressBar progressBar = v.findViewById(R.id.recipe_load_progressBar);
 //        progressBar.setProgress(0);

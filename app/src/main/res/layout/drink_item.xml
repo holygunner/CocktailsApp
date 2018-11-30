@@ -46,7 +46,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:text="@string/app_name"
                     android:id="@+id/drink_name_TextView"
                     android:textColor="@color/textView_color"
                     android:textStyle="bold"
@@ -54,7 +53,7 @@
                     android:layout_width="wrap_content"/>
 
                 <TextView
-                    android:text="@string/ingredient1_ingredient2_test"
+
                     android:id="@+id/drink_chosen_ingrs_TextView"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/textView_color"
@@ -67,14 +66,13 @@
         </LinearLayout>
 
         <TextView
-            android:text="24"
             android:textSize="10sp"
-
             android:id="@+id/drink_position"
             android:textColor="@color/textView_color"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:gravity="bottom|end"/>
+            android:gravity="bottom|end"
+            tools:ignore="SmallSp"/>
 
     </android.support.constraint.ConstraintLayout>
 

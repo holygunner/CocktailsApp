@@ -47,8 +47,6 @@ public class DrinksFragment extends Fragment {
 
     public void onCreate(Bundle onSavedInstanceState){
         super.onCreate(onSavedInstanceState);
-        setRetainInstance(true);
-
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){

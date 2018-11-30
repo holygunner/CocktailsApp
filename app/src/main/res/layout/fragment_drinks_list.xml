@@ -23,14 +23,14 @@
         android:visibility="gone"
         android:indeterminate="true"/>
 
-    <android.support.v7.widget.RecyclerView
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/drinks_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        tools:context=".DrinksActivity"/>
+        <android.support.v7.widget.RecyclerView
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/drinks_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="?attr/actionBarSize"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            tools:context=".DrinksActivity"/>
 
 </RelativeLayout>
