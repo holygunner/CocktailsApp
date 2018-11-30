@@ -1,12 +1,10 @@
 package com.holygunner.cocktailsapp;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-import com.google.gson.Gson;
+
 import com.holygunner.cocktailsapp.models.Bar;
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.Ingredient;
-import com.holygunner.cocktailsapp.save.Saver;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import org.jetbrains.annotations.Nullable;
@@ -27,16 +25,19 @@ class RequestProvider {
         List<Bar> downloadBars = new ArrayList<>();
 
         for (int i = 0; i < ingredients.length; i++){
-            String url = URLBuilder.getCocktailsListUrl(ingredients[i]);
-            String json = getJsonByRequest(url);
+            String checkedIngr = ingredients[i];
+            String url = URLBuilder.getCocktailsListUrl(checkedIngr);
+            String json = downloadJsonByRequest(url);
             Bar bar = mJsonParser.parseJsonToDrinksBar(json);
 
             if (bar != null) {
                 if (bar.drinks.length > 0) {
                     downloadBars.add(bar);
 
-                    for (int j = 0; j < downloadBars.get(i).drinks.length; j++) {
-                        downloadBars.get(i).drinks[j].addChosenIngredient(new Ingredient(ingredients[i]));
+//                    Bar currentBar = downloadBars.get(i);
+
+                    for (int j = 0; j < bar.drinks.length; j++) {
+                        bar.drinks[j].addChosenIngredient(new Ingredient(checkedIngr));
                     }
                 }
             }
@@ -49,7 +50,7 @@ class RequestProvider {
     Drink getDrinkById(Integer drinkId){
         if (drinkId != null){
             String url = URLBuilder.getCocktailDetailsUrl(drinkId);
-            Bar bar = mJsonParser.parseJsonToDrinksBar(getJsonByRequest(url));
+            Bar bar = mJsonParser.parseJsonToDrinksBar(downloadJsonByRequest(url));
 
             if (bar == null){
                 return null;
@@ -61,7 +62,7 @@ class RequestProvider {
     }
 
     @NonNull
-    private String getJsonByRequest(String url){
+    private String downloadJsonByRequest(String url){
         Request request = new Request.Builder()
                 .url(url)
                 .get()

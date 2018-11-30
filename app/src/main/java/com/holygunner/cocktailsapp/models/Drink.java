@@ -2,6 +2,8 @@ package com.holygunner.cocktailsapp.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class Drink {
     private String instruction;
     @SerializedName("strDrinkThumb")
     private String urlImage;
+    @SerializedName ("strAlcoholic")
     private String strAlcoholic;
 
     private String strIngredient1;
@@ -30,6 +33,11 @@ public class Drink {
     private String strIngredient8;
     private String strIngredient9;
     private String strIngredient10;
+    private String strIngredient11;
+    private String strIngredient12;
+    private String strIngredient13;
+    private String strIngredient14;
+    private String strIngredient15;
 
     private String strMeasure1;
     private String strMeasure2;
@@ -41,6 +49,11 @@ public class Drink {
     private String strMeasure8;
     private String strMeasure9;
     private String strMeasure10;
+    private String strMeasure11;
+    private String strMeasure12;
+    private String strMeasure13;
+    private String strMeasure14;
+    private String strMeasure15;
 
     private List<Ingredient> mIngredientsList;
     private List<Ingredient> chosenIngredients;
@@ -50,7 +63,7 @@ public class Drink {
     }
 
     private void initIngredients(){
-        Ingredient[] ingredients = new Ingredient[10];
+        Ingredient[] ingredients = new Ingredient[15];
         ingredients[0] = new Ingredient(strIngredient1, strMeasure1);
         ingredients[1] = new Ingredient(strIngredient2, strMeasure2);
         ingredients[2] = new Ingredient(strIngredient3, strMeasure3);
@@ -61,6 +74,11 @@ public class Drink {
         ingredients[7] = new Ingredient(strIngredient8, strMeasure8);
         ingredients[8] = new Ingredient(strIngredient9, strMeasure9);
         ingredients[9] = new Ingredient(strIngredient10, strMeasure10);
+        ingredients[10] = new Ingredient(strIngredient11, strMeasure11);
+        ingredients[11] = new Ingredient(strIngredient12, strMeasure12);
+        ingredients[12] = new Ingredient(strIngredient13, strMeasure13);
+        ingredients[13] = new Ingredient(strIngredient14, strMeasure14);
+        ingredients[14] = new Ingredient(strIngredient15, strMeasure15);
 
         mIngredientsList = DrinkHelper.convertArrToIngredientList(ingredients);
     }
@@ -101,6 +119,7 @@ public class Drink {
         return mIngredientsList;
     }
 
+    @Contract(value = "null -> false", pure = true)
     @Override
     public boolean equals(Object object) {
         return object instanceof Drink && this.id == ((Drink) object).id;

@@ -93,6 +93,7 @@ public class DrinksFragment extends Fragment {
         private Drink mDrink;
         private TextView drinkNameTextView;
         private TextView drinkChosenIngrsTextView;
+        private TextView drinkPositionTextView;
         private ImageView drinkImageView;
         private CardView drink_CardView;
 
@@ -100,6 +101,7 @@ public class DrinksFragment extends Fragment {
             super(itemView);
             drinkNameTextView = itemView.findViewById(R.id.drink_name_TextView);
             drinkChosenIngrsTextView = itemView.findViewById(R.id.drink_chosen_ingrs_TextView);
+            drinkPositionTextView = itemView.findViewById(R.id.drink_position);
             drinkImageView = itemView.findViewById(R.id.drink_imageView);
             drink_CardView = itemView.findViewById(R.id.drink_CardView);
             drink_CardView.setOnClickListener(this);
@@ -147,6 +149,8 @@ public class DrinksFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull DrinksHolder holder, int position) {
+            String drinkPosition = position + 1 + "";
+            holder.drinkPositionTextView.setText(drinkPosition);
             holder.bindDrink(mDrinks.get(position));
         }
 
@@ -181,7 +185,10 @@ public class DrinksFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Bar> downloadBars){
             DrinksFragment fragment = mReference.get();
-            mProgressBarReference.get().setVisibility(View.GONE);
+
+            if (mProgressBarReference != null) {
+                mProgressBarReference.get().setVisibility(View.GONE);
+            }
 
             if (fragment != null) {
                 if (fragment.howMuchChecked == downloadBars.size()) {

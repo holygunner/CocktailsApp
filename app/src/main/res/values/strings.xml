@@ -7,7 +7,9 @@ Shake the other ingredients with ice, then carefully pour into the glass.</strin
     <string name="serve_glass">Serve: Cocktail glass</string>
     <string name="ingredient1_ingredient2_test">
         ingredient1, ingredient2,
-        ingredient3, ingredient4</string>
+        ingredient3, ingredient4,
+        ingredient5, ingredient6,
+       </string>
     <string name="serve">Serve:</string>
     <string name="gap"/>
     <string name="ingredient_image">Ingredient image</string>

@@ -239,7 +239,10 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         @Override
         protected void onPostExecute(Drink drink){
             DrinkRecipeFragment fragment = mReference.get();
-            mProgressBarReference.get().setVisibility(View.GONE);
+
+            if (mProgressBarReference != null) {
+                mProgressBarReference.get().setVisibility(View.GONE);
+            }
 
             if (fragment != null) {
                 if (drink != null) {
