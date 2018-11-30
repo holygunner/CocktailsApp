@@ -3,11 +3,14 @@ package com.holygunner.cocktailsapp;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.models.IngredientsCategory;
 import com.holygunner.cocktailsapp.values.IngredientsCategoriesNames;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -23,7 +26,7 @@ import java.util.Set;
 class IngredientManager {
     private AssetManager mAssetManager;
 
-    IngredientManager(Context context){
+    IngredientManager(@NotNull Context context){
         mAssetManager = context.getAssets();
     }
 
@@ -91,6 +94,7 @@ class IngredientManager {
         return returnIngrs;
     }
 
+    @Nullable
     private List<Ingredient> getIngredientsOfCategory(String category){
         try {
             String[] names = mAssetManager.list(category);
@@ -102,11 +106,13 @@ class IngredientManager {
         }
     }
 
+    @NonNull
+    @Contract(pure = true)
     private String getRightFileName(String folderName, String fileName){
         return folderName + "/" + fileName + ".png";
     }
 
-    private List<Ingredient> setTitleElemFirstIfExists(List<Ingredient> ingredients, String category){
+    private List<Ingredient> setTitleElemFirstIfExists(@NotNull List<Ingredient> ingredients, String category){
         int indx = 0;
         for (int i = 0; i < ingredients.size(); i++){
             if (ingredients.get(i).getName().equals(category)){
@@ -123,7 +129,7 @@ class IngredientManager {
         return ingredients;
     }
 
-    private List<Ingredient> namesToIngredients(String[] fileNames, String category){
+    private List<Ingredient> namesToIngredients(@NotNull String[] fileNames, String category){
         List<Ingredient> ingredients = new LinkedList<>();
         for (String name: fileNames){
             name = name.replace(".png", "");

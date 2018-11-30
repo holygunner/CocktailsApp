@@ -31,7 +31,7 @@
         android:background="@drawable/like_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_alignParentEnd="true"
         android:contentDescription="@string/like_button"/>
 
@@ -44,7 +44,6 @@
 
         <TextView
             android:id="@+id/drink_name_textView"
-            android:text="Margarita"
             android:gravity="center|top"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="40dp"
@@ -54,7 +53,6 @@
             android:textSize="24sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
 
     </LinearLayout>
 
@@ -67,8 +65,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -78,7 +74,6 @@
 
             <ImageView
                 android:id="@+id/drink_imageView"
-                android:src="@drawable/drink_test_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -97,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="invisible"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="8dp"
                 app:cardUseCompatPadding="true">
@@ -123,7 +118,6 @@
 
                         <TextView
                             android:id="@+id/recipe_textView"
-                            android:text="@string/test_recipe"
                             android:textAlignment="textStart"
                             android:textColor="@color/textView_color"
                             android:layout_width="match_parent"
@@ -131,7 +125,6 @@
 
                         <TextView
                             android:id="@+id/serve_glass_textView"
-                            android:text="Serve: glass"
                             android:layout_marginTop="8dp"
                             android:textStyle="italic"
                             android:textColor="@color/textView_color"
@@ -143,13 +136,9 @@
 
                     </ScrollView>
 
-
-
             </android.support.v7.widget.CardView>
 
         </FrameLayout>
-
-
 
         <FrameLayout
             android:layout_width="0dp"
@@ -159,7 +148,7 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/ingredients_list_cardView"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

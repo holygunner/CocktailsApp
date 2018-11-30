@@ -14,7 +14,6 @@ import java.util.Set;
 public class Saver {
     public static final String CHOSEN_INGREDIENTS_KEY = "chosen_ingredients_key";
     public static final String CHECKED_INGREDIENTS_KEY = "checked_ingredients_key";
-    public static final String FAILED_TO_LOAD_INGREDIENTS_KEY = "failed_to_load_ingredients_key";
     private static final String SELECTED_BAR_KEY = "selected_bar_key";
 
     public static Set<String> readIngredients(Context context, String key){

@@ -24,8 +24,7 @@ class RequestProvider {
     List<Bar> downloadBars(String... ingredients){
         List<Bar> downloadBars = new ArrayList<>();
 
-        for (int i = 0; i < ingredients.length; i++){
-            String checkedIngr = ingredients[i];
+        for (String checkedIngr : ingredients) {
             String url = URLBuilder.getCocktailsListUrl(checkedIngr);
             String json = downloadJsonByRequest(url);
             Bar bar = mJsonParser.parseJsonToDrinksBar(json);
@@ -34,15 +33,12 @@ class RequestProvider {
                 if (bar.drinks.length > 0) {
                     downloadBars.add(bar);
 
-//                    Bar currentBar = downloadBars.get(i);
-
                     for (int j = 0; j < bar.drinks.length; j++) {
                         bar.drinks[j].addChosenIngredient(new Ingredient(checkedIngr));
                     }
                 }
             }
         }
-
         return downloadBars;
     }
 

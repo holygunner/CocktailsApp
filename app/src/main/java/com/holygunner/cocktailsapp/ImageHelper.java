@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import org.jetbrains.annotations.NotNull;
+
 abstract class ImageHelper {
     private static final float ROUND_FACTOR = 32;
 
@@ -38,7 +40,7 @@ abstract class ImageHelper {
         return target;
     }
 
-    private static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+    private static Bitmap getRoundedCornerBitmap(@NotNull Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
                 .getHeight(), Config.ARGB_8888);
         Canvas canvas = new Canvas(output);

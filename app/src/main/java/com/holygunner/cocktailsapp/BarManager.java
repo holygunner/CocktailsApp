@@ -1,14 +1,12 @@
 package com.holygunner.cocktailsapp;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.google.gson.Gson;
 import com.holygunner.cocktailsapp.models.Bar;
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.DrinkComparator;
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.save.Saver;
+
+import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,13 +31,12 @@ class BarManager {
 
     Bar getSelectedBar(List<Bar> downloadBars){
         mSelectedDrinks = new ArrayList<>();
-        Bar deserializedBar = mJsonParser.parseJsonToDrinksBar(Saver
+        Bar dematerializedBar = mJsonParser.parseJsonToDrinksBar(Saver
                 .readSelectedBar(mContext));
 
-        if (deserializedBar != null) {
-            deserializedBar.drinks = checkAndRemoveOldDrinks(deserializedBar).toArray(new Drink[0]);
-            Log.i("TAG", "CHECKED AND REMOVED PREFS - BAR SIZE = " + deserializedBar.drinks.length);
-            mSelectedDrinks.addAll(Arrays.asList(deserializedBar.drinks));
+        if (dematerializedBar != null) {
+            dematerializedBar.drinks = checkAndRemoveOldDrinks(dematerializedBar).toArray(new Drink[0]);
+            mSelectedDrinks.addAll(Arrays.asList(dematerializedBar.drinks));
         }
 
         for (Bar bar: downloadBars){
@@ -55,7 +52,6 @@ class BarManager {
 
         selectedBar.drinks = mSelectedDrinks.toArray(new Drink[0]);
 
-        Log.i("TAG", "SAVE BAR - BAR SIZE = " + selectedBar.drinks.length);
         Saver.writeSelectedBar(mContext, selectedBar);
 
         return selectedBar;

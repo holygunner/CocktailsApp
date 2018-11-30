@@ -24,7 +24,7 @@ abstract class URLBuilder {
 
 
     @NonNull
-    private static String underscoresToSpacesIfRequired(String name){
+    private static String underscoresToSpacesIfRequired(@NotNull String name){
         return name.replace(" ", "_");
     }
 

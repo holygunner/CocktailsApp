@@ -3,6 +3,7 @@ package com.holygunner.cocktailsapp;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -40,6 +41,9 @@ public class DrinksFragment extends Fragment {
     private BarManager mBarManager;
     private int howMuchChecked;
 
+    private static final String SAVED_STATE_KEY = "saved_state_key";
+    private Parcelable savedRecyclerViewState;
+
     @NonNull
     public static DrinksFragment newInstance(){
         return new DrinksFragment();
@@ -49,20 +53,30 @@ public class DrinksFragment extends Fragment {
         super.onCreate(onSavedInstanceState);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putParcelable(SAVED_STATE_KEY,
+                mRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_drinks_list, container, false);
+
+        if (savedInstanceState != null){
+            savedRecyclerViewState = savedInstanceState.getParcelable(SAVED_STATE_KEY);
+        }
+
         mRecyclerView = v.findViewById(R.id.drinks_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,
-//                false);
-//        manager.setInitialPrefetchItemCount(3);
+
         setDrinks(v);
         setupAdapter();
         return v;
     }
 
-    private void setDrinks(View v){
-        // realize callback later if required
+    private void setDrinks(@NotNull View v){
         mBarManager = new BarManager(getContext());
 
         String[] added = IngredientManager.countAddedIngredients(
@@ -72,7 +86,6 @@ public class DrinksFragment extends Fragment {
         howMuchChecked = added.length;
 
         final ProgressBar progressBar = v.findViewById(R.id.drinks_load_progressBar);
-//        progressBar.setProgress(0);
         progressBar.setVisibility(View.VISIBLE);
 
         DrinksProviderTask task = new DrinksProviderTask(this);
@@ -84,6 +97,7 @@ public class DrinksFragment extends Fragment {
     private void setupAdapter(){
         if (isAdded()){
             mRecyclerView.setAdapter(new DrinksAdapter(mDrinks));
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
         }
     }
 
@@ -125,6 +139,7 @@ public class DrinksFragment extends Fragment {
             for (Ingredient ingr: drink.getChosenIngredients()){
                 text.append(ingr.getName()).append(", ");
             }
+
             text.delete(text.length()-2, text.length()-1);
             drinkChosenIngrsTextView.setText(text);
         }
