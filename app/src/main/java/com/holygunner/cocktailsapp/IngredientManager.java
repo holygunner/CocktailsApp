@@ -76,6 +76,11 @@ class IngredientManager {
         return ingredientCategory;
     }
 
+    static boolean ingredientMeasureVerification(@NotNull String measure){
+        return !measure.equals("\n")
+                && !measure.equals(" ") && !measure.equals("");
+    }
+
     private static Set<String> countChangedIngredients(Set<String> ingrs1, Set<String> ingrs2,
                                                        boolean isInvertCompare){
         Set<String> returnIngrs = new HashSet<>();

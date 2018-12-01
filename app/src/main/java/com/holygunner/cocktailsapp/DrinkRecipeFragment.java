@@ -210,7 +210,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
 
             String text;
 
-            if (!ingredient.getMeasure().equals("\n")) {
+            if (IngredientManager.ingredientMeasureVerification(ingredient.getMeasure())) {
                 text = ingredient.getName() + ": " + ingredient.getMeasure();
             }   else {
                 text = ingredient.getName();
