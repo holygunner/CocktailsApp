@@ -11,6 +11,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -35,6 +36,7 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 public class DrinkRecipeFragment extends Fragment implements View.OnClickListener {
+    private android.support.v7.widget.Toolbar mToolbar;
     private RecyclerView mRecyclerView;
     private ImageView drinkImageView;
     private ImageButton likeImageButton;
@@ -58,7 +60,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-//        setRetainInstance(true);
+
         mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
         chosenIngredientNames = Saver.readChosenIngredientsNamesInLowerCase(getContext(),
                 CHOSEN_INGREDIENTS_KEY);
@@ -74,9 +76,24 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Objects.requireNonNull(getActivity()).onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.drink_recipe_layout, container, false);
+        mToolbar = v.findViewById(R.id.toolbar_drink_recipe);
+        mToolbar = ToolbarHelper.setToolbarUpButton(mToolbar,
+                (SingleFragmentActivity) getActivity(), getResources());
+
         drinkImageView = v.findViewById(R.id.drink_imageView);
         likeImageButton = v.findViewById(R.id.like_imageButton);
         likeImageButton.setOnClickListener(this);

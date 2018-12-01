@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:background="@drawable/activity_background"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_from_drinks_list"
+        android:id="@+id/toolbar_drink_recipe"
         app:title="Drink recipe"
         app:titleTextColor="@color/light_color"
-        style="@style/custom_toolbar"/>
+        style="@style/CustomToolbar"/>
 
     <ProgressBar
         android:id="@+id/recipe_load_progressBar"
@@ -21,11 +20,12 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:visibility="gone"
+        android:theme="@style/ProgressBarTheme"
         android:indeterminate="true"/>
 
     <ImageButton
         android:id="@+id/like_imageButton"
-        android:layout_below="@id/toolbar_from_drinks_list"
+        android:layout_below="@id/toolbar_drink_recipe"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/like_button"
@@ -37,7 +37,7 @@
 
     <LinearLayout
         android:id="@+id/drink_title_container"
-        android:layout_below="@id/toolbar_from_drinks_list"
+        android:layout_below="@id/toolbar_drink_recipe"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -102,10 +102,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    tools:ignore="ContentDescription"/>
+                    android:contentDescription="@string/cardView_background"/>
 
                     <ScrollView
-
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scrollbars="vertical">
@@ -161,7 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                tools:ignore="ContentDescription"/>
+                android:contentDescription="@string/cardView_background"/>
 
             <LinearLayout
                 android:layout_marginRight="8dp"

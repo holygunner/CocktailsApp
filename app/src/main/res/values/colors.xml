@@ -8,7 +8,7 @@
     <color name="ingredientColorFill2">#9646ff40</color>
     <color name="darkBlue">#304e9f</color>
     <color name="light_color">#fffdf1</color>
-    <color name="light_color0">#fffbe6</color>
+    <color name="light_color_top">#616161</color>
     <color name="gradient_top_color_blue">#afc1ff</color>
     <color name="gradient_bellow_color_lilac">#fdc7ff</color>
     <color name="toolBar_grey">#e3767676</color>

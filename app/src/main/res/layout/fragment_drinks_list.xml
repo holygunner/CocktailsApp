@@ -7,11 +7,7 @@
                 android:background="@drawable/activity_background"
                 android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_from_drinks_list"
-        app:title="Choose the drink"
-        app:titleTextColor="@color/light_color"
-        style="@style/custom_toolbar"/>
+
 
     <ProgressBar
         android:id="@+id/drinks_load_progressBar"
@@ -21,6 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:visibility="gone"
+        android:theme="@style/ProgressBarTheme"
         android:indeterminate="true"/>
 
         <android.support.v7.widget.RecyclerView
@@ -32,5 +29,11 @@
             android:clipToPadding="false"
             android:scrollbars="vertical"
             tools:context=".DrinksActivity"/>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_drinks_list"
+        app:title="Choose the drink"
+        app:titleTextColor="@color/light_color"
+        style="@style/CustomToolbar"/>
 
 </RelativeLayout>

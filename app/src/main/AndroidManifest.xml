@@ -3,10 +3,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.holygunner.cocktailsapp">
 
-
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
 
     <application
         android:icon="@drawable/icon"
@@ -16,14 +14,22 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning"
         android:allowBackup="true">
+
         <activity android:name=".IngredientsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".DrinksActivity"/>
-        <activity android:name=".DrinkRecipeActivity"/>
+
+        <activity android:name=".DrinksActivity"
+            android:parentActivityName=".IngredientsActivity">
+        </activity>
+
+        <activity android:name=".DrinkRecipeActivity"
+            android:parentActivityName=".DrinksActivity">
+        </activity>
+
     </application>
 
 </manifest>

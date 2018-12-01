@@ -10,6 +10,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -34,13 +35,13 @@ import static com.holygunner.cocktailsapp.save.Saver.CHECKED_INGREDIENTS_KEY;
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 public class DrinksFragment extends Fragment {
-    public static final String DRINK_ID_KEY = "drink_id_key";
-
+    private android.support.v7.widget.Toolbar mToolbar;
     private RecyclerView mRecyclerView;
     private List<Drink> mDrinks = new ArrayList<>();
     private BarManager mBarManager;
     private int howMuchChecked;
 
+    public static final String DRINK_ID_KEY = "drink_id_key";
     private static final String SAVED_STATE_KEY = "saved_state_key";
     private Parcelable savedRecyclerViewState;
 
@@ -53,14 +54,6 @@ public class DrinksFragment extends Fragment {
         super.onCreate(onSavedInstanceState);
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
-        super.onSaveInstanceState(savedInstanceState);
-
-        savedInstanceState.putParcelable(SAVED_STATE_KEY,
-                mRecyclerView.getLayoutManager().onSaveInstanceState());
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_drinks_list, container, false);
 
@@ -68,12 +61,36 @@ public class DrinksFragment extends Fragment {
             savedRecyclerViewState = savedInstanceState.getParcelable(SAVED_STATE_KEY);
         }
 
+        mToolbar = v.findViewById(R.id.toolbar_drinks_list);
+        mToolbar = ToolbarHelper.setToolbarUpButton(mToolbar,
+                (SingleFragmentActivity) getActivity(), getResources());
+
+
         mRecyclerView = v.findViewById(R.id.drinks_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         setDrinks(v);
         setupAdapter();
         return v;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Objects.requireNonNull(getActivity()).onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putParcelable(SAVED_STATE_KEY,
+                mRecyclerView.getLayoutManager().onSaveInstanceState());
     }
 
     private void setDrinks(@NotNull View v){
