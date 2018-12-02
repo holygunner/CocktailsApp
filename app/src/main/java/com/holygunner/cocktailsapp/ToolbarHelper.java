@@ -15,6 +15,8 @@ public abstract class ToolbarHelper {
         Objects.requireNonNull(activity).setSupportActionBar(toolbar);
         Objects.requireNonNull(activity
                 .getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(activity
+                .getSupportActionBar()).setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(toolbar.getNavigationIcon())
                 .setColorFilter(resources
                         .getColor(R.color.light_color), PorterDuff.Mode.SRC_ATOP);

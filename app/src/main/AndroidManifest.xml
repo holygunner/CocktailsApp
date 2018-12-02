@@ -22,13 +22,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DrinksActivity"
-            android:parentActivityName=".IngredientsActivity">
-        </activity>
+        <activity android:name=".SelectedDrinksActivity"
+            android:parentActivityName=".IngredientsActivity"/>
 
         <activity android:name=".DrinkRecipeActivity"
-            android:parentActivityName=".DrinksActivity">
-        </activity>
+            />
 
     </application>
 

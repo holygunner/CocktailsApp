@@ -17,6 +17,7 @@
         <TextView
             android:id="@+id/ingredientTextView"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_gravity="center_horizontal"

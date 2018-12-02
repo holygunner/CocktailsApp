@@ -37,7 +37,7 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
     @NonNull
     @Override
     public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mFragment.getContext()).inflate(R.layout.ingredient_section_card,
+        View view = LayoutInflater.from(mFragment.getContext()).inflate(R.layout.ingredients_section_card_item,
                 parent, false);
         mSnapHelper = new LinearSnapHelper();
         CategoryHolder holder = new CategoryHolder(view);

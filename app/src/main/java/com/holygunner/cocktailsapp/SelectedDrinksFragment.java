@@ -34,8 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.holygunner.cocktailsapp.save.Saver.CHECKED_INGREDIENTS_KEY;
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
-public class DrinksFragment extends Fragment {
-    private android.support.v7.widget.Toolbar mToolbar;
+public class SelectedDrinksFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<Drink> mDrinks = new ArrayList<>();
     private BarManager mBarManager;
@@ -46,23 +45,24 @@ public class DrinksFragment extends Fragment {
     private Parcelable savedRecyclerViewState;
 
     @NonNull
-    public static DrinksFragment newInstance(){
-        return new DrinksFragment();
+    public static SelectedDrinksFragment newInstance(){
+        return new SelectedDrinksFragment();
     }
 
     public void onCreate(Bundle onSavedInstanceState){
         super.onCreate(onSavedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.fragment_drinks_list, container, false);
+        View v = inflater.inflate(R.layout.selected_drinks_layout, container, false);
 
         if (savedInstanceState != null){
             savedRecyclerViewState = savedInstanceState.getParcelable(SAVED_STATE_KEY);
         }
 
-        mToolbar = v.findViewById(R.id.toolbar_drinks_list);
-        mToolbar = ToolbarHelper.setToolbarUpButton(mToolbar,
+        android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar_drinks_list);
+        ToolbarHelper.setToolbarUpButton(toolbar,
                 (SingleFragmentActivity) getActivity(), getResources());
 
 
@@ -191,10 +191,10 @@ public class DrinksFragment extends Fragment {
     }
 
     protected static class DrinksProviderTask extends AsyncTask<String, Integer, List<Bar>> {
-        private WeakReference<DrinksFragment> mReference;
+        private WeakReference<SelectedDrinksFragment> mReference;
         private WeakReference<ProgressBar> mProgressBarReference;
 
-        DrinksProviderTask(DrinksFragment instance){
+        DrinksProviderTask(SelectedDrinksFragment instance){
             mReference = new WeakReference<>(instance);
         }
 
@@ -214,7 +214,7 @@ public class DrinksFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Bar> downloadBars){
-            DrinksFragment fragment = mReference.get();
+            SelectedDrinksFragment fragment = mReference.get();
 
             if (mProgressBarReference != null) {
                 mProgressBarReference.get().setVisibility(View.GONE);

@@ -36,7 +36,6 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 public class DrinkRecipeFragment extends Fragment implements View.OnClickListener {
-    private android.support.v7.widget.Toolbar mToolbar;
     private RecyclerView mRecyclerView;
     private ImageView drinkImageView;
     private ImageButton likeImageButton;
@@ -60,6 +59,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
         chosenIngredientNames = Saver.readChosenIngredientsNamesInLowerCase(getContext(),
@@ -90,8 +90,8 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.drink_recipe_layout, container, false);
-        mToolbar = v.findViewById(R.id.toolbar_drink_recipe);
-        mToolbar = ToolbarHelper.setToolbarUpButton(mToolbar,
+        android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar_drink_recipe);
+        toolbar = ToolbarHelper.setToolbarUpButton(toolbar,
                 (SingleFragmentActivity) getActivity(), getResources());
 
         drinkImageView = v.findViewById(R.id.drink_imageView);
@@ -133,7 +133,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     }
 
     private void loadDrink(@NotNull View v){
-        int drinkId = Objects.requireNonNull(getActivity()).getIntent().getIntExtra(DrinksFragment.DRINK_ID_KEY, 0);
+        int drinkId = Objects.requireNonNull(getActivity()).getIntent().getIntExtra(SelectedDrinksFragment.DRINK_ID_KEY, 0);
         final ProgressBar progressBar = v.findViewById(R.id.recipe_load_progressBar);
 //        progressBar.setProgress(0);
         progressBar.setVisibility(View.VISIBLE);

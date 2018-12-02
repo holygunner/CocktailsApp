@@ -46,10 +46,11 @@
 
                 <TextView
                     android:id="@+id/drink_name_TextView"
-                    android:textColor="@color/textView_color"
-                    android:textStyle="bold"
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/textView_color"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/drink_chosen_ingrs_TextView"
@@ -60,6 +61,21 @@
                     android:layout_width="wrap_content"/>
 
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/is_drink_liked_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:gravity="top|end">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/heart_pressed"
+                android:contentDescription="@string/is_drink_liked"/>
 
         </LinearLayout>
 

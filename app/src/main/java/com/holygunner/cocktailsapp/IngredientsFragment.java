@@ -32,12 +32,14 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
     private List<IngredientsCategory> mIngredientsCategories = new ArrayList<>();
     private IngredientManager mIngredientManager;
 
+    @NonNull
     public static IngredientsFragment newInstance(){
         return new IngredientsFragment();
     }
 
     public void onCreate(Bundle onSavedInstanceState){
         super.onCreate(onSavedInstanceState);
+        setHasOptionsMenu(true);
         setRetainInstance(true);
         mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
         mIngredientsCategories = mIngredientManager.getAllIngredients();
@@ -61,7 +63,7 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(getContext(), DrinksActivity.class));
+        startActivity(new Intent(getContext(), SelectedDrinksActivity.class));
     }
 
     public void setMixButtonVisibility(){

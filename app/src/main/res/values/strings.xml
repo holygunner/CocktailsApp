@@ -36,4 +36,5 @@ Shake the other ingredients with ice, then carefully pour into the glass.</strin
     <string name="like_button_pressed_cancel">Removed from your fav\'s</string>
     <string name="cardView_background">CardView Background</string>
     <string name="drink_recipe">Drink recipe</string>
+    <string name="is_drink_liked">Is drink liked</string>
 </resources>
