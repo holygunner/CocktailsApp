@@ -1,4 +1,4 @@
-package com.holygunner.cocktailsapp;
+package com.holygunner.cocktailsapp.models;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -6,8 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.holygunner.cocktailsapp.models.Ingredient;
-import com.holygunner.cocktailsapp.models.IngredientsCategory;
 import com.holygunner.cocktailsapp.values.IngredientsCategoriesNames;
 
 import org.jetbrains.annotations.Contract;
@@ -23,14 +21,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-class IngredientManager {
+public class IngredientManager {
     private AssetManager mAssetManager;
 
-    IngredientManager(@NotNull Context context){
+    public IngredientManager(@NotNull Context context){
         mAssetManager = context.getAssets();
     }
 
-    List<IngredientsCategory> getAllIngredients(){
+    public List<IngredientsCategory> getAllIngredients(){
         List<IngredientsCategory> allIngredients = new ArrayList<>();
         String[] categoriesNames = IngredientsCategoriesNames.CATEGORIES_NAMES;
 
@@ -40,7 +38,7 @@ class IngredientManager {
         return allIngredients;
     }
 
-    static Set<String> countAddedIngredients(Set<String> userChosenIngrs,
+    public static Set<String> countAddedIngredients(Set<String> userChosenIngrs,
                                                @NotNull Set<String> checkedIngrs) {
         return countChangedIngredients(userChosenIngrs, checkedIngrs, false);
     }
@@ -50,7 +48,7 @@ class IngredientManager {
         return countChangedIngredients(userChosenIngrs, checkedIngrs, true);
     }
 
-    Drawable getIngredientDrawable(String folderName, String fileName){
+    public Drawable getIngredientDrawable(String folderName, String fileName){
         try {
             InputStream inputStream = mAssetManager.open(getRightFileName(folderName, fileName));
             return Drawable.createFromStream(inputStream, null);
@@ -61,7 +59,7 @@ class IngredientManager {
         }
     }
 
-    String findIngredientCategory(String fileName){
+    public String findIngredientCategory(String fileName){
         String ingredientCategory = "";
         try {
             for (String category: IngredientsCategoriesNames.CATEGORIES_NAMES){
@@ -76,9 +74,23 @@ class IngredientManager {
         return ingredientCategory;
     }
 
-    static boolean ingredientMeasureVerification(@NotNull String measure){
+    public static boolean ingredientMeasureVerification(@NotNull String measure){
         return !measure.equals("\n")
                 && !measure.equals(" ") && !measure.equals("");
+    }
+
+    static List<Ingredient> convertArrToIngredientList(@NotNull Ingredient[] ingredients){
+        List<Ingredient> ingredientList = new ArrayList<>();
+        for (Ingredient ingredient: ingredients){
+            if (ingredient.getName() != null){
+                if (!ingredient.getName().equals("")) {
+                    ingredientList.add(ingredient);
+                }
+            }   else {
+                break;
+            }
+        }
+        return ingredientList;
     }
 
     private static Set<String> countChangedIngredients(Set<String> ingrs1, Set<String> ingrs2,

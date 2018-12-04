@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.holygunner.cocktailsapp.models.Ingredient;
+import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.models.IngredientsCategory;
 import com.holygunner.cocktailsapp.values.IngredientsCategoriesNames;
 

@@ -1,10 +1,13 @@
 package com.holygunner.cocktailsapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,8 +28,10 @@ import java.util.List;
 import java.util.Objects;
 
 import com.holygunner.cocktailsapp.models.Bar;
+import com.holygunner.cocktailsapp.models.BarManager;
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.Ingredient;
+import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.save.Saver;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +41,7 @@ import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 public class SelectedDrinksFragment extends Fragment {
     private RecyclerView mRecyclerView;
+    private DrinksAdapter mDrinksAdapter;
     private List<Drink> mDrinks = new ArrayList<>();
     private BarManager mBarManager;
     private int howMuchChecked;
@@ -54,6 +60,15 @@ public class SelectedDrinksFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null){
+            savedRecyclerViewState = savedInstanceState.getParcelable(SAVED_STATE_KEY);
+        }
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.selected_drinks_layout, container, false);
 
@@ -64,7 +79,6 @@ public class SelectedDrinksFragment extends Fragment {
         android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar_drinks_list);
         ToolbarHelper.setToolbarUpButton(toolbar,
                 (SingleFragmentActivity) getActivity(), getResources());
-
 
         mRecyclerView = v.findViewById(R.id.drinks_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -83,6 +97,12 @@ public class SelectedDrinksFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -113,8 +133,11 @@ public class SelectedDrinksFragment extends Fragment {
 
     private void setupAdapter(){
         if (isAdded()){
-            mRecyclerView.setAdapter(new DrinksAdapter(mDrinks));
-            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
+            mDrinksAdapter = new DrinksAdapter(mDrinks);
+            mRecyclerView.setAdapter(mDrinksAdapter);
+            if (savedRecyclerViewState != null){
+                mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
+            }
         }
     }
 
@@ -125,6 +148,7 @@ public class SelectedDrinksFragment extends Fragment {
         private TextView drinkPositionTextView;
         private ImageView drinkImageView;
         private CardView drink_CardView;
+        private View mHeartImageViewContainer;
 
         DrinksHolder(View itemView) {
             super(itemView);
@@ -134,13 +158,23 @@ public class SelectedDrinksFragment extends Fragment {
             drinkImageView = itemView.findViewById(R.id.drink_imageView);
             drink_CardView = itemView.findViewById(R.id.drink_CardView);
             drink_CardView.setOnClickListener(this);
+            mHeartImageViewContainer = itemView.findViewById(R.id.is_drink_liked_container);
         }
 
         void bindDrink(Drink drink){
             mDrink = drink;
+            setIsFav(Saver.isDrinkFav(getContext(), mDrink));
             drinkImageView.setTag(ImageHelper.downloadImage(drink.getUrlImage(), drinkImageView));
             drinkNameTextView.setText(drink.getName());
             setDrinkChosenIngrsTextView(drink);
+        }
+
+        private void setIsFav(boolean isFav){
+            if (isFav){
+                mHeartImageViewContainer.setVisibility(View.VISIBLE);
+            }   else {
+                mHeartImageViewContainer.setVisibility(View.GONE);
+            }
         }
 
         @Override

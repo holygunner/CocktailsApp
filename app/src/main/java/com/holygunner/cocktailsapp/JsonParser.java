@@ -9,19 +9,19 @@ import com.holygunner.cocktailsapp.models.Drink;
 public class JsonParser {
     private Gson mGson;
 
-    JsonParser(){
+    public JsonParser(){
         mGson = new Gson();
     }
 
-    Bar parseJsonToDrinksBar(String json){
+    public Bar parseJsonToDrinksBar(String json){
         Bar drinks = mGson.fromJson(json, Bar.class);
         Log.i("TAG", "output: " + json);
         return drinks;
     }
 
-    public String serializeBarToJson(Bar bar){
-        return mGson.toJson(bar);
-    }
+//    public String serializeBarToJson(Bar bar){
+//        return mGson.toJson(bar);
+//    }
 
     String serializeDrinkToJsonBar(Drink drink){
         Bar bar = new Bar();

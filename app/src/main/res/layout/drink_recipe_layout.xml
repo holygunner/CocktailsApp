@@ -28,7 +28,7 @@
         android:layout_below="@id/toolbar_drink_recipe"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
-        android:background="@drawable/like_button"
+        android:background="@drawable/like_button_not_pressed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"

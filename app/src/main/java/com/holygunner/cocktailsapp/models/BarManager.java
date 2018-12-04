@@ -1,9 +1,6 @@
-package com.holygunner.cocktailsapp;
+package com.holygunner.cocktailsapp.models;
 
-import com.holygunner.cocktailsapp.models.Bar;
-import com.holygunner.cocktailsapp.models.Drink;
-import com.holygunner.cocktailsapp.models.DrinkComparator;
-import com.holygunner.cocktailsapp.models.Ingredient;
+import com.holygunner.cocktailsapp.JsonParser;
 import com.holygunner.cocktailsapp.save.Saver;
 
 import android.content.Context;
@@ -19,24 +16,24 @@ import java.util.Set;
 import static com.holygunner.cocktailsapp.save.Saver.CHECKED_INGREDIENTS_KEY;
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
-class BarManager {
+public class BarManager {
     private List<Drink> mSelectedDrinks;
     private JsonParser mJsonParser;
     private Context mContext;
 
-    BarManager(Context context){
+    public BarManager(Context context){
         mContext = context;
         mJsonParser = new JsonParser();
     }
 
-    Bar getSelectedBar(List<Bar> downloadBars){
+    public Bar getSelectedBar(List<Bar> downloadBars){
         mSelectedDrinks = new ArrayList<>();
-        Bar dematerializedBar = mJsonParser.parseJsonToDrinksBar(Saver
+        Bar deserializedBar = mJsonParser.parseJsonToDrinksBar(Saver
                 .readSelectedBar(mContext));
 
-        if (dematerializedBar != null) {
-            dematerializedBar.drinks = checkAndRemoveOldDrinks(dematerializedBar).toArray(new Drink[0]);
-            mSelectedDrinks.addAll(Arrays.asList(dematerializedBar.drinks));
+        if (deserializedBar != null) {
+            deserializedBar.drinks = checkAndRemoveOldDrinks(deserializedBar).toArray(new Drink[0]);
+            mSelectedDrinks.addAll(Arrays.asList(deserializedBar.drinks));
         }
 
         for (Bar bar: downloadBars){

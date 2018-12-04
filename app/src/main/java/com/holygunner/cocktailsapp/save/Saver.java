@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.holygunner.cocktailsapp.models.Bar;
+import com.holygunner.cocktailsapp.models.Drink;
 
 import org.jetbrains.annotations.Contract;
 
@@ -15,6 +16,39 @@ public class Saver {
     public static final String CHOSEN_INGREDIENTS_KEY = "chosen_ingredients_key";
     public static final String CHECKED_INGREDIENTS_KEY = "checked_ingredients_key";
     private static final String SELECTED_BAR_KEY = "selected_bar_key";
+    private static final String FAV_DRINKS_ID_SET_KEY = "";
+    private static final String FAV_DRINKS_BAR_KEY = "";
+
+    public static Set<String> readFavDrinkIdSet(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getStringSet(FAV_DRINKS_ID_SET_KEY, new HashSet<String>());
+    }
+
+    public static boolean isDrinkFav(Context context, Drink drink){
+        String drinkId = String.valueOf(drink.getId());
+
+        return readFavDrinkIdSet(context).contains(drinkId);
+    }
+
+    public static void updFavDrinkId(Context context, int id, boolean isFav){
+        String drinkId = String.valueOf(id);
+        Set<String> favDrinksIdSet = readFavDrinkIdSet(context);
+
+        if (isFav){
+            favDrinksIdSet.add(drinkId);
+        }   else {
+            favDrinksIdSet.remove(drinkId);
+        }
+
+        updFavDrinksIdSet(context, favDrinksIdSet);
+    }
+
+    private static void updFavDrinksIdSet(Context context, Set<String> updFavDrinksIdSet){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putStringSet(FAV_DRINKS_ID_SET_KEY, updFavDrinksIdSet)
+                .apply();
+    }
 
     public static Set<String> readIngredients(Context context, String key){
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -56,7 +90,7 @@ public class Saver {
         return readIngredients(context, CHOSEN_INGREDIENTS_KEY).contains(ingredientName);
     }
 
-    public static boolean changeChosenIngredient(Context context, String ingredientName){
+    public static boolean updChosenIngredient(Context context, String ingredientName){
         Set<String> savedNames = readIngredients(context, Saver.CHOSEN_INGREDIENTS_KEY);
 
         boolean result;

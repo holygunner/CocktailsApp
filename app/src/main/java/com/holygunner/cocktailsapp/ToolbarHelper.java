@@ -7,9 +7,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public abstract class ToolbarHelper {
 
-    static android.support.v7.widget.Toolbar setToolbarUpButton(
+abstract class ToolbarHelper {
+
+    static void setToolbarUpButton(
             android.support.v7.widget.Toolbar toolbar, final SingleFragmentActivity activity,
             @NotNull Resources resources){
         Objects.requireNonNull(activity).setSupportActionBar(toolbar);
@@ -20,7 +21,5 @@ public abstract class ToolbarHelper {
         Objects.requireNonNull(toolbar.getNavigationIcon())
                 .setColorFilter(resources
                         .getColor(R.color.light_color), PorterDuff.Mode.SRC_ATOP);
-
-        return toolbar;
     }
 }

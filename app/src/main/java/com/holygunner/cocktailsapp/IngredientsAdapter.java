@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.holygunner.cocktailsapp.models.Ingredient;
+import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.save.Saver;
 
 import org.jetbrains.annotations.NotNull;
@@ -73,7 +74,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         @Override
         public void onClick(View v) {
-            setColorFilter(Saver.changeChosenIngredient(mContext, mIngredient.getName()));
+            setColorFilter(Saver.updChosenIngredient(mContext, mIngredient.getName()));
             mFragment.setMixButtonVisibility();
         }
 

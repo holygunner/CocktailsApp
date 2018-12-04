@@ -32,7 +32,7 @@ public class Ingredient {
         return mCategory;
     }
 
-    public void setCategory(String category) {
+    void setCategory(String category) {
         this.mCategory = category;
     }
 }

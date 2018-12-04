@@ -56,10 +56,11 @@ public class Drink {
     private String strMeasure15;
 
     private List<Ingredient> mIngredientsList;
-    private List<Ingredient> chosenIngredients;
+    private List<Ingredient> mChosenIngredients;
+    private boolean mIsFavourite;
 
     public Drink(){
-        chosenIngredients = new ArrayList<>();
+        mChosenIngredients = new ArrayList<>();
     }
 
     private void initIngredients(){
@@ -80,7 +81,7 @@ public class Drink {
         ingredients[13] = new Ingredient(strIngredient14, strMeasure14);
         ingredients[14] = new Ingredient(strIngredient15, strMeasure15);
 
-        mIngredientsList = DrinkHelper.convertArrToIngredientList(ingredients);
+        mIngredientsList = IngredientManager.convertArrToIngredientList(ingredients);
     }
 
     public int getId() {
@@ -126,10 +127,18 @@ public class Drink {
     }
 
     public List<Ingredient> getChosenIngredients() {
-        return chosenIngredients;
+        return mChosenIngredients;
     }
 
     public void addChosenIngredient(Ingredient ingredient){
-        chosenIngredients.add(ingredient);
+        mChosenIngredients.add(ingredient);
+    }
+
+    public boolean isFavourite() {
+        return mIsFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        mIsFavourite = favourite;
     }
 }
