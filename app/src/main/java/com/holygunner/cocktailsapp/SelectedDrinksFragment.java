@@ -1,11 +1,9 @@
 package com.holygunner.cocktailsapp;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -77,8 +75,9 @@ public class SelectedDrinksFragment extends Fragment {
         }
 
         android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar_drinks_list);
-        ToolbarHelper.setToolbarUpButton(toolbar,
-                (SingleFragmentActivity) getActivity(), getResources());
+        ToolbarHelper.setToolbar(toolbar,
+                (SingleFragmentActivity) Objects.requireNonNull(getActivity()),
+                ToolbarHelper.UP_BUTTON);
 
         mRecyclerView = v.findViewById(R.id.drinks_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

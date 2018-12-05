@@ -97,8 +97,9 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.drink_recipe_layout, container, false);
         android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar_drink_recipe);
-        ToolbarHelper.setToolbarUpButton(toolbar,
-                (SingleFragmentActivity) getActivity(), getResources());
+        ToolbarHelper.setToolbar(toolbar,
+                (SingleFragmentActivity) Objects.requireNonNull(getActivity()),
+                ToolbarHelper.UP_BUTTON);
 
         drinkImageView = v.findViewById(R.id.drink_imageView);
         likeImageButton = v.findViewById(R.id.like_imageButton);
