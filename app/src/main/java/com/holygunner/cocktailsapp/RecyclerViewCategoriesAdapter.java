@@ -23,9 +23,9 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
     private IngredientManager mIngredientManager;
     private RecyclerView.RecycledViewPool mRecycledViewPool;
     private SnapHelper mSnapHelper;
-    private IngredientsFragment mFragment;
+    private SelectIngredientsFragment mFragment;
 
-    RecyclerViewCategoriesAdapter(IngredientsFragment fragment, IngredientManager ingredientManager,
+    RecyclerViewCategoriesAdapter(SelectIngredientsFragment fragment, IngredientManager ingredientManager,
                                   List<IngredientsCategory> ingredientsCategories){
         mFragment = fragment;
         mIngredientManager = ingredientManager;
@@ -51,14 +51,14 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
         final String categoryName = mIngredientsCategories.get(position).getCategoryName();
         List<Ingredient> singleCategoryIngredients = mIngredientsCategories.get(position).getIngredients();
         holder.categoryNameTextView.setText(categoryName);
-        IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(mFragment, singleCategoryIngredients,
+        SelectIngredientsAdapter selectIngredientsAdapter = new SelectIngredientsAdapter(mFragment, singleCategoryIngredients,
                 mIngredientManager);
         holder.mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(mFragment.getActivity(), LinearLayoutManager.HORIZONTAL,
                 false);
         manager.setInitialPrefetchItemCount(3);
         holder.mRecyclerView.setLayoutManager(manager);
-        holder.mRecyclerView.setAdapter(ingredientsAdapter);
+        holder.mRecyclerView.setAdapter(selectIngredientsAdapter);
 
         if (holder.mRecyclerView.getOnFlingListener() == null) {
             mSnapHelper.attachToRecyclerView(holder.mRecyclerView);

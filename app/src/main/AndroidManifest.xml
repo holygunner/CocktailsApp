@@ -16,7 +16,7 @@
         tools:replace="android:allowBackup"
         android:allowBackup="false">
 
-        <activity android:name=".IngredientsActivity">
+        <activity android:name=".SelectIngredientsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -24,9 +24,13 @@
         </activity>
 
         <activity android:name=".SelectedDrinksActivity"
-            android:parentActivityName=".IngredientsActivity"/>
+            android:parentActivityName=".SelectIngredientsActivity"/>
 
         <activity android:name=".DrinkRecipeActivity"/>
+
+        <activity android:name=".ChosenIngredientsActivity"/>
+
+        <activity android:name=".FavouriteDrinkActivity"/>
 
     </application>
 

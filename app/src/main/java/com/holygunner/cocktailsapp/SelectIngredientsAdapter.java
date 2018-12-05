@@ -18,14 +18,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientHolder> {
+public class SelectIngredientsAdapter extends RecyclerView.Adapter<SelectIngredientsAdapter.IngredientHolder> {
     private Context mContext;
-    private IngredientsFragment mFragment;
+    private SelectIngredientsFragment mFragment;
     private List<Ingredient> mIngredients;
     private IngredientManager mIngredientManager;
 
-    IngredientsAdapter(@NotNull IngredientsFragment fragment, List<Ingredient> ingredients,
-                       IngredientManager ingredientManager){
+    SelectIngredientsAdapter(@NotNull SelectIngredientsFragment fragment, List<Ingredient> ingredients,
+                             IngredientManager ingredientManager){
         mFragment = fragment;
         mContext = fragment.getContext();
         mIngredients = ingredients;

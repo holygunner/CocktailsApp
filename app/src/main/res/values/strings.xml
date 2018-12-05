@@ -34,7 +34,14 @@ Shake the other ingredients with ice, then carefully pour into the glass.</strin
     <string name="failed_connection">Failed connection</string>
     <string name="like_button_pressed_ok">Added to your fav\'s</string>
     <string name="like_button_pressed_cancel">Removed from your fav\'s</string>
+    <string name="no_chosen_ingredients">Choose at least one ingredient</string>
     <string name="cardView_background">CardView Background</string>
     <string name="drink_recipe">Drink recipe</string>
     <string name="is_drink_liked">Is drink liked</string>
+    <string name="search_drink">Search drink</string>
+    <string name="favourite_drinks">Favourite drinks</string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
+    <string name="chosen_ingredients">Chosen ingredients</string>
+    <string name="select_ingredients">Select ingredients</string>
 </resources>

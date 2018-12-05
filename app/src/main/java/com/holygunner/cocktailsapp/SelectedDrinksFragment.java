@@ -1,22 +1,18 @@
 package com.holygunner.cocktailsapp;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
@@ -28,7 +24,6 @@ import java.util.Objects;
 import com.holygunner.cocktailsapp.models.Bar;
 import com.holygunner.cocktailsapp.models.BarManager;
 import com.holygunner.cocktailsapp.models.Drink;
-import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.save.Saver;
 
@@ -132,94 +127,11 @@ public class SelectedDrinksFragment extends Fragment {
 
     private void setupAdapter(){
         if (isAdded()){
-            mDrinksAdapter = new DrinksAdapter(mDrinks);
+            mDrinksAdapter = new com.holygunner.cocktailsapp.DrinksAdapter(getContext(), mDrinks);
             mRecyclerView.setAdapter(mDrinksAdapter);
             if (savedRecyclerViewState != null){
                 mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
             }
-        }
-    }
-
-    private class DrinksHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private Drink mDrink;
-        private TextView drinkNameTextView;
-        private TextView drinkChosenIngrsTextView;
-        private TextView drinkPositionTextView;
-        private ImageView drinkImageView;
-        private CardView drink_CardView;
-        private View mHeartImageViewContainer;
-
-        DrinksHolder(View itemView) {
-            super(itemView);
-            drinkNameTextView = itemView.findViewById(R.id.drink_name_TextView);
-            drinkChosenIngrsTextView = itemView.findViewById(R.id.drink_chosen_ingrs_TextView);
-            drinkPositionTextView = itemView.findViewById(R.id.drink_position);
-            drinkImageView = itemView.findViewById(R.id.drink_imageView);
-            drink_CardView = itemView.findViewById(R.id.drink_CardView);
-            drink_CardView.setOnClickListener(this);
-            mHeartImageViewContainer = itemView.findViewById(R.id.is_drink_liked_container);
-        }
-
-        void bindDrink(Drink drink){
-            mDrink = drink;
-            setIsFav(Saver.isDrinkFav(getContext(), mDrink));
-            drinkImageView.setTag(ImageHelper.downloadImage(drink.getUrlImage(), drinkImageView));
-            drinkNameTextView.setText(drink.getName());
-            setDrinkChosenIngrsTextView(drink);
-        }
-
-        private void setIsFav(boolean isFav){
-            if (isFav){
-                mHeartImageViewContainer.setVisibility(View.VISIBLE);
-            }   else {
-                mHeartImageViewContainer.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getContext(), DrinkRecipeActivity.class);
-            intent.putExtra(DRINK_ID_KEY, mDrink.getId());
-            startActivity(intent);
-        }
-
-        private void setDrinkChosenIngrsTextView(@NotNull Drink drink){
-            StringBuilder text = new StringBuilder();
-
-            for (Ingredient ingr: drink.getChosenIngredients()){
-                text.append(ingr.getName()).append(", ");
-            }
-
-            text.delete(text.length()-2, text.length()-1);
-            drinkChosenIngrsTextView.setText(text);
-        }
-    }
-
-    private class DrinksAdapter extends RecyclerView.Adapter<DrinksHolder>{
-        private List<Drink> mDrinks;
-
-        DrinksAdapter(List<Drink> drinks){
-            mDrinks = drinks;
-        }
-
-        @NonNull
-        @Override
-        public DrinksHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View view = inflater.inflate(R.layout.drink_item, parent, false);
-            return new DrinksHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull DrinksHolder holder, int position) {
-            String drinkPosition = position + 1 + "";
-            holder.drinkPositionTextView.setText(drinkPosition);
-            holder.bindDrink(mDrinks.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mDrinks.size();
         }
     }
 

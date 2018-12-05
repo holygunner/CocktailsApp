@@ -26,4 +26,16 @@
         <item name="android:theme">@style/ThemeOverlay.AppCompat.ActionBar</item>
     </style>
 
+    <style name="CustomDrawerNavigationView">
+        <item name="android:background">@color/light_color</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:addStatesFromChildren">true</item>
+        <item name="itemIconTint">@drawable/nav_menu_text_colors</item>
+        <item name="itemTextColor">@drawable/nav_menu_text_colors</item>
+        <item name="menu">@menu/drawer_view</item>
+    </style>
+
 </resources>

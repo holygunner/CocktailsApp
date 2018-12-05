@@ -3,6 +3,7 @@ package com.holygunner.cocktailsapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -30,29 +31,31 @@ import java.util.Objects;
 
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
-public class IngredientsFragment extends Fragment implements View.OnClickListener{
+public class SelectIngredientsFragment extends Fragment implements View.OnClickListener{
     private RecyclerView mRecyclerView;
     private Button mMixButton;
     private ViewGroup parentLayout;
     private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
     private List<IngredientsCategory> mIngredientsCategories = new ArrayList<>();
     private IngredientManager mIngredientManager;
+    private final int CURRENT_ITEM_ID = R.id.select_ingredients;
 
     @NonNull
-    public static IngredientsFragment newInstance(){
-        return new IngredientsFragment();
+    public static SelectIngredientsFragment newInstance(){
+        return new SelectIngredientsFragment();
     }
 
     public void onCreate(Bundle onSavedInstanceState){
         super.onCreate(onSavedInstanceState);
-        setHasOptionsMenu(true);
         setRetainInstance(true);
+        setHasOptionsMenu(true);
         mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
         mIngredientsCategories = mIngredientManager.getAllIngredients();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.fragment_ingredients_list, container, false);
+        View v = inflater.inflate(R.layout.select_ingredients_list, container, false);
 
         android.support.v7.widget.Toolbar toolbar
                 = v.findViewById(R.id.toolbar_from_ingredients_list);
@@ -63,8 +66,10 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
         parentLayout = v.findViewById(R.id.parent_layout);
         mMixButton = v.findViewById(R.id.mix_button);
         mDrawerLayout = v.findViewById(R.id.drawer_layout);
-        NavigationView navigationView = v.findViewById(R.id.nav_view1);
-        setNavigationMenu(navigationView);
+        mNavigationView = v.findViewById(R.id.nav_view);
+        DrawerMenuHelper.setNavigationMenu(getContext(), mDrawerLayout, mNavigationView,
+                CURRENT_ITEM_ID);
+
         mMixButton.setOnClickListener(this);
         mMixButton.setVisibility(!Saver.readIngredients(getContext(),
                 CHOSEN_INGREDIENTS_KEY).isEmpty() ? View.VISIBLE : View.INVISIBLE);
@@ -76,6 +81,18 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
         mRecyclerView.setLayoutManager(manager);
         setupAdapter();
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mNavigationView.setCheckedItem(CURRENT_ITEM_ID);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
     }
 
     @Override
@@ -91,28 +108,6 @@ public class IngredientsFragment extends Fragment implements View.OnClickListene
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void setNavigationMenu(NavigationView navigationView){
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        mDrawerLayout.closeDrawers();
-
-                        if (menuItem.getItemId() == R.id.about){
-                            startActivity(new Intent(getContext(), SelectedDrinksActivity.class)); // only TEST
-                        }
-
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
-
-                        return true;
-                    }
-                });
     }
 
     public void setMixButtonVisibility(){

@@ -19,6 +19,10 @@ abstract class ToastBuilder {
         return buildToast(context, R.string.like_button_pressed_cancel);
     }
 
+    static Toast noChosenIngrsToast(Context context){
+        return buildToast(context, R.string.no_chosen_ingredients);
+    }
+
     private static Toast buildToast(Context context, int resId){
         @SuppressLint("ShowToast") Toast toast = Toast.makeText(context,
                 resId, Toast.LENGTH_SHORT);
