@@ -51,7 +51,6 @@ abstract class DrawerMenuHelper {
                                     }
                                 }, 200);
                             }
-
                             drawerLayout.closeDrawers();
                         }
                         return true;

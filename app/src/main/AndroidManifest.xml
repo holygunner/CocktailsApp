@@ -28,7 +28,8 @@
 
         <activity android:name=".DrinkRecipeActivity"/>
 
-        <activity android:name=".ChosenIngredientsActivity"/>
+        <activity android:name=".ChosenIngredientsActivity"
+                  android:parentActivityName=".SelectIngredientsActivity"/>
 
         <activity android:name=".FavouriteDrinkActivity"/>
 

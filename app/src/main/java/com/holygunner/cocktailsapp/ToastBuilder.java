@@ -23,6 +23,10 @@ abstract class ToastBuilder {
         return buildToast(context, R.string.no_chosen_ingredients);
     }
 
+    static Toast chosenIngrsListEmptyToast(Context context){
+        return buildToast(context, R.string.chosen_ingredients_are_cleared);
+    }
+
     private static Toast buildToast(Context context, int resId){
         @SuppressLint("ShowToast") Toast toast = Toast.makeText(context,
                 resId, Toast.LENGTH_SHORT);

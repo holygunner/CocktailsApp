@@ -150,16 +150,14 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
         }   else if
                 ((mMixButton.getVisibility() == View.VISIBLE) && isExist){
             visibility = false;
+            TransitionSet set = new TransitionSet()
+                    .addTransition(new Fade())
+                    .setInterpolator(new FastOutLinearInInterpolator());
+            TransitionManager.beginDelayedTransition(parentLayout, set);
             }   else {
             return;
         }
 
-        TransitionSet set = new TransitionSet()
-                .addTransition(new Fade())
-                .setInterpolator(visibility ? new LinearOutSlowInInterpolator() :
-                        new FastOutLinearInInterpolator());
-
-        TransitionManager.beginDelayedTransition(parentLayout, set);
         mMixButton.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
     }
 

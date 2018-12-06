@@ -2,6 +2,7 @@ package com.holygunner.cocktailsapp;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,5 +28,17 @@ public abstract class IngredientItemHelper {
         }   else {
             ingredientImageView.setColorFilter(null);
         }
+    }
+
+    public static int calculateNoOfColumns(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        return  (int) (dpWidth / 128);
+    }
+
+    public static int calculateNoOfColumns(Context context, int width) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = width / displayMetrics.density;
+        return  (int) (dpWidth / 128);
     }
 }

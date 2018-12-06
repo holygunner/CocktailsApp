@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -113,7 +112,9 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
         mRecyclerView = v.findViewById(R.id.drink_ingredients_recyclerGridView);
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), getSpanCount()));
+        View view = (View) mRecyclerView.getParent();
+
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), calculateSpanCount()));
 
         if (savedInstanceState != null){
             if (savedInstanceState.getCharArray(SAVED_DRINK_KEY) != null) {
@@ -139,12 +140,13 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private int getSpanCount(){
+    private int calculateSpanCount(){
         int orientation = getResources().getConfiguration().orientation;
         int spanCount = 2;
 
         if (orientation == ORIENTATION_PORTRAIT){
-            spanCount = 3;
+            spanCount = IngredientItemHelper
+                    .calculateNoOfColumns(Objects.requireNonNull(getContext()));
         }
         return spanCount;
     }
