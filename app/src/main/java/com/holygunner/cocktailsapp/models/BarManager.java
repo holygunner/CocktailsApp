@@ -40,7 +40,7 @@ public class BarManager {
             selectBars(bar);
         }
 
-        Collections.sort(mSelectedDrinks, new DrinkComparator());
+        Collections.sort(mSelectedDrinks, new DrinksComparator());
 
         Bar selectedBar = new Bar();
         Saver.writeIngredients(mContext,

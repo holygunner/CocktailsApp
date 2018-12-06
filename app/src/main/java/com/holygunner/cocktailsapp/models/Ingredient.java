@@ -1,9 +1,13 @@
 package com.holygunner.cocktailsapp.models;
 
+import android.graphics.drawable.Drawable;
+
 public class Ingredient {
     private String mName;
     private String mCategory;
     private String mMeasure;
+    private Drawable mDrawable;
+    private boolean mIsFill;
 
     public Ingredient(String ingredientName, String ingredientMeasure){
         this.mName = ingredientName;
@@ -34,5 +38,21 @@ public class Ingredient {
 
     void setCategory(String category) {
         this.mCategory = category;
+    }
+
+    public Drawable getDrawable() {
+        return mDrawable;
+    }
+
+    public void setDrawable(Drawable drawable) {
+        mDrawable = drawable;
+    }
+
+    public boolean isFill() {
+        return mIsFill;
+    }
+
+    public void setFill(boolean fill) {
+        mIsFill = fill;
     }
 }

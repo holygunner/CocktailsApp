@@ -280,13 +280,15 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
             ingredientNameTextView.setText(text);
 
             if (chosenIngredientNames.contains(ingredient.getName().toLowerCase())){
-                Context context = Objects.requireNonNull(getContext());
-                ingredientNameTextView.setTextColor(ContextCompat
-                        .getColor(context, R.color.light_color));
-                ingredientNameTextView
-                        .setBackground(ContextCompat
-                                .getDrawable(context,
-                                        R.drawable.ingredient_name_background));
+                IngredientItemHelper.setFillToNameTextView(getContext(),
+                        ingredientNameTextView, true);
+//                Context context = Objects.requireNonNull(getContext());
+//                ingredientNameTextView.setTextColor(ContextCompat
+//                        .getColor(context, R.color.light_color));
+//                ingredientNameTextView
+//                        .setBackground(ContextCompat
+//                                .getDrawable(context,
+//                                        R.drawable.ingredient_name_background));
             }
         }
     }

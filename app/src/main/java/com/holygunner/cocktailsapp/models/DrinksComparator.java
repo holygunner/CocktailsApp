@@ -2,7 +2,7 @@ package com.holygunner.cocktailsapp.models;
 
 import java.util.Comparator;
 
-public class DrinkComparator implements Comparator<Drink> {
+public class DrinksComparator implements Comparator<Drink> {
     @Override
     public int compare(Drink drink1, Drink drink2) {
         int sizeCompare = Integer.compare(drink2.getChosenIngredients().size(),

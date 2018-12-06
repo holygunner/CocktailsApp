@@ -2,6 +2,7 @@ package com.holygunner.cocktailsapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.holygunner.cocktailsapp.save.Saver.CHECKED_INGREDIENTS_KEY;
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 public class SelectIngredientsFragment extends Fragment implements View.OnClickListener{
@@ -40,6 +42,8 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
     private List<IngredientsCategory> mIngredientsCategories = new ArrayList<>();
     private IngredientManager mIngredientManager;
     private final int CURRENT_ITEM_ID = R.id.select_ingredients;
+    private Parcelable savedRecyclerViewState;
+    private static final String SELECT_INGRS_SAVED_STATE_KEY = "select_ingrs_saved_state";
 
     @NonNull
     public static SelectIngredientsFragment newInstance(){
@@ -54,8 +58,22 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
         mIngredientsCategories = mIngredientManager.getAllIngredients();
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null){
+            savedRecyclerViewState = savedInstanceState.getParcelable(SELECT_INGRS_SAVED_STATE_KEY);
+        }
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.select_ingredients_list, container, false);
+
+        if (savedInstanceState != null){
+            savedRecyclerViewState = savedInstanceState.getParcelable(SELECT_INGRS_SAVED_STATE_KEY);
+        }
 
         android.support.v7.widget.Toolbar toolbar
                 = v.findViewById(R.id.toolbar_from_ingredients_list);
@@ -86,7 +104,19 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
+        mRecyclerView.getAdapter().notifyDataSetChanged();
+//        setupAdapter();
+        setMixButtonVisibility();
+         // better save parcelable state of recView
         mNavigationView.setCheckedItem(CURRENT_ITEM_ID);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putParcelable(SELECT_INGRS_SAVED_STATE_KEY,
+                mRecyclerView.getLayoutManager().onSaveInstanceState());
     }
 
     @Override
@@ -138,6 +168,10 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
             RecyclerViewCategoriesAdapter adapter = new RecyclerViewCategoriesAdapter(this,
                     mIngredientManager, mIngredientsCategories);
             mRecyclerView.setAdapter(adapter);
+
+            if (savedRecyclerViewState != null){
+                mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
+            }
         }
     }
 }

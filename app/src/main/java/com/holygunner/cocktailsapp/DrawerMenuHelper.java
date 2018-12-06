@@ -13,7 +13,7 @@ import com.holygunner.cocktailsapp.save.Saver;
 abstract class DrawerMenuHelper {
 
     static void setNavigationMenu(final Context context, final DrawerLayout drawerLayout,
-                                  @NonNull NavigationView navigationView, final int currentItemId){
+                                  @NonNull final NavigationView navigationView, final int currentItemId){
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -31,6 +31,10 @@ abstract class DrawerMenuHelper {
                                     if (isChosenIngrsAvailable(context)) {
                                         intent = new Intent(context,
                                                 ChosenIngredientsActivity.class);
+                                    }   else {
+                                        menuItem.setChecked(false);
+                                        drawerLayout.closeDrawers();
+                                        return false;
                                     }
                                     break;
                                 case R.id.about:

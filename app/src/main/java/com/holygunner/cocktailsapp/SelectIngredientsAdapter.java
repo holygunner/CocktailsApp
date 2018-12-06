@@ -2,7 +2,6 @@ package com.holygunner.cocktailsapp;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +61,7 @@ public class SelectIngredientsAdapter extends RecyclerView.Adapter<SelectIngredi
             ingredientImageView = itemView.findViewById(R.id.ingredientImageView);
             ingredientNameTextView.setOnClickListener(this);
             ingredientImageView.setOnClickListener(this);
+//            itemView.setOnClickListener(this);
         }
 
         void bind(Ingredient ingredient){
@@ -69,27 +69,31 @@ public class SelectIngredientsAdapter extends RecyclerView.Adapter<SelectIngredi
             ingredientNameTextView.setText(ingredient.getName());
             ingredientImageView.setImageDrawable(mIngredientManager.getIngredientDrawable(ingredient.getCategory(),
                     ingredient.getName()));
-            setColorFilter(Saver.isIngredientExists(mContext, ingredient.getName()));
+            boolean isFill = Saver.isIngredientExists(mContext, ingredient.getName());
+            IngredientItemHelper.setColorFilterToImageView(mContext, ingredientImageView, isFill);
+            IngredientItemHelper.setFillToNameTextView(mContext, ingredientNameTextView, isFill);
         }
 
         @Override
         public void onClick(View v) {
-            setColorFilter(Saver.updChosenIngredient(mContext, mIngredient.getName()));
+            boolean isFill = Saver.updChosenIngredient(mContext, mIngredient.getName());
+            IngredientItemHelper.setColorFilterToImageView(mContext, ingredientImageView, isFill);
+            IngredientItemHelper.setFillToNameTextView(mContext, ingredientNameTextView, isFill);
             mFragment.setMixButtonVisibility();
         }
 
-        private void setColorFilter(boolean isFill){
-            if (isFill){
-                ingredientImageView.setColorFilter(ContextCompat.getColor(mContext, R.color.ingredientColorFill));
-                ingredientNameTextView.setTextColor(ContextCompat.getColor(mContext, R.color.light_color));
-                ingredientNameTextView
-                        .setBackground(ContextCompat
-                                .getDrawable(mContext, R.drawable.ingredient_name_background));
-            }   else {
-                ingredientImageView.setColorFilter(null);
-                ingredientNameTextView.setTextColor(ContextCompat.getColor(mContext, R.color.textView_color));
-                ingredientNameTextView.setBackgroundResource(0);
-            }
-        }
+//        private void setColorFilter(boolean isFill){
+//            if (isFill){
+//                ingredientImageView.setColorFilter(ContextCompat.getColor(mContext, R.color.ingredientColorFill));
+//                ingredientNameTextView.setTextColor(ContextCompat.getColor(mContext, R.color.light_color));
+//                ingredientNameTextView
+//                        .setBackground(ContextCompat
+//                                .getDrawable(mContext, R.drawable.ingredient_name_background));
+//            }   else {
+//                ingredientImageView.setColorFilter(null);
+//                ingredientNameTextView.setTextColor(ContextCompat.getColor(mContext, R.color.textView_color));
+//                ingredientNameTextView.setBackgroundResource(0);
+//            }
+//        }
     }
 }

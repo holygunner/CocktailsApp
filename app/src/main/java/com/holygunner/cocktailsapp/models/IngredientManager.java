@@ -6,8 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.holygunner.cocktailsapp.values.IngredientsCategoriesNames;
-
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,6 +19,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.holygunner.cocktailsapp.values.IngredientsCategoriesNames.CATEGORIES_NAMES;
+
 public class IngredientManager {
     private AssetManager mAssetManager;
 
@@ -30,7 +30,7 @@ public class IngredientManager {
 
     public List<IngredientsCategory> getAllIngredients(){
         List<IngredientsCategory> allIngredients = new ArrayList<>();
-        String[] categoriesNames = IngredientsCategoriesNames.CATEGORIES_NAMES;
+        String[] categoriesNames = CATEGORIES_NAMES;
 
         for (String category: categoriesNames){
             allIngredients.add(new IngredientsCategory(category, getIngredientsOfCategory(category)));
@@ -43,7 +43,7 @@ public class IngredientManager {
         return countChangedIngredients(userChosenIngrs, checkedIngrs, false);
     }
 
-    static Set<String> countRemovedIngredients(Set<String> userChosenIngrs,
+    public static Set<String> countRemovedIngredients(Set<String> userChosenIngrs,
                                                @NotNull Set<String> checkedIngrs) {
         return countChangedIngredients(userChosenIngrs, checkedIngrs, true);
     }
@@ -62,7 +62,7 @@ public class IngredientManager {
     public String findIngredientCategory(String fileName){
         String ingredientCategory = "";
         try {
-            for (String category: IngredientsCategoriesNames.CATEGORIES_NAMES){
+            for (String category: CATEGORIES_NAMES){
                 if (Arrays.asList(Objects.requireNonNull(mAssetManager.list(category)))
                         .contains(fileName + ".png")){
                     ingredientCategory = category;
@@ -156,5 +156,17 @@ public class IngredientManager {
         }
         ingredients = setTitleElemFirstIfExists(ingredients, category);
         return ingredients;
+    }
+
+    public List<Ingredient> chosenNameToIngrList(Set<String> chosenNames){
+        List<Ingredient> chosenIngrList = new LinkedList<>();
+
+        for (String name : chosenNames){
+            String category = findIngredientCategory(name);
+            Ingredient ingredient = new Ingredient(name);
+            ingredient.setDrawable(getIngredientDrawable(category, name));
+            chosenIngrList.add(ingredient);
+        }
+        return chosenIngrList;
     }
 }

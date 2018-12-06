@@ -40,7 +40,7 @@ public class SelectedDrinksFragment extends Fragment {
     private int howMuchChecked;
 
     public static final String DRINK_ID_KEY = "drink_id_key";
-    private static final String SAVED_STATE_KEY = "saved_state_key";
+    private static final String SELECTED_DRINKS_SAVED_STATE_KEY = "selected_drinks_saved_state_key";
     private Parcelable savedRecyclerViewState;
 
     @NonNull
@@ -58,7 +58,7 @@ public class SelectedDrinksFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (savedInstanceState != null){
-            savedRecyclerViewState = savedInstanceState.getParcelable(SAVED_STATE_KEY);
+            savedRecyclerViewState = savedInstanceState.getParcelable(SELECTED_DRINKS_SAVED_STATE_KEY);
         }
     }
 
@@ -66,7 +66,7 @@ public class SelectedDrinksFragment extends Fragment {
         View v = inflater.inflate(R.layout.selected_drinks_layout, container, false);
 
         if (savedInstanceState != null){
-            savedRecyclerViewState = savedInstanceState.getParcelable(SAVED_STATE_KEY);
+            savedRecyclerViewState = savedInstanceState.getParcelable(SELECTED_DRINKS_SAVED_STATE_KEY);
         }
 
         android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar_drinks_list);
@@ -103,7 +103,7 @@ public class SelectedDrinksFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
 
-        savedInstanceState.putParcelable(SAVED_STATE_KEY,
+        savedInstanceState.putParcelable(SELECTED_DRINKS_SAVED_STATE_KEY,
                 mRecyclerView.getLayoutManager().onSaveInstanceState());
     }
 
@@ -162,7 +162,9 @@ public class SelectedDrinksFragment extends Fragment {
             SelectedDrinksFragment fragment = mReference.get();
 
             if (mProgressBarReference != null) {
-                mProgressBarReference.get().setVisibility(View.GONE);
+                if (mProgressBarReference.get() != null) {
+                    mProgressBarReference.get().setVisibility(View.GONE);
+                }
             }
 
             if (fragment != null) {

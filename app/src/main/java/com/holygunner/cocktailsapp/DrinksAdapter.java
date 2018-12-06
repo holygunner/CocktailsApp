@@ -66,8 +66,8 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
             drinkPositionTextView = itemView.findViewById(R.id.drink_position);
             drinkImageView = itemView.findViewById(R.id.drink_imageView);
             drink_CardView = itemView.findViewById(R.id.drink_CardView);
-            drink_CardView.setOnClickListener(this);
             mHeartImageViewContainer = itemView.findViewById(R.id.is_drink_liked_container);
+            itemView.setOnClickListener(this);
         }
 
         void bindDrink(Drink drink){
