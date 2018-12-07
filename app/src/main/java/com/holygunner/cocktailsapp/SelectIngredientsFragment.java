@@ -24,7 +24,7 @@ import android.widget.Button;
 import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.models.IngredientsCategory;
 import com.holygunner.cocktailsapp.save.Saver;
-import com.holygunner.cocktailsapp.tools.DrawerMenuHelper;
+import com.holygunner.cocktailsapp.tools.DrawerMenuManager;
 import com.holygunner.cocktailsapp.tools.ToolbarHelper;
 
 import java.util.ArrayList;
@@ -85,7 +85,8 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
         mMixButton = v.findViewById(R.id.mix_button);
         mDrawerLayout = v.findViewById(R.id.drawer_layout);
         mNavigationView = v.findViewById(R.id.nav_view);
-        DrawerMenuHelper.setNavigationMenu(getActivity(), mDrawerLayout, mNavigationView,
+        DrawerMenuManager drawerMenuManager = new DrawerMenuManager();
+        drawerMenuManager.setNavigationMenu(getActivity(), mDrawerLayout, mNavigationView,
                 CURRENT_ITEM_ID);
 
         mMixButton.setOnClickListener(this);

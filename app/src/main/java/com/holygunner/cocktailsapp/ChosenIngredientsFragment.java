@@ -1,6 +1,5 @@
 package com.holygunner.cocktailsapp;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -29,11 +28,10 @@ import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.models.IngredientsComparator;
 import com.holygunner.cocktailsapp.save.Saver;
-import com.holygunner.cocktailsapp.tools.DrawerMenuHelper;
+import com.holygunner.cocktailsapp.tools.DrawerMenuManager;
 import com.holygunner.cocktailsapp.tools.IngredientItemHelper;
 import com.holygunner.cocktailsapp.tools.ToastBuilder;
 import com.holygunner.cocktailsapp.tools.ToolbarHelper;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -112,7 +110,8 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
         mRemoveButton.setOnClickListener(this);
         mDrawerLayout = v.findViewById(R.id.drawer_layout);
         mNavigationView = v.findViewById(R.id.nav_view);
-        DrawerMenuHelper.setNavigationMenu(getActivity(), mDrawerLayout, mNavigationView,
+        DrawerMenuManager drawerMenuManager = new DrawerMenuManager();
+        drawerMenuManager.setNavigationMenu(getActivity(), mDrawerLayout, mNavigationView,
                 CURRENT_ITEM_ID);
 
         mRecyclerView = v.findViewById(R.id.chosen_ingredients_list);
