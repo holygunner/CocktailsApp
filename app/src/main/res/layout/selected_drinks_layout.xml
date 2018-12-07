@@ -21,7 +21,6 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_drinks_list"
-        app:title="Choose the drink"
         app:titleTextColor="@color/light_color"
         style="@style/CustomToolbar"/>
 

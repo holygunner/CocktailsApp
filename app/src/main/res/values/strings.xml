@@ -33,4 +33,7 @@
     <string name="chosen_ingredients">Chosen ingredients</string>
     <string name="select_ingredients">Select ingredients</string>
     <string name="select_ingredients_to_remove">Select ingredients to remove from this list</string>
+    <string name="choose_the_drink">Choose the drink</string>
+    <string name="drawer_open">drawer open</string>
+    <string name="drawer_close">drawer close</string>
 </resources>

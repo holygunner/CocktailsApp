@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -76,6 +77,8 @@ public class SelectedDrinksFragment extends Fragment {
         ToolbarHelper.setToolbar(toolbar,
                 (SingleFragmentActivity) Objects.requireNonNull(getActivity()),
                 ToolbarHelper.UP_BUTTON);
+        Objects.requireNonNull(((SingleFragmentActivity) getActivity()).getSupportActionBar())
+                .setTitle(R.string.choose_the_drink);
 
         mRecyclerView = v.findViewById(R.id.drinks_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

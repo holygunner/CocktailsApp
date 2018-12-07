@@ -5,6 +5,9 @@ import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -30,9 +33,8 @@ public class IngredientManager {
 
     public List<IngredientsCategory> getAllIngredients(){
         List<IngredientsCategory> allIngredients = new ArrayList<>();
-        String[] categoriesNames = CATEGORIES_NAMES;
 
-        for (String category: categoriesNames){
+        for (String category: CATEGORIES_NAMES){
             allIngredients.add(new IngredientsCategory(category, getIngredientsOfCategory(category)));
         }
         return allIngredients;
@@ -43,7 +45,7 @@ public class IngredientManager {
         return countChangedIngredients(userChosenIngrs, checkedIngrs, false);
     }
 
-    public static Set<String> countRemovedIngredients(Set<String> userChosenIngrs,
+    static Set<String> countRemovedIngredients(Set<String> userChosenIngrs,
                                                @NotNull Set<String> checkedIngrs) {
         return countChangedIngredients(userChosenIngrs, checkedIngrs, true);
     }
@@ -57,6 +59,31 @@ public class IngredientManager {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @NonNull
+    @Contract(pure = true)
+    public static String getIngredientPath(String folderName, String fileName){
+        return "file:///android_asset/" + folderName + "/" + fileName + ".png";
+    }
+
+    public void bindIngredientWithImageView(ImageView imageView, String fileName){
+        String folderName = findIngredientCategory(fileName);
+        String path = getPath(fileName, folderName);
+        Picasso.get()
+                .load(path)
+                .into(imageView);
+    }
+
+    public void bindIngredientWithImageView(ImageView imageView, String fileName, String folderName){
+        String path = getPath(fileName, folderName);
+        Picasso.get()
+                .load(path)
+                .into(imageView);
+    }
+
+    private String getPath(String fileName, String folderName){
+        return "file:///android_asset/" + folderName + "/" + fileName + ".png";
     }
 
     public String findIngredientCategory(String fileName){

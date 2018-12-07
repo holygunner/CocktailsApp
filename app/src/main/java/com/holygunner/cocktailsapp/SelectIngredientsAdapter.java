@@ -68,8 +68,10 @@ public class SelectIngredientsAdapter extends RecyclerView.Adapter<SelectIngredi
         void bind(Ingredient ingredient){
             mIngredient = ingredient;
             ingredientNameTextView.setText(ingredient.getName());
-            ingredientImageView.setImageDrawable(mIngredientManager.getIngredientDrawable(ingredient.getCategory(),
-                    ingredient.getName()));
+//            ingredientImageView.setImageDrawable(mIngredientManager.getIngredientDrawable(ingredient.getCategory(),
+//                    ingredient.getName()));
+            mIngredientManager.bindIngredientWithImageView(ingredientImageView,
+                    ingredient.getName(), ingredient.getCategory());
             boolean isFill = Saver.isIngredientExists(mContext, ingredient.getName());
             IngredientItemHelper.setColorFilterToImageView(mContext, ingredientImageView, isFill);
             IngredientItemHelper.setFillToNameTextView(mContext, ingredientNameTextView, isFill);
@@ -82,19 +84,5 @@ public class SelectIngredientsAdapter extends RecyclerView.Adapter<SelectIngredi
             IngredientItemHelper.setFillToNameTextView(mContext, ingredientNameTextView, isFill);
             mFragment.setMixButtonVisibility();
         }
-
-//        private void setColorFilter(boolean isFill){
-//            if (isFill){
-//                ingredientImageView.setColorFilter(ContextCompat.getColor(mContext, R.color.ingredientColorFill));
-//                ingredientNameTextView.setTextColor(ContextCompat.getColor(mContext, R.color.light_color));
-//                ingredientNameTextView
-//                        .setBackground(ContextCompat
-//                                .getDrawable(mContext, R.drawable.ingredient_name_background));
-//            }   else {
-//                ingredientImageView.setColorFilter(null);
-//                ingredientNameTextView.setTextColor(ContextCompat.getColor(mContext, R.color.textView_color));
-//                ingredientNameTextView.setBackgroundResource(0);
-//            }
-//        }
     }
 }

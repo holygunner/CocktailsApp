@@ -85,7 +85,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
         mMixButton = v.findViewById(R.id.mix_button);
         mDrawerLayout = v.findViewById(R.id.drawer_layout);
         mNavigationView = v.findViewById(R.id.nav_view);
-        DrawerMenuHelper.setNavigationMenu(getContext(), mDrawerLayout, mNavigationView,
+        DrawerMenuHelper.setNavigationMenu(getActivity(), mDrawerLayout, mNavigationView,
                 CURRENT_ITEM_ID);
 
         mMixButton.setOnClickListener(this);

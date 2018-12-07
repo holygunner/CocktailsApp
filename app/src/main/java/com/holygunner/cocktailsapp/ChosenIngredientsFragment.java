@@ -33,6 +33,7 @@ import com.holygunner.cocktailsapp.tools.DrawerMenuHelper;
 import com.holygunner.cocktailsapp.tools.IngredientItemHelper;
 import com.holygunner.cocktailsapp.tools.ToastBuilder;
 import com.holygunner.cocktailsapp.tools.ToolbarHelper;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -111,7 +112,7 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
         mRemoveButton.setOnClickListener(this);
         mDrawerLayout = v.findViewById(R.id.drawer_layout);
         mNavigationView = v.findViewById(R.id.nav_view);
-        DrawerMenuHelper.setNavigationMenu(getContext(), mDrawerLayout, mNavigationView,
+        DrawerMenuHelper.setNavigationMenu(getActivity(), mDrawerLayout, mNavigationView,
                 CURRENT_ITEM_ID);
 
         mRecyclerView = v.findViewById(R.id.chosen_ingredients_list);
@@ -245,15 +246,7 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
 
         void bindIngredient(Ingredient ingredient) {
             mIngredient = ingredient;
-            String category = mIngredientManager
-                    .findIngredientCategory(ingredient
-                            .getName());
-
-            Drawable drawable = mIngredientManager
-                    .getIngredientDrawable(category,
-                            ingredient.getName());
-
-            ingredientImageView.setImageDrawable(drawable);
+            mIngredientManager.bindIngredientWithImageView(ingredientImageView, ingredient.getName());
             ingredientNameTextView.setText(ingredient.getName());
 
             if (mIngredient.isFill()){
