@@ -32,6 +32,7 @@
                   android:parentActivityName=".SelectIngredientsActivity"/>
 
         <activity android:name=".FavouriteDrinkActivity"/>
+        <activity android:name=".AboutActivity"/>
 
     </application>
 

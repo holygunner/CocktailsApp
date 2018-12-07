@@ -23,6 +23,13 @@ import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.save.Saver;
+import com.holygunner.cocktailsapp.tools.ImageHelper;
+import com.holygunner.cocktailsapp.tools.IngredientItemHelper;
+import com.holygunner.cocktailsapp.tools.JsonParser;
+import com.holygunner.cocktailsapp.tools.RequestProvider;
+import com.holygunner.cocktailsapp.tools.ToastBuilder;
+import com.holygunner.cocktailsapp.tools.ToolbarHelper;
+import com.holygunner.cocktailsapp.tools.URLBuilder;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -146,7 +153,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
 
         if (orientation == ORIENTATION_PORTRAIT){
             spanCount = IngredientItemHelper
-                    .calculateNoOfColumns(Objects.requireNonNull(getContext()));
+                    .calculateNumbOfColumns(Objects.requireNonNull(getContext()));
         }
         return spanCount;
     }

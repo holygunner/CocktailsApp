@@ -29,6 +29,10 @@ import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.models.IngredientsComparator;
 import com.holygunner.cocktailsapp.save.Saver;
+import com.holygunner.cocktailsapp.tools.DrawerMenuHelper;
+import com.holygunner.cocktailsapp.tools.IngredientItemHelper;
+import com.holygunner.cocktailsapp.tools.ToastBuilder;
+import com.holygunner.cocktailsapp.tools.ToolbarHelper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -113,7 +117,7 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
         mRecyclerView = v.findViewById(R.id.chosen_ingredients_list);
         mRecyclerView.setHasFixedSize(false);
         LinearLayoutManager manager = new GridLayoutManager(getContext(),
-                IngredientItemHelper.calculateNoOfColumns(Objects.requireNonNull(getContext())));
+                IngredientItemHelper.calculateNumbOfColumns(Objects.requireNonNull(getContext())));
         mRecyclerView.setLayoutManager(manager);
         setupAdapter();
         return v;
@@ -236,6 +240,7 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
             ingredientNameTextView = itemView.findViewById(R.id.ingredientTextView);
             ingredientImageView.setOnClickListener(this);
             ingredientNameTextView.setOnClickListener(this);
+//            itemView.setOnClickListener(this);
         }
 
         void bindIngredient(Ingredient ingredient) {

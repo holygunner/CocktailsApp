@@ -93,16 +93,10 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:visibility="invisible"
+                app:cardBackgroundColor="@color/light_color"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="8dp"
                 app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:src="@drawable/card_background"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:contentDescription="@string/cardView_background"/>
 
                     <ScrollView
                         android:layout_width="match_parent"
@@ -151,16 +145,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            app:cardBackgroundColor="@color/light_color"
             app:cardElevation="4dp"
             app:cardCornerRadius="8dp"
             app:cardUseCompatPadding="true">
-
-            <ImageView
-                android:src="@drawable/card_background"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:contentDescription="@string/cardView_background"/>
 
             <LinearLayout
                 android:layout_marginRight="8dp"

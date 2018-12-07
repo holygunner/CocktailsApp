@@ -1,6 +1,6 @@
 package com.holygunner.cocktailsapp.models;
 
-import com.holygunner.cocktailsapp.JsonParser;
+import com.holygunner.cocktailsapp.tools.JsonParser;
 import com.holygunner.cocktailsapp.save.Saver;
 
 import android.content.Context;

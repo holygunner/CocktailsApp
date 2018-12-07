@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.save.Saver;
+import com.holygunner.cocktailsapp.tools.IngredientItemHelper;
 
 import org.jetbrains.annotations.NotNull;
 

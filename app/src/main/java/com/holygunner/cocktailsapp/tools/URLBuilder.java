@@ -1,11 +1,11 @@
-package com.holygunner.cocktailsapp;
+package com.holygunner.cocktailsapp.tools;
 
 import android.support.annotation.NonNull;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-abstract class URLBuilder {
+public abstract class URLBuilder {
     private static final String GET_COCKTAILS_LIST_BY_INGREDIENT = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=";
     private static final String COCKTAIL_BY_ID = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
     private static final String COCKTAIL_BY_NAME = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
@@ -30,7 +30,7 @@ abstract class URLBuilder {
 
     @NonNull
     @Contract(pure = true)
-    static String getMissedIngredientUrl(String name){
+    public static String getMissedIngredientUrl(String name){
         return "https://www.thecocktaildb.com/images/ingredients/" + name + "-Medium.png";
     }
 }

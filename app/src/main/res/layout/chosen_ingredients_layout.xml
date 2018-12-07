@@ -27,17 +27,11 @@
             android:layout_height="match_parent"
             android:minHeight="192dp"
             android:orientation="vertical"
-
+            app:cardBackgroundColor="@color/light_color"
             app:cardElevation="4dp"
             app:cardCornerRadius="8dp"
             app:cardUseCompatPadding="true">
 
-            <ImageView
-                android:src="@drawable/card_background"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:contentDescription="@string/cardView_background"/>
 
             <LinearLayout
                 android:layout_marginRight="8dp"
@@ -55,6 +49,7 @@
                     android:clipToPadding="false"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
+
                     app:stackFromEnd="true"
                     app:reverseLayout="true"/>
 

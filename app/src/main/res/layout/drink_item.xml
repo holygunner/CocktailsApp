@@ -7,16 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/light_color"
     android:padding="8dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="8dp"
-    app:cardUseCompatPadding="true">
-
-    <ImageView
-        android:src="@drawable/card_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:contentDescription="@string/cardView_background"/>
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="@color/light_color">
 
     <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -60,6 +58,15 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"/>
 
+                <TextView
+                    android:textSize="10sp"
+                    android:id="@+id/drink_position"
+                    android:textColor="@color/textView_color"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:gravity="bottom|end"
+                    tools:ignore="SmallSp"/>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -78,15 +85,6 @@
                 android:contentDescription="@string/is_drink_liked"/>
 
         </LinearLayout>
-
-        <TextView
-            android:textSize="10sp"
-            android:id="@+id/drink_position"
-            android:textColor="@color/textView_color"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:gravity="bottom|end"
-            tools:ignore="SmallSp"/>
 
     </android.support.constraint.ConstraintLayout>
 

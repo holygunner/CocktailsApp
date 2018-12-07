@@ -1,10 +1,11 @@
-package com.holygunner.cocktailsapp;
+package com.holygunner.cocktailsapp.tools;
 
 import android.support.annotation.NonNull;
 
 import com.holygunner.cocktailsapp.models.Bar;
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.Ingredient;
+import com.holygunner.cocktailsapp.tools.JsonParser;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import org.jetbrains.annotations.Nullable;
@@ -12,16 +13,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-class RequestProvider {
+public class RequestProvider {
     private JsonParser mJsonParser;
     private OkHttpClient mHttpClient;
 
-    RequestProvider(){
+    public RequestProvider(){
         mJsonParser = new JsonParser();
         mHttpClient = new OkHttpClient();
     }
 
-    List<Bar> downloadBars(String... ingredients){
+    public List<Bar> downloadBars(String... ingredients){
         List<Bar> downloadBars = new ArrayList<>();
 
         for (String checkedIngr : ingredients) {
@@ -43,7 +44,7 @@ class RequestProvider {
     }
 
     @Nullable
-    Drink getDrinkById(Integer drinkId){
+    public Drink getDrinkById(Integer drinkId){
         if (drinkId != null){
             String url = URLBuilder.getCocktailDetailsUrl(drinkId);
             Bar bar = mJsonParser.parseJsonToDrinksBar(downloadJsonByRequest(url));

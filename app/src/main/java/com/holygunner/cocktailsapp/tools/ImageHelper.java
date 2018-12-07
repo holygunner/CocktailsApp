@@ -1,4 +1,4 @@
-package com.holygunner.cocktailsapp;
+package com.holygunner.cocktailsapp.tools;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -16,10 +16,10 @@ import com.squareup.picasso.Target;
 
 import org.jetbrains.annotations.NotNull;
 
-abstract class ImageHelper {
+public abstract class ImageHelper {
     private static final float ROUND_FACTOR = 32;
 
-    static Target downloadImage(final String url, final ImageView imageView){
+    public static Target downloadImage(final String url, final ImageView imageView){
         final Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {

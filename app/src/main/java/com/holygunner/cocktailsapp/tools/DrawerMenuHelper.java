@@ -1,4 +1,4 @@
-package com.holygunner.cocktailsapp;
+package com.holygunner.cocktailsapp.tools;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,11 +8,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.os.Handler;
 
+import com.holygunner.cocktailsapp.AboutActivity;
+import com.holygunner.cocktailsapp.ChosenIngredientsActivity;
+import com.holygunner.cocktailsapp.R;
+import com.holygunner.cocktailsapp.SelectIngredientsActivity;
 import com.holygunner.cocktailsapp.save.Saver;
 
-abstract class DrawerMenuHelper {
+public abstract class DrawerMenuHelper {
 
-    static void setNavigationMenu(final Context context, final DrawerLayout drawerLayout,
+    public static void setNavigationMenu(final Context context, final DrawerLayout drawerLayout,
                                   @NonNull final NavigationView navigationView, final int currentItemId){
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -39,7 +43,7 @@ abstract class DrawerMenuHelper {
                                     break;
                                 case R.id.about:
                                     intent = new Intent(context,
-                                            SelectedDrinksActivity.class); // only TEST
+                                            AboutActivity.class);
                             }
                             final Intent finalIntent = intent;
 

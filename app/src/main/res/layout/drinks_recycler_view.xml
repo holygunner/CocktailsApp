@@ -1,4 +1,5 @@
 <android.support.v7.widget.RecyclerView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drinks_recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

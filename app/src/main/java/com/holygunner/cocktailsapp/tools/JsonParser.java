@@ -1,4 +1,4 @@
-package com.holygunner.cocktailsapp;
+package com.holygunner.cocktailsapp.tools;
 
 import android.util.Log;
 
@@ -23,7 +23,7 @@ public class JsonParser {
 //        return mGson.toJson(bar);
 //    }
 
-    String serializeDrinkToJsonBar(Drink drink){
+    public String serializeDrinkToJsonBar(Drink drink){
         Bar bar = new Bar();
         bar.drinks = new Drink[1];
         bar.drinks[0] = drink;
