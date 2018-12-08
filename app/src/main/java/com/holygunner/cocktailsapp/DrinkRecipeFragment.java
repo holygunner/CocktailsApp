@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -115,6 +116,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         ingredientsListCardView = v.findViewById(R.id.ingredients_list_cardView);
         drinkNameTextView = v.findViewById(R.id.drink_name_textView);
         drinkRecipeTextView = v.findViewById(R.id.recipe_textView);
+        drinkRecipeTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
         serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
         serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
         mRecyclerView = v.findViewById(R.id.drink_ingredients_recyclerGridView);

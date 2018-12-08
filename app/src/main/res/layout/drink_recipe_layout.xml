@@ -98,10 +98,12 @@
                     <TextView
                         android:id="@+id/recipe_textView"
                         android:textAlignment="textStart"
+                        android:singleLine="false"
+                        android:maxLines="6"
+                        android:scrollbars="vertical"
                         android:textColor="@color/textView_color"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxHeight="154dp"/>
+                        android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/serve_glass_textView"
