@@ -29,6 +29,14 @@ public abstract class ToastBuilder {
         return buildToast(context, R.string.chosen_ingredients_are_cleared);
     }
 
+    public static Toast favDrinksListEmptyToast(Context context){
+        return buildToast(context, R.string.fav_drinks_are_cleared);
+    }
+
+    public static Toast noFavDrinksToast(Context context){
+        return buildToast(context, R.string.no_fav_drinks);
+    }
+
     private static Toast buildToast(Context context, int resId){
         @SuppressLint("ShowToast") Toast toast = Toast.makeText(context,
                 resId, Toast.LENGTH_SHORT);

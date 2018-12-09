@@ -2,6 +2,7 @@ package com.holygunner.cocktailsapp.tools;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 
 import com.holygunner.cocktailsapp.R;
 import com.holygunner.cocktailsapp.SingleFragmentActivity;
@@ -13,7 +14,7 @@ public abstract class ToolbarHelper {
     public static final String MENU_BUTTON = "menu_button";
 
     public static void setToolbar(@NotNull android.support.v7.widget.Toolbar toolbar,
-                           @NotNull final SingleFragmentActivity activity, @NonNull String key){
+                                  @NotNull final AppCompatActivity activity, @NonNull String key){
         activity.setSupportActionBar(toolbar);
         ActionBar actionBar = activity.getSupportActionBar();
         assert actionBar != null;

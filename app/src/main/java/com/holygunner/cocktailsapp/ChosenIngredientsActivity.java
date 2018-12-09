@@ -1,5 +1,6 @@
 package com.holygunner.cocktailsapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -15,6 +16,12 @@ public class ChosenIngredientsActivity extends SingleFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkIsListNotEmpty();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, SelectIngredientsActivity.class));
     }
 
     private void checkIsListNotEmpty(){

@@ -121,17 +121,14 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
         mRecyclerView = v.findViewById(R.id.drink_ingredients_recyclerGridView);
 
-        View view = (View) mRecyclerView.getParent();
-
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), calculateSpanCount()));
 
         if (savedInstanceState != null){
             if (savedInstanceState.getCharArray(SAVED_DRINK_KEY) != null) {
                 mIsFav = savedInstanceState.getBoolean(IS_FAV_KEY);
-                String json = new String(Objects
+                String drinkJson = new String(Objects
                         .requireNonNull(savedInstanceState.getCharArray(SAVED_DRINK_KEY)));
-                Drink drink = mJsonParser.parseJsonToDrinksBar(json).drinks[0];
-                setupDrinkRecipe(drink, mIsFav);
+                setupDrinkRecipe(drinkJson, mIsFav);
             }
         }   else {
             loadDrink(v);
@@ -163,8 +160,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
 
     private void loadDrink(@NotNull View v){
         int drinkId = Objects.requireNonNull(getActivity()).getIntent().getIntExtra(SelectedDrinksFragment.DRINK_ID_KEY, 0);
-        final ProgressBar progressBar = v.findViewById(R.id.recipe_load_progressBar);
-//        progressBar.setProgress(0);
+        final ProgressBar progressBar = v.findViewById(R.id.app_progress_bar);
         progressBar.setVisibility(View.VISIBLE);
         BarProviderTask task = new BarProviderTask(this);
         task.setProgressBar(progressBar);
@@ -184,11 +180,9 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         if (!mIsFav){
             likeImageButton.setImageResource(R.drawable.like_button_pressed);
             mIsFav = true;
-//            mFavDrinksManager.addDrinkToFavs(mDrink);
         }   else {
             likeImageButton.setImageResource(R.drawable.like_button_not_pressed);
             mIsFav = false;
-//            mFavDrinksManager.removeDrinkFromFavs(mDrink);
         }
         return mIsFav;
     }
@@ -200,20 +194,25 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private void setupDrinkRecipe(Drink drink, boolean isFav){
-        mDrink = drink;
-        mIsFav = isFav;
+    private void setupDrinkRecipe(String drinkJson, Boolean isFav){
+        mDrink = mJsonParser.parseJsonToDrinksBar(drinkJson).drinks[0];
+
+        if (isFav != null){
+            mIsFav = isFav;
+        }   else {
+            mIsFav = Saver.isDrinkFav(getContext(), mDrink);
+        }
         mDrink.setFavourite(mIsFav);
         setLikeImageButton();
-        setupAdapter(drink);
-        ImageHelper.downloadImage(drink.getUrlImage(), drinkImageView);
+        setupAdapter(mDrink);
+        ImageHelper.downloadImage(mDrink.getUrlImage(), drinkImageView);
         recipeCardView.setVisibility(View.VISIBLE);
         ingredientsListCardView.setVisibility(View.VISIBLE);
         likeImageButton.setVisibility(View.VISIBLE);
-        drinkNameTextView.setText(drink.getName());
-        String recipe = " " + drink.getInstruction();
+        drinkNameTextView.setText(mDrink.getName());
+        String recipe = " " + mDrink.getInstruction();
         drinkRecipeTextView.setText(recipe);
-        String serveGlass = getString(R.string.serve) + " " + drink.getGlass();
+        String serveGlass = getString(R.string.serve) + " " + mDrink.getGlass();
         serveGlassTextView.setText(serveGlass);
     }
 
@@ -294,18 +293,11 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
             if (chosenIngredientNames.contains(ingredient.getName().toLowerCase())){
                 IngredientItemHelper.setFillToNameTextView(getContext(),
                         ingredientNameTextView, true);
-//                Context context = Objects.requireNonNull(getContext());
-//                ingredientNameTextView.setTextColor(ContextCompat
-//                        .getColor(context, R.color.light_color));
-//                ingredientNameTextView
-//                        .setBackground(ContextCompat
-//                                .getDrawable(context,
-//                                        R.drawable.ingredient_name_background));
             }
         }
     }
 
-    protected static class BarProviderTask extends AsyncTask<Integer, Integer, Drink> {
+    protected static class BarProviderTask extends AsyncTask<Integer, Integer, String> {
         private WeakReference<DrinkRecipeFragment> mReference;
         private WeakReference<ProgressBar> mProgressBarReference;
 
@@ -323,12 +315,12 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         }
 
         @Override
-        protected Drink doInBackground(Integer... drinksId) {
-            return new RequestProvider().downloadDrinkById(drinksId[0]);
+        protected String doInBackground(Integer... drinksId) {
+            return new RequestProvider().downloadDrinkJsonById(drinksId[0]);
         }
 
         @Override
-        protected void onPostExecute(Drink drink){
+        protected void onPostExecute(String drinkJson){
             DrinkRecipeFragment fragment = mReference.get();
 
             if (mProgressBarReference.get() != null) {
@@ -336,10 +328,9 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
             }
 
             if (fragment != null) {
-                if (drink != null) {
+                if (drinkJson != null) {
                     if (fragment.isAdded()) {
-                        fragment.setupDrinkRecipe(drink,
-                                Saver.isDrinkFav(fragment.getContext(), drink));
+                        fragment.setupDrinkRecipe(drinkJson, null);
                     }
                 }   else {
                     Toast toast = ToastBuilder.getFailedConnectionToast(fragment.getContext());

@@ -16,29 +16,14 @@
 
         <TextView
             android:id="@+id/bottom_textView"
-            android:background="@drawable/toolbar_gradient_background180"
-            android:textSize="16sp"
-            android:textColor="@color/light_color"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_alignParentBottom="true"
-            android:text="@string/swipe_to_remove"/>
-
-        <TextView
-            android:id="@+id/empty_disclaimer_textView"
-            android:textSize="16sp"
-            android:textColor="@color/textView_color"
-            android:visibility="gone"
-            android:text="Fav drinks list is empty"
-            android:gravity="center_horizontal|center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:text="@string/swipe_to_remove"
+            style="@style/fav_drinks_bottom_text_view"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_drinks_list"
             app:title="Favourite drinks"
-            app:titleTextColor="@color/light_color"
             style="@style/CustomToolbar"/>
 
     </RelativeLayout>

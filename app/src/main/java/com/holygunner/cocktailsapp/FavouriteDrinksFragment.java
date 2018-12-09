@@ -1,9 +1,10 @@
 package com.holygunner.cocktailsapp;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -14,17 +15,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.save.Saver;
 import com.holygunner.cocktailsapp.tools.DrawerMenuManager;
 import com.holygunner.cocktailsapp.tools.JsonParser;
+import com.holygunner.cocktailsapp.tools.ToastBuilder;
 import com.holygunner.cocktailsapp.tools.ToolbarHelper;
 
 import org.jetbrains.annotations.Contract;
@@ -40,7 +42,6 @@ public class FavouriteDrinksFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private TextView bottomTextView;
-    private TextView emptyDisclaimerTextView;
     private List<Drink> mFavDrinks = new ArrayList<>();
 
     private final int CURRENT_ITEM_ID = R.id.favourite_drinks;
@@ -78,7 +79,6 @@ public class FavouriteDrinksFragment extends Fragment {
         mRecyclerView = v.findViewById(R.id.drinks_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         bottomTextView = v.findViewById(R.id.bottom_textView);
-        emptyDisclaimerTextView = v.findViewById(R.id.empty_disclaimer_textView);
         return v;
     }
 
@@ -86,6 +86,7 @@ public class FavouriteDrinksFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setupAdapter();
+        closeIfEmpty();
         setupSwipeToRemove();
         mNavigationView.setCheckedItem(CURRENT_ITEM_ID);
     }
@@ -142,7 +143,7 @@ public class FavouriteDrinksFragment extends Fragment {
                     Saver.updFavDrinkId(getContext(), drink.getId(), false, "");
                     mDrinksAdapter.notifyItemRemoved(position);
                     mDrinksAdapter.notifyItemRangeChanged(position, mFavDrinks.size());
-                    setIfEmpty();
+                    closeIfEmpty();
                 }
             }
 
@@ -183,14 +184,20 @@ public class FavouriteDrinksFragment extends Fragment {
 
     private void setupAdapter(){
         mFavDrinks = getFavDrinks();
-        mDrinksAdapter = new DrinksAdapter(getContext(), mFavDrinks, true);
+        mDrinksAdapter = new DrinksAdapter(getContext(), mFavDrinks);
         mRecyclerView.setAdapter(mDrinksAdapter);
-        setIfEmpty();
     }
 
-    private void setIfEmpty(){
+    private void closeIfEmpty(){
+
         if (mFavDrinks.size() == 0){
-            bottomTextView.setText("Fav drinks list is empty");
+            startActivity(new Intent(getContext(), SelectIngredientsActivity.class));
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ToastBuilder.favDrinksListEmptyToast(getContext()).show();
+                }
+            }, 300);
         }
     }
 }

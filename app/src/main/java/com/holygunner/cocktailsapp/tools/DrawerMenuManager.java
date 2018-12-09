@@ -47,8 +47,14 @@ public class DrawerMenuManager {
                                     }
                                     break;
                                 case R.id.favourite_drinks:
-                                    intent = new Intent(context,
-                                            FavouriteDrinksActivity.class);
+                                    if (isFavDrinksExist(context)) {
+                                        intent = new Intent(context,
+                                                FavouriteDrinksActivity.class);
+                                    }   else {
+                                        menuItem.setChecked(false);
+                                        drawerLayout.closeDrawers();
+                                        return false;
+                                    }
                                     break;
                                 case R.id.about:
                                     intent = new Intent(context,
@@ -102,6 +108,17 @@ public class DrawerMenuManager {
             return true;
         }   else {
             ToastBuilder.noChosenIngrsToast(context).show();
+            return false;
+        }
+    }
+
+    private boolean isFavDrinksExist(Context context){
+        boolean result = Saver.readFavDrinkIdSet(context).size() > 0;
+
+        if (result){
+            return true;
+        }   else {
+            ToastBuilder.noFavDrinksToast(context).show();
             return false;
         }
     }

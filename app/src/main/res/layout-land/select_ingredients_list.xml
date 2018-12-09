@@ -47,7 +47,6 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_from_ingredients_list"
                 app:title="Select your ingredients"
-                app:titleTextColor="@color/light_color"
                 style="@style/CustomToolbar"/>
 
     </RelativeLayout>

@@ -1,7 +1,5 @@
 package com.holygunner.cocktailsapp.tools;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.holygunner.cocktailsapp.models.Bar;
 import com.holygunner.cocktailsapp.models.Drink;
@@ -14,13 +12,7 @@ public class JsonParser {
     }
 
     public Bar parseJsonToDrinksBar(String json){
-        Bar drinks = mGson.fromJson(json, Bar.class);
-        Log.i("TAG", "parse json");
-        return drinks;
-    }
-
-    public String serializeBarToJson(Bar bar){
-        return mGson.toJson(bar);
+        return mGson.fromJson(json, Bar.class);
     }
 
     public String serializeDrinkToJsonBar(Drink drink){

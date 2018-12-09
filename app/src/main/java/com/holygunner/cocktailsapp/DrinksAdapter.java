@@ -32,8 +32,7 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
     private List<Drink> mDrinks;
     private boolean mIsOnlyFav;
 
-    DrinksAdapter(Context context, List<Drink> drinks, boolean isOnlyFav){
-        mIsOnlyFav = isOnlyFav;
+    DrinksAdapter(Context context, List<Drink> drinks){
         mContext = context;
         mDrinks = drinks;
     }

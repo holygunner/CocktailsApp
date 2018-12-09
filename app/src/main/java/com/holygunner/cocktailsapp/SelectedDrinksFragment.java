@@ -125,7 +125,7 @@ public class SelectedDrinksFragment extends Fragment {
 
         howMuchChecked = added.length;
 
-        final ProgressBar progressBar = v.findViewById(R.id.drinks_load_progressBar);
+        final ProgressBar progressBar = v.findViewById(R.id.app_progress_bar);
         progressBar.setVisibility(View.VISIBLE);
 
         DrinksProviderTask task = new DrinksProviderTask(this);
@@ -136,7 +136,7 @@ public class SelectedDrinksFragment extends Fragment {
 
     private void setupAdapter(){
         if (isAdded()){
-            DrinksAdapter drinksAdapter = new DrinksAdapter(getContext(), mDrinks, false);
+            DrinksAdapter drinksAdapter = new DrinksAdapter(getContext(), mDrinks);
             mRecyclerView.setAdapter(drinksAdapter);
             if (savedRecyclerViewState != null){
                 mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);

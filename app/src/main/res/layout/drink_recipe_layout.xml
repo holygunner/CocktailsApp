@@ -9,19 +9,10 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_drink_recipe"
         app:title="@string/drink_recipe"
-        app:titleTextColor="@color/light_color"
         style="@style/CustomToolbar"/>
 
-    <ProgressBar
-        android:id="@+id/recipe_load_progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:theme="@style/ProgressBarTheme"
-        android:indeterminate="true"/>
+    <include
+        layout="@layout/app_progress_bar"/>
 
     <ImageButton
         android:id="@+id/like_imageButton"

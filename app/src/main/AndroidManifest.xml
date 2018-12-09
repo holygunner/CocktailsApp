@@ -31,8 +31,10 @@
         <activity android:name=".ChosenIngredientsActivity"
                   android:parentActivityName=".SelectIngredientsActivity"/>
 
-        <activity android:name=".FavouriteDrinksActivity"/>
+        <activity android:name=".FavouriteDrinksActivity"
+                  android:parentActivityName=".SelectIngredientsActivity"/>
         <activity android:name=".AboutActivity"/>
+        <activity android:name=".SearchDrinkActivity"/>
 
     </application>
 

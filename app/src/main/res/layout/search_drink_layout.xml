@@ -12,25 +12,14 @@
         android:background="@drawable/gradient_background"
         android:orientation="vertical">
 
-        <include layout="@layout/drinks_recycler_view"/>
-
-        <TextView
-            android:id="@+id/bottom_textView"
-            style="@style/fav_drinks_bottom_text_view"
-
-
-            android:layout_width="wrap_content"
-            android:paddingRight="24dp"
-            android:paddingLeft="24dp"
-            android:gravity="center_vertical"
-            android:layout_centerHorizontal="true"
-
-            android:text="@string/swipe_to_remove"/>
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_drinks_list"
-            app:title="Favourite drinks"
+            app:title="Search drink"
             style="@style/CustomToolbar"/>
+
+        <android.support.v7.widget.SearchView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 
@@ -41,6 +30,7 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        style="@style/CustomDrawerNavigationView"/>
+        style="@style/CustomDrawerNavigationView"
+        app:headerLayout="@layout/navigation_menu_header"/>
 
 </android.support.v4.widget.DrawerLayout>

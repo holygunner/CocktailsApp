@@ -22,7 +22,9 @@
     <string name="like_button_pressed_ok">Added to your fav\'s</string>
     <string name="like_button_pressed_cancel">Removed from your fav\'s</string>
     <string name="no_chosen_ingredients">Choose at least one ingredient</string>
+    <string name="no_fav_drinks">Like at least one drink</string>
     <string name="chosen_ingredients_are_cleared">Chosen ingredients are cleared</string>
+    <string name="fav_drinks_are_cleared">Fav drinks are cleared</string>
     <string name="cardView_background">CardView Background</string>
     <string name="drink_recipe">Drink recipe</string>
     <string name="is_drink_liked">Is drink liked</string>

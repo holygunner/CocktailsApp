@@ -1,5 +1,6 @@
 package com.holygunner.cocktailsapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -186,7 +187,7 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
         setButtonVisibility(false);
 
         if (mChosenIngrs.size() == 0){
-            Objects.requireNonNull(getActivity()).onBackPressed();
+            startActivity(new Intent(getContext(), SelectIngredientsActivity.class));
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

@@ -17,6 +17,8 @@ public class RequestProvider {
     private JsonParser mJsonParser;
     private OkHttpClient mHttpClient;
 
+    private final static String WRONG_RESPONSE = "{\"drinks\":null}";
+
     public RequestProvider(){
         mJsonParser = new JsonParser();
         mHttpClient = new OkHttpClient();
@@ -53,6 +55,21 @@ public class RequestProvider {
                 return null;
             }   else {
                 return bar.drinks[0];
+            }
+        }   else
+            return null;
+    }
+
+    @Nullable
+    public String downloadDrinkJsonById(Integer drinkId){
+        if (drinkId != null){
+            String url = URLBuilder.getCocktailDetailsUrl(drinkId);
+            String jsonDrink = downloadJsonByRequest(url);
+
+            if (jsonDrink.equals("") || jsonDrink.equals(WRONG_RESPONSE)){
+                return null;
+            }   else {
+                return jsonDrink;
             }
         }   else
             return null;
