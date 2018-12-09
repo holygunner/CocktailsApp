@@ -1,6 +1,5 @@
 package com.holygunner.cocktailsapp.tools;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -8,13 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.holygunner.cocktailsapp.AboutActivity;
 import com.holygunner.cocktailsapp.ChosenIngredientsActivity;
+import com.holygunner.cocktailsapp.FavouriteDrinksActivity;
 import com.holygunner.cocktailsapp.R;
 import com.holygunner.cocktailsapp.SelectIngredientsActivity;
 import com.holygunner.cocktailsapp.save.Saver;
@@ -48,6 +45,10 @@ public class DrawerMenuManager {
                                         drawerLayout.closeDrawers();
                                         return false;
                                     }
+                                    break;
+                                case R.id.favourite_drinks:
+                                    intent = new Intent(context,
+                                            FavouriteDrinksActivity.class);
                                     break;
                                 case R.id.about:
                                     intent = new Intent(context,

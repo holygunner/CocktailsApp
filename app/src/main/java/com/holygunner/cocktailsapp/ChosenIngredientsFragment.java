@@ -163,7 +163,6 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
             mRecyclerView.setAdapter(mIngredientsAdapter);
             if (savedRecyclerViewState != null){
                 mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
-
             }
         }
     }

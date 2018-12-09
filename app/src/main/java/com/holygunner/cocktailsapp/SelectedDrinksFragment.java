@@ -38,7 +38,6 @@ import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 public class SelectedDrinksFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private DrinksAdapter mDrinksAdapter;
     private List<Drink> mDrinks = new ArrayList<>();
     private BarManager mBarManager;
     private int howMuchChecked;
@@ -62,15 +61,19 @@ public class SelectedDrinksFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (savedInstanceState != null){
-            savedRecyclerViewState = savedInstanceState.getParcelable(SELECTED_DRINKS_SAVED_STATE_KEY);
+            savedRecyclerViewState = savedInstanceState
+                    .getParcelable(SELECTED_DRINKS_SAVED_STATE_KEY);
         }
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.selected_drinks_layout, container, false);
 
         if (savedInstanceState != null){
-            savedRecyclerViewState = savedInstanceState.getParcelable(SELECTED_DRINKS_SAVED_STATE_KEY);
+            savedRecyclerViewState = savedInstanceState
+                    .getParcelable(SELECTED_DRINKS_SAVED_STATE_KEY);
         }
 
         android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar_drinks_list);
@@ -133,8 +136,8 @@ public class SelectedDrinksFragment extends Fragment {
 
     private void setupAdapter(){
         if (isAdded()){
-            mDrinksAdapter = new com.holygunner.cocktailsapp.DrinksAdapter(getContext(), mDrinks);
-            mRecyclerView.setAdapter(mDrinksAdapter);
+            DrinksAdapter drinksAdapter = new DrinksAdapter(getContext(), mDrinks, false);
+            mRecyclerView.setAdapter(drinksAdapter);
             if (savedRecyclerViewState != null){
                 mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
             }

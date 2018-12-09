@@ -61,7 +61,6 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         if (savedInstanceState != null){
             savedRecyclerViewState = savedInstanceState.getParcelable(SELECT_INGRS_SAVED_STATE_KEY);
         }
@@ -108,14 +107,12 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
         mRecyclerView.getAdapter().notifyDataSetChanged();
 //        setupAdapter();
         setMixButtonVisibility();
-         // better save parcelable state of recView
         mNavigationView.setCheckedItem(CURRENT_ITEM_ID);
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
-
         savedInstanceState.putParcelable(SELECT_INGRS_SAVED_STATE_KEY,
                 mRecyclerView.getLayoutManager().onSaveInstanceState());
     }
@@ -123,7 +120,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
+        Objects.requireNonNull(getActivity()).invalidateOptionsMenu(); // is really need here?
     }
 
     @Override

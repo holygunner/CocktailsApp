@@ -15,13 +15,13 @@ public class JsonParser {
 
     public Bar parseJsonToDrinksBar(String json){
         Bar drinks = mGson.fromJson(json, Bar.class);
-        Log.i("TAG", "output: " + json);
+        Log.i("TAG", "parse json");
         return drinks;
     }
 
-//    public String serializeBarToJson(Bar bar){
-//        return mGson.toJson(bar);
-//    }
+    public String serializeBarToJson(Bar bar){
+        return mGson.toJson(bar);
+    }
 
     public String serializeDrinkToJsonBar(Drink drink){
         Bar bar = new Bar();

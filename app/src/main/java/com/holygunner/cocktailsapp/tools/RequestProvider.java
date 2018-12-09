@@ -44,7 +44,7 @@ public class RequestProvider {
     }
 
     @Nullable
-    public Drink getDrinkById(Integer drinkId){
+    public Drink downloadDrinkById(Integer drinkId){
         if (drinkId != null){
             String url = URLBuilder.getCocktailDetailsUrl(drinkId);
             Bar bar = mJsonParser.parseJsonToDrinksBar(downloadJsonByRequest(url));

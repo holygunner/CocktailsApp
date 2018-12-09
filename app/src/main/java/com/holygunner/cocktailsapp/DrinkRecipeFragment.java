@@ -145,7 +145,8 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         super.onPause();
         // save isFavourite
         if (mDrink != null) {
-            Saver.updFavDrinkId(getContext(), mDrink.getId(), mIsFav);
+            Saver.updFavDrinkId(getContext(), mDrink.getId(), mIsFav,
+                    mJsonParser.serializeDrinkToJsonBar(mDrink));
         }
     }
 
@@ -323,7 +324,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
 
         @Override
         protected Drink doInBackground(Integer... drinksId) {
-            return new RequestProvider().getDrinkById(drinksId[0]);
+            return new RequestProvider().downloadDrinkById(drinksId[0]);
         }
 
         @Override
@@ -337,7 +338,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
             if (fragment != null) {
                 if (drink != null) {
                     if (fragment.isAdded()) {
-
                         fragment.setupDrinkRecipe(drink,
                                 Saver.isDrinkFav(fragment.getContext(), drink));
                     }

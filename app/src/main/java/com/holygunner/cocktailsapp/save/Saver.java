@@ -2,6 +2,7 @@ package com.holygunner.cocktailsapp.save;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.holygunner.cocktailsapp.models.Bar;
@@ -24,19 +25,55 @@ public class Saver {
                 .getStringSet(FAV_DRINKS_ID_SET_KEY, new HashSet<String>());
     }
 
-    public static boolean isDrinkFav(Context context, Drink drink){
+    public static boolean isDrinkFav(Context context, @NonNull Drink drink){
         String drinkId = String.valueOf(drink.getId());
 
+        return isDrinkFav(context, drinkId);
+    }
+
+    public static boolean isDrinkFav(Context context, @NonNull String drinkId){
         return readFavDrinkIdSet(context).contains(drinkId);
     }
 
-    public static void updFavDrinkId(Context context, int id, boolean isFav){
+    private static void saveFavDrink(Context context, String drinkId, String drinkJson){
+        if (!isDrinkFav(context, drinkId)){
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit()
+                    .putString(drinkId, drinkJson)
+                    .apply();
+        }
+    }
+
+    private static void removeFavDrink(Context context, String drinkId){
+        if (isDrinkFav(context, drinkId)){
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit().remove(drinkId)
+                    .apply();
+        }
+    }
+
+    public static Set<String> readFavDrinksJsons(Context context){
+        Set<String> favDrinksJsons = new HashSet<>();
+
+        Set<String> favDrinkIdSet = readFavDrinkIdSet(context);
+
+        for (String drinkId: favDrinkIdSet){
+            favDrinksJsons.add(PreferenceManager.getDefaultSharedPreferences(context)
+                    .getString(drinkId, ""));
+        }
+
+        return favDrinksJsons;
+    }
+
+    public static void updFavDrinkId(Context context, int id, boolean isFav, String drinkJson){
         String drinkId = String.valueOf(id);
         Set<String> favDrinksIdSet = readFavDrinkIdSet(context);
 
         if (isFav){
+            saveFavDrink(context, drinkId, drinkJson);
             favDrinksIdSet.add(drinkId);
         }   else {
+            removeFavDrink(context, drinkId);
             favDrinksIdSet.remove(drinkId);
         }
 
