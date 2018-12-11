@@ -19,8 +19,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.save.Saver;
@@ -41,7 +39,6 @@ public class FavouriteDrinksFragment extends Fragment {
     private DrinksAdapter mDrinksAdapter;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
-    private TextView bottomTextView;
     private List<Drink> mFavDrinks = new ArrayList<>();
 
     private final int CURRENT_ITEM_ID = R.id.favourite_drinks;
@@ -64,12 +61,10 @@ public class FavouriteDrinksFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.favourite_drinks_layout, container, false);
 
-        android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar_drinks_list);
+        android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar);
         ToolbarHelper.setToolbar(toolbar,
                 (SingleFragmentActivity) Objects.requireNonNull(getActivity()),
                 ToolbarHelper.MENU_BUTTON);
-        Objects.requireNonNull(((SingleFragmentActivity) getActivity()).getSupportActionBar())
-                .setTitle(R.string.favourite_drinks);
 
         mDrawerLayout = v.findViewById(R.id.drawer_layout);
         mNavigationView = v.findViewById(R.id.nav_view);
@@ -78,7 +73,6 @@ public class FavouriteDrinksFragment extends Fragment {
 
         mRecyclerView = v.findViewById(R.id.drinks_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        bottomTextView = v.findViewById(R.id.bottom_textView);
         return v;
     }
 
@@ -105,9 +99,12 @@ public class FavouriteDrinksFragment extends Fragment {
         Set<String> favDrinksJsons = Saver.readFavDrinksJsons(getContext());
         List<Drink> mavDrinks = new ArrayList<>();
 
+
         for (String json: favDrinksJsons){
-            Drink favDrink = mJsonParser.parseJsonToDrinksBar(json).drinks[0];
-            mavDrinks.add(favDrink);
+            if (!json.equals("")) {
+                Drink favDrink = mJsonParser.parseJsonToDrinksBar(json).drinks[0];
+                mavDrinks.add(favDrink);
+            }
         }
         return mavDrinks;
     }

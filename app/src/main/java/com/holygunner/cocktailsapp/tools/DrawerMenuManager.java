@@ -13,6 +13,7 @@ import com.holygunner.cocktailsapp.AboutActivity;
 import com.holygunner.cocktailsapp.ChosenIngredientsActivity;
 import com.holygunner.cocktailsapp.FavouriteDrinksActivity;
 import com.holygunner.cocktailsapp.R;
+import com.holygunner.cocktailsapp.SearchDrinkActivity;
 import com.holygunner.cocktailsapp.SelectIngredientsActivity;
 import com.holygunner.cocktailsapp.save.Saver;
 
@@ -45,6 +46,10 @@ public class DrawerMenuManager {
                                         drawerLayout.closeDrawers();
                                         return false;
                                     }
+                                    break;
+                                case R.id.search_drink:
+                                    intent = new Intent(context,
+                                            SearchDrinkActivity.class);
                                     break;
                                 case R.id.favourite_drinks:
                                     if (isFavDrinksExist(context)) {

@@ -28,7 +28,7 @@
             android:text="@string/swipe_to_remove"/>
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_drinks_list"
+            android:id="@+id/toolbar"
             app:title="Favourite drinks"
             style="@style/CustomToolbar"/>
 

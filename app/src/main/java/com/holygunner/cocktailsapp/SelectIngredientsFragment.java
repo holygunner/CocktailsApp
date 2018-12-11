@@ -68,7 +68,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.select_ingredients_list, container, false);
+        View v = inflater.inflate(R.layout.select_ingredients_layout, container, false);
 
         if (savedInstanceState != null){
             savedRecyclerViewState = savedInstanceState.getParcelable(SELECT_INGRS_SAVED_STATE_KEY);

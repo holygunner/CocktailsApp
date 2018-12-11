@@ -1,12 +1,10 @@
 package com.holygunner.cocktailsapp;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +24,7 @@ import com.holygunner.cocktailsapp.models.BarManager;
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.save.Saver;
+import com.holygunner.cocktailsapp.tools.RequestProviderAsyncTask;
 import com.holygunner.cocktailsapp.tools.RequestProvider;
 import com.holygunner.cocktailsapp.tools.ToastBuilder;
 import com.holygunner.cocktailsapp.tools.ToolbarHelper;
@@ -76,7 +74,7 @@ public class SelectedDrinksFragment extends Fragment {
                     .getParcelable(SELECTED_DRINKS_SAVED_STATE_KEY);
         }
 
-        android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar_drinks_list);
+        android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar);
         ToolbarHelper.setToolbar(toolbar,
                 (SingleFragmentActivity) Objects.requireNonNull(getActivity()),
                 ToolbarHelper.UP_BUTTON);
@@ -86,7 +84,9 @@ public class SelectedDrinksFragment extends Fragment {
         mRecyclerView = v.findViewById(R.id.drinks_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        setDrinks(v);
+        final ProgressBar progressBar = v.findViewById(R.id.app_progress_bar);
+
+        loadDrinks(progressBar);
         setupAdapter();
         return v;
     }
@@ -105,7 +105,9 @@ public class SelectedDrinksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+        if (mRecyclerView != null) {
+            mRecyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -116,7 +118,7 @@ public class SelectedDrinksFragment extends Fragment {
                 mRecyclerView.getLayoutManager().onSaveInstanceState());
     }
 
-    private void setDrinks(@NotNull View v){
+    private void loadDrinks(@NotNull ProgressBar progressBar){
         mBarManager = new BarManager(getContext());
 
         String[] added = IngredientManager.countAddedIngredients(
@@ -125,10 +127,7 @@ public class SelectedDrinksFragment extends Fragment {
 
         howMuchChecked = added.length;
 
-        final ProgressBar progressBar = v.findViewById(R.id.app_progress_bar);
-        progressBar.setVisibility(View.VISIBLE);
-
-        DrinksProviderTask task = new DrinksProviderTask(this);
+        MyRequestProviderTask task = new MyRequestProviderTask(this);
         task.setProgressBar(progressBar);
 
         task.execute(added);
@@ -136,29 +135,32 @@ public class SelectedDrinksFragment extends Fragment {
 
     private void setupAdapter(){
         if (isAdded()){
-            DrinksAdapter drinksAdapter = new DrinksAdapter(getContext(), mDrinks);
-            mRecyclerView.setAdapter(drinksAdapter);
-            if (savedRecyclerViewState != null){
-                mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
+                DrinksAdapter drinksAdapter = new DrinksAdapter(getContext(), mDrinks);
+                mRecyclerView.setAdapter(drinksAdapter);
+                if (savedRecyclerViewState != null) {
+                    mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
+                }
             }
-        }
     }
 
-    protected static class DrinksProviderTask extends AsyncTask<String, Integer, List<Bar>> {
-        private WeakReference<SelectedDrinksFragment> mReference;
-        private WeakReference<ProgressBar> mProgressBarReference;
+//    private boolean ifOnlyOneDrinkFound(){
+//        if (mDrinks.size() == 1){
+//            // intent
+//            Context context = Objects.requireNonNull(getActivity()).getBaseContext();
+//            Intent intent = new Intent(context, DrinkRecipeActivity.class);
+//            intent.putExtra(DRINK_ID_KEY, mDrinks.get(0).getId());
+//            context.startActivity(intent);
+//            return true;
+//        }   else {
+//            return false;
+//        }
+//    }
 
-        DrinksProviderTask(SelectedDrinksFragment instance){
-            mReference = new WeakReference<>(instance);
-        }
+    protected static class MyRequestProviderTask
+            extends RequestProviderAsyncTask<String, Integer, List<Bar>> {
 
-        @Override
-        protected void onProgressUpdate(Integer... param) {
-            super.onProgressUpdate(param);
-            ProgressBar progressBar = mProgressBarReference.get();
-            if (progressBar != null) {
-                progressBar.setProgress(param[0]);
-            }
+        MyRequestProviderTask(Fragment instance) {
+            super(instance);
         }
 
         @Override
@@ -167,14 +169,11 @@ public class SelectedDrinksFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(List<Bar> downloadBars){
-            SelectedDrinksFragment fragment = mReference.get();
+        protected void onPostExecute(List<Bar> downloadBars) {
+            super.onPostExecute(downloadBars);
 
-            if (mProgressBarReference != null) {
-                if (mProgressBarReference.get() != null) {
-                    mProgressBarReference.get().setVisibility(View.GONE);
-                }
-            }
+            SelectedDrinksFragment fragment
+                    = (SelectedDrinksFragment) super.getFragmentReference().get();
 
             if (fragment != null) {
                 if (fragment.howMuchChecked == downloadBars.size()) {
@@ -184,15 +183,10 @@ public class SelectedDrinksFragment extends Fragment {
                 }   else {
                     Toast toast = ToastBuilder.getFailedConnectionToast(fragment.getContext());
                     toast.show();
-
                     Objects.requireNonNull(fragment.getActivity()).onBackPressed();
                 }
                 fragment.howMuchChecked = 0;
             }
-        }
-
-        void setProgressBar(ProgressBar progressBar) {
-            mProgressBarReference = new WeakReference<>(progressBar);
         }
     }
 }

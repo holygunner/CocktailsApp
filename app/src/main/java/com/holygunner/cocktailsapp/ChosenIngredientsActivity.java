@@ -18,12 +18,6 @@ public class ChosenIngredientsActivity extends SingleFragmentActivity {
         checkIsListNotEmpty();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(this, SelectIngredientsActivity.class));
-    }
-
     private void checkIsListNotEmpty(){
         if (Saver.readIngredients(this, Saver.CHOSEN_INGREDIENTS_KEY).size() == 0){
             onBackPressed();

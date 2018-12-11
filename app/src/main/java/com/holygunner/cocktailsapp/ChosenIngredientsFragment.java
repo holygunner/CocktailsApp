@@ -68,6 +68,7 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         setHasOptionsMenu(true);
         mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
         mChosenIngrs = mIngredientManager

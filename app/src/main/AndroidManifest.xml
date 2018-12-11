@@ -34,7 +34,16 @@
         <activity android:name=".FavouriteDrinksActivity"
                   android:parentActivityName=".SelectIngredientsActivity"/>
         <activity android:name=".AboutActivity"/>
-        <activity android:name=".SearchDrinkActivity"/>
+        <activity android:name=".SearchDrinkActivity"
+                  android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
 
     </application>
 

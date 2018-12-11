@@ -52,6 +52,7 @@
 
                 <TextView
                     android:id="@+id/drink_chosen_ingrs_TextView"
+                    android:maxLines="3"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/textView_color"
                     android:textStyle="italic"
@@ -76,7 +77,7 @@
             android:id="@+id/is_drink_liked_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             android:gravity="top|end">
 
             <ImageView

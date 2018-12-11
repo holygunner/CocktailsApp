@@ -2,7 +2,6 @@ package com.holygunner.cocktailsapp;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -24,6 +23,7 @@ import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.models.IngredientManager;
 import com.holygunner.cocktailsapp.save.Saver;
+import com.holygunner.cocktailsapp.tools.RequestProviderAsyncTask;
 import com.holygunner.cocktailsapp.tools.ImageHelper;
 import com.holygunner.cocktailsapp.tools.IngredientItemHelper;
 import com.holygunner.cocktailsapp.tools.JsonParser;
@@ -35,7 +35,6 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -72,7 +71,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         setHasOptionsMenu(true);
 
         Context context = Objects.requireNonNull(getContext());
-//        mFavDrinksManager = new FavouriteDrinksManager(context);
         mIngredientManager = new IngredientManager(context);
         chosenIngredientNames = Saver.readChosenIngredientsNamesInLowerCase(getContext(),
                 CHOSEN_INGREDIENTS_KEY);
@@ -122,6 +120,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         mRecyclerView = v.findViewById(R.id.drink_ingredients_recyclerGridView);
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), calculateSpanCount()));
+        final ProgressBar progressBar = v.findViewById(R.id.app_progress_bar);
 
         if (savedInstanceState != null){
             if (savedInstanceState.getCharArray(SAVED_DRINK_KEY) != null) {
@@ -131,7 +130,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
                 setupDrinkRecipe(drinkJson, mIsFav);
             }
         }   else {
-            loadDrink(v);
+            loadDrink(progressBar);
         }
 
         return v;
@@ -158,11 +157,9 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         return spanCount;
     }
 
-    private void loadDrink(@NotNull View v){
+    private void loadDrink(@NotNull ProgressBar progressBar){
         int drinkId = Objects.requireNonNull(getActivity()).getIntent().getIntExtra(SelectedDrinksFragment.DRINK_ID_KEY, 0);
-        final ProgressBar progressBar = v.findViewById(R.id.app_progress_bar);
-        progressBar.setVisibility(View.VISIBLE);
-        BarProviderTask task = new BarProviderTask(this);
+        RecipeProviderTask task = new RecipeProviderTask(this);
         task.setProgressBar(progressBar);
         task.execute(drinkId);
     }
@@ -296,36 +293,23 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
             }
         }
     }
+//
+    protected static class RecipeProviderTask
+        extends RequestProviderAsyncTask<Integer, Integer, String> {
 
-    protected static class BarProviderTask extends AsyncTask<Integer, Integer, String> {
-        private WeakReference<DrinkRecipeFragment> mReference;
-        private WeakReference<ProgressBar> mProgressBarReference;
-
-        BarProviderTask(DrinkRecipeFragment instance){
-            mReference = new WeakReference<>(instance);
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... param) {
-            super.onProgressUpdate(param);
-            ProgressBar progressBar = mProgressBarReference.get();
-            if (progressBar != null) {
-                progressBar.setProgress(param[0]);
-            }
+        RecipeProviderTask(Fragment instance) {
+            super(instance);
         }
 
         @Override
         protected String doInBackground(Integer... drinksId) {
-            return new RequestProvider().downloadDrinkJsonById(drinksId[0]);
+            return new RequestProvider().downloadBarJsonById(drinksId[0]);
         }
 
         @Override
         protected void onPostExecute(String drinkJson){
-            DrinkRecipeFragment fragment = mReference.get();
-
-            if (mProgressBarReference.get() != null) {
-                mProgressBarReference.get().setVisibility(View.GONE);
-            }
+            super.onPostExecute(drinkJson);
+            DrinkRecipeFragment fragment = (DrinkRecipeFragment) super.getFragmentReference().get();
 
             if (fragment != null) {
                 if (drinkJson != null) {
@@ -338,10 +322,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
                     Objects.requireNonNull(fragment.getActivity()).onBackPressed();
                 }
             }
-        }
-
-        void setProgressBar(ProgressBar progressBar) {
-            mProgressBarReference = new WeakReference<>(progressBar);
         }
     }
 }

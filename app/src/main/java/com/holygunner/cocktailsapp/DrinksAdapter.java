@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +15,16 @@ import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.save.Saver;
 import com.holygunner.cocktailsapp.tools.ImageHelper;
-import com.holygunner.cocktailsapp.tools.ItemTouchHelperAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static com.holygunner.cocktailsapp.SelectedDrinksFragment.DRINK_ID_KEY;
 
-public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHolder>
-        implements ItemTouchHelperAdapter {
+public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHolder> {
     private Context mContext;
     private List<Drink> mDrinks;
-    private boolean mIsOnlyFav;
 
     DrinksAdapter(Context context, List<Drink> drinks){
         mContext = context;
@@ -55,19 +49,6 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
     @Override
     public int getItemCount() {
         return mDrinks.size();
-    }
-
-    @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(mDrinks, fromPosition, toPosition);
-        notifyItemMoved(fromPosition, toPosition);
-        return true;
-    }
-
-    @Override
-    public void onItemDismiss(int position) {
-        mDrinks.remove(position);
-        notifyItemRemoved(position);
     }
 
     protected class DrinksHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
