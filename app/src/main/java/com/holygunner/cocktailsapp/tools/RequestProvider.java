@@ -3,7 +3,6 @@ package com.holygunner.cocktailsapp.tools;
 import android.support.annotation.NonNull;
 
 import com.holygunner.cocktailsapp.models.Bar;
-import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -46,20 +45,20 @@ public class RequestProvider {
         return downloadBars;
     }
 
-    @Nullable
-    public Drink downloadDrinkById(Integer drinkId){
-        if (drinkId != null){
-            String url = URLBuilder.getCocktailDetailsUrl(drinkId);
-            Bar bar = mJsonParser.parseJsonToDrinksBar(downloadJsonByRequest(url));
-
-            if (bar == null){
-                return null;
-            }   else {
-                return bar.drinks[0];
-            }
-        }   else
-            return null;
-    }
+//    @Nullable
+//    public Drink downloadDrinkById(Integer drinkId){
+//        if (drinkId != null){
+//            String url = URLBuilder.getCocktailDetailsUrl(drinkId);
+//            Bar bar = mJsonParser.parseJsonToDrinksBar(downloadJsonByRequest(url));
+//
+//            if (bar == null){
+//                return null;
+//            }   else {
+//                return bar.drinks[0];
+//            }
+//        }   else
+//            return null;
+//    }
 
     public String downloadBarByDrinkName(String drinkName){
         if (isDrinkNameCorrect(drinkName)){

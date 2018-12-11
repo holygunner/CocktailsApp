@@ -21,10 +21,6 @@ public abstract class ToastBuilder {
         return buildToast(context, R.string.like_button_pressed_cancel);
     }
 
-    public static Toast noChosenIngrsToast(Context context){
-        return buildToast(context, R.string.no_chosen_ingredients);
-    }
-
     public static Toast chosenIngrsListEmptyToast(Context context){
         return buildToast(context, R.string.chosen_ingredients_are_cleared);
     }
@@ -33,7 +29,11 @@ public abstract class ToastBuilder {
         return buildToast(context, R.string.fav_drinks_are_cleared);
     }
 
-    public static Toast noFavDrinksToast(Context context){
+    static Toast noChosenIngrsToast(Context context){
+        return buildToast(context, R.string.no_chosen_ingredients);
+    }
+
+    static Toast noFavDrinksToast(Context context){
         return buildToast(context, R.string.no_fav_drinks);
     }
 

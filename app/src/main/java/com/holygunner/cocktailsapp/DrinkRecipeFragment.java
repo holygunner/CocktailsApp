@@ -58,7 +58,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     private Drink mDrink;
     private boolean mIsFav;
     private JsonParser mJsonParser;
-
     private static final String SAVED_DRINK_KEY = "saved_drink_key";
     private static final String IS_FAV_KEY = "is_fav_key";
 
@@ -71,7 +70,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
         Context context = Objects.requireNonNull(getContext());
         mIngredientManager = new IngredientManager(context);
         chosenIngredientNames = Saver.readChosenIngredientsNamesInLowerCase(getContext(),
@@ -147,10 +145,71 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    private void setupDrinkRecipe(String drinkJson, Boolean isFav){
+        mDrink = mJsonParser.parseJsonToDrinksBar(drinkJson).drinks[0];
+        if (isFav != null){
+            mIsFav = isFav;
+        }   else {
+            mIsFav = Saver.isDrinkFav(getContext(), mDrink);
+        }
+        mDrink.setFavourite(mIsFav);
+        setLikeImageButton();
+        setupAdapter(mDrink);
+        ImageHelper.downloadImage(mDrink.getUrlImage(), drinkImageView);
+        recipeCardView.setVisibility(View.VISIBLE);
+        ingredientsListCardView.setVisibility(View.VISIBLE);
+        likeImageButton.setVisibility(View.VISIBLE);
+        drinkNameTextView.setText(mDrink.getName());
+        String recipe = " " + mDrink.getInstruction();
+        drinkRecipeTextView.setText(recipe);
+        String serveGlass = getString(R.string.serve) + " " + mDrink.getGlass();
+        serveGlassTextView.setText(serveGlass);
+    }
+
+    @Override
+    public void onClick(View v) {
+        boolean result = changeLikeImageButtonState();
+        if (result) {
+            ToastBuilder.getDrinkAddedToast(getContext()).show();
+        }   else {
+            ToastBuilder.getDrinkRemovedToast(getContext()).show();
+        }
+    }
+
+    protected static class RecipeProviderTask
+            extends RequestProviderAsyncTask<Integer, Integer, String> {
+
+        RecipeProviderTask(Fragment instance) {
+            super(instance);
+        }
+
+        @Override
+        protected String doInBackground(Integer... drinksId) {
+            return new RequestProvider().downloadBarJsonById(drinksId[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String drinkJson){
+            super.onPostExecute(drinkJson);
+            DrinkRecipeFragment fragment = (DrinkRecipeFragment) super.getFragmentReference().get();
+
+            if (fragment != null) {
+                if (drinkJson != null) {
+                    if (fragment.isAdded()) {
+                        fragment.setupDrinkRecipe(drinkJson, null);
+                    }
+                }   else {
+                    Toast toast = ToastBuilder.getFailedConnectionToast(fragment.getContext());
+                    toast.show();
+                    Objects.requireNonNull(fragment.getActivity()).onBackPressed();
+                }
+            }
+        }
+    }
+
     private int calculateSpanCount(){
         int orientation = getResources().getConfiguration().orientation;
         int spanCount = 2;
-
         if (orientation == ORIENTATION_PORTRAIT){
             spanCount = IngredientItemHelper
                     .calculateNumbOfColumns(Objects.requireNonNull(getContext()));
@@ -161,10 +220,9 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     private void loadDrink(@NotNull ProgressBar progressBar){
         int drinkId = Objects.requireNonNull(getActivity())
                 .getIntent().getIntExtra(DRINK_ID_KEY, 0);
-
-        String drinkJson = tryToLoadSavedJson();
+        String drinkJson = tryToLoadExtraJson();
         if (drinkJson != null){
-            setupDrinkRecipe(drinkJson, true);
+            setupDrinkRecipe(drinkJson, null);
         }   else {
             RecipeProviderTask task = new RecipeProviderTask(this);
             task.setProgressBar(progressBar);
@@ -172,7 +230,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private String tryToLoadSavedJson(){
+    private String tryToLoadExtraJson(){
         return Objects.requireNonNull(getActivity())
                 .getIntent().getStringExtra(DRINK_JSON_KEY);
     }
@@ -201,39 +259,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         if (isAdded()){
             List<Ingredient> ingredients = drink.getIngredientsList();
             mRecyclerView.setAdapter(new IngredientsAdapter(ingredients));
-        }
-    }
-
-    private void setupDrinkRecipe(String drinkJson, Boolean isFav){
-        mDrink = mJsonParser.parseJsonToDrinksBar(drinkJson).drinks[0];
-
-        if (isFav != null){
-            mIsFav = isFav;
-        }   else {
-            mIsFav = Saver.isDrinkFav(getContext(), mDrink);
-        }
-        mDrink.setFavourite(mIsFav);
-        setLikeImageButton();
-        setupAdapter(mDrink);
-        ImageHelper.downloadImage(mDrink.getUrlImage(), drinkImageView);
-        recipeCardView.setVisibility(View.VISIBLE);
-        ingredientsListCardView.setVisibility(View.VISIBLE);
-        likeImageButton.setVisibility(View.VISIBLE);
-        drinkNameTextView.setText(mDrink.getName());
-        String recipe = " " + mDrink.getInstruction();
-        drinkRecipeTextView.setText(recipe);
-        String serveGlass = getString(R.string.serve) + " " + mDrink.getGlass();
-        serveGlassTextView.setText(serveGlass);
-    }
-
-    @Override
-    public void onClick(View v) {
-        boolean result = changeLikeImageButtonState();
-
-        if (result) {
-            ToastBuilder.getDrinkAddedToast(getContext()).show();
-        }   else {
-            ToastBuilder.getDrinkRemovedToast(getContext()).show();
         }
     }
 
@@ -303,37 +328,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
             if (chosenIngredientNames.contains(ingredient.getName().toLowerCase())){
                 IngredientItemHelper.setFillToNameTextView(getContext(),
                         ingredientNameTextView, true);
-            }
-        }
-    }
-//
-    protected static class RecipeProviderTask
-        extends RequestProviderAsyncTask<Integer, Integer, String> {
-
-        RecipeProviderTask(Fragment instance) {
-            super(instance);
-        }
-
-        @Override
-        protected String doInBackground(Integer... drinksId) {
-            return new RequestProvider().downloadBarJsonById(drinksId[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String drinkJson){
-            super.onPostExecute(drinkJson);
-            DrinkRecipeFragment fragment = (DrinkRecipeFragment) super.getFragmentReference().get();
-
-            if (fragment != null) {
-                if (drinkJson != null) {
-                    if (fragment.isAdded()) {
-                        fragment.setupDrinkRecipe(drinkJson, null);
-                    }
-                }   else {
-                    Toast toast = ToastBuilder.getFailedConnectionToast(fragment.getContext());
-                    toast.show();
-                    Objects.requireNonNull(fragment.getActivity()).onBackPressed();
-                }
             }
         }
     }

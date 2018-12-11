@@ -62,10 +62,7 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
 
         if (holder.mRecyclerView.getOnFlingListener() == null) {
             mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
-//            mSnapHelper.onFling()
         }
-//        holder.mRecyclerView.setOnFlingListener(null);
-//        mSnapHelper.attachToRecyclerView(holder.mRecyclerView);
     }
 
     @Override

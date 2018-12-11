@@ -36,10 +36,6 @@ public class Ingredient {
         return mCategory;
     }
 
-    void setCategory(String category) {
-        this.mCategory = category;
-    }
-
     public Drawable getDrawable() {
         return mDrawable;
     }
@@ -54,5 +50,9 @@ public class Ingredient {
 
     public void setFill(boolean fill) {
         mIsFill = fill;
+    }
+
+    void setCategory(String category) {
+        this.mCategory = category;
     }
 }

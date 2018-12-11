@@ -5,7 +5,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.holygunner.cocktailsapp.R;
-import com.holygunner.cocktailsapp.SingleFragmentActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,13 +33,13 @@ public abstract class ToolbarHelper {
         }
     }
 
-    public static void setToolbarHome(@NotNull android.support.v7.widget.Toolbar toolbar,
-                               @NotNull final SingleFragmentActivity activity){
-        activity.setSupportActionBar(toolbar);
-        ActionBar actionBar = activity.getSupportActionBar();
-        assert actionBar != null;
-
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-    }
+//    public static void setToolbarHome(@NotNull android.support.v7.widget.Toolbar toolbar,
+//                               @NotNull final SingleFragmentActivity activity){
+//        activity.setSupportActionBar(toolbar);
+//        ActionBar actionBar = activity.getSupportActionBar();
+//        assert actionBar != null;
+//
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+//    }
 }

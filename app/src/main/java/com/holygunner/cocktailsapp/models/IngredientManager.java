@@ -31,6 +31,18 @@ public class IngredientManager {
         mAssetManager = context.getAssets();
     }
 
+    public List<Ingredient> chosenNameToIngrList(Set<String> chosenNames){
+        List<Ingredient> chosenIngrList = new LinkedList<>();
+
+        for (String name : chosenNames){
+            String category = findIngredientCategory(name);
+            Ingredient ingredient = new Ingredient(name);
+            ingredient.setDrawable(getIngredientDrawable(category, name));
+            chosenIngrList.add(ingredient);
+        }
+        return chosenIngrList;
+    }
+
     public List<IngredientsCategory> getAllIngredients(){
         List<IngredientsCategory> allIngredients = new ArrayList<>();
 
@@ -61,11 +73,11 @@ public class IngredientManager {
         }
     }
 
-    @NonNull
-    @Contract(pure = true)
-    public static String getIngredientPath(String folderName, String fileName){
-        return "file:///android_asset/" + folderName + "/" + fileName + ".png";
-    }
+//    @NonNull
+//    @Contract(pure = true)
+//    public static String getIngredientPath(String folderName, String fileName){
+//        return "file:///android_asset/" + folderName + "/" + fileName + ".png";
+//    }
 
     public void bindIngredientWithImageView(ImageView imageView, String fileName){
         String folderName = findIngredientCategory(fileName);
@@ -75,13 +87,15 @@ public class IngredientManager {
                 .into(imageView);
     }
 
-    public void bindIngredientWithImageView(ImageView imageView, String fileName, String folderName){
-        String path = getPath(fileName, folderName);
-        Picasso.get()
-                .load(path)
-                .into(imageView);
-    }
+//    public void bindIngredientWithImageView(ImageView imageView, String fileName, String folderName){
+//        String path = getPath(fileName, folderName);
+//        Picasso.get()
+//                .load(path)
+//                .into(imageView);
+//    }
 
+    @NonNull
+    @Contract(pure = true)
     private String getPath(String fileName, String folderName){
         return "file:///android_asset/" + folderName + "/" + fileName + ".png";
     }
@@ -183,17 +197,5 @@ public class IngredientManager {
         }
         ingredients = setTitleElemFirstIfExists(ingredients, category);
         return ingredients;
-    }
-
-    public List<Ingredient> chosenNameToIngrList(Set<String> chosenNames){
-        List<Ingredient> chosenIngrList = new LinkedList<>();
-
-        for (String name : chosenNames){
-            String category = findIngredientCategory(name);
-            Ingredient ingredient = new Ingredient(name);
-            ingredient.setDrawable(getIngredientDrawable(category, name));
-            chosenIngrList.add(ingredient);
-        }
-        return chosenIngrList;
     }
 }

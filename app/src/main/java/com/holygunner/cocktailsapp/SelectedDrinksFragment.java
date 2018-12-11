@@ -117,31 +117,6 @@ public class SelectedDrinksFragment extends Fragment {
                 mRecyclerView.getLayoutManager().onSaveInstanceState());
     }
 
-    private void loadDrinks(@NotNull ProgressBar progressBar){
-        mBarManager = new BarManager(getContext());
-
-        String[] added = IngredientManager.countAddedIngredients(
-                Saver.readIngredients(getContext(), CHOSEN_INGREDIENTS_KEY),
-                Saver.readIngredients(getContext(), CHECKED_INGREDIENTS_KEY)).toArray(new String[0]);
-
-        howMuchChecked = added.length;
-
-        MyRequestProviderTask task = new MyRequestProviderTask(this);
-        task.setProgressBar(progressBar);
-
-        task.execute(added);
-    }
-
-    private void setupAdapter(){
-        if (isAdded()){
-                DrinksAdapter drinksAdapter = new DrinksAdapter(getContext(), mDrinks);
-                mRecyclerView.setAdapter(drinksAdapter);
-                if (savedRecyclerViewState != null) {
-                    mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
-                }
-            }
-    }
-
     protected static class MyRequestProviderTask
             extends RequestProviderAsyncTask<String, Integer, List<Bar>> {
 
@@ -172,6 +147,31 @@ public class SelectedDrinksFragment extends Fragment {
                     Objects.requireNonNull(fragment.getActivity()).onBackPressed();
                 }
                 fragment.howMuchChecked = 0;
+            }
+        }
+    }
+
+    private void loadDrinks(@NotNull ProgressBar progressBar){
+        mBarManager = new BarManager(getContext());
+
+        String[] added = IngredientManager.countAddedIngredients(
+                Saver.readIngredients(getContext(), CHOSEN_INGREDIENTS_KEY),
+                Saver.readIngredients(getContext(), CHECKED_INGREDIENTS_KEY)).toArray(new String[0]);
+
+        howMuchChecked = added.length;
+
+        MyRequestProviderTask task = new MyRequestProviderTask(this);
+        task.setProgressBar(progressBar);
+
+        task.execute(added);
+    }
+
+    private void setupAdapter(){
+        if (isAdded()){
+            DrinksAdapter drinksAdapter = new DrinksAdapter(getContext(), mDrinks);
+            mRecyclerView.setAdapter(drinksAdapter);
+            if (savedRecyclerViewState != null) {
+                mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
             }
         }
     }

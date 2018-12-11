@@ -86,30 +86,6 @@ public class SearchDrinkFragment extends Fragment {
         }
     }
 
-    private void setSearchView(){
-            searchView.setQueryHint("Enter drink name");
-            searchView.setClipToPadding(true);
-            searchView.setIconifiedByDefault(false);
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    Log.i("TAG", query);
-                    searchDrink(query);
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    Log.d("TAG", "QueryTextChange: " + newText);
-                    if (newText.toCharArray().length > 1) {
-                        searchDrink(newText);
-                    }
-                    return false;
-                }
-            });
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -118,19 +94,6 @@ public class SearchDrinkFragment extends Fragment {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void setupAdapter(){
-        if (isAdded()){
-            DrinksAdapter drinksAdapter = new DrinksAdapter(getContext(), mDrinks);
-            mRecyclerView.setAdapter(drinksAdapter);
-        }
-    }
-
-    private void searchDrink(String drinkName){
-        MyRequestProviderTask task = new MyRequestProviderTask(this);
-        task.setProgressBar(mProgressBar);
-        task.execute(drinkName);
     }
 
     protected static class MyRequestProviderTask
@@ -159,5 +122,42 @@ public class SearchDrinkFragment extends Fragment {
                 }
             }
         }
+    }
+
+    private void setSearchView(){
+            searchView.setQueryHint("Enter drink name");
+            searchView.setClipToPadding(true);
+            searchView.setIconifiedByDefault(false);
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.i("TAG", query);
+                    searchDrink(query);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    Log.d("TAG", "QueryTextChange: " + newText);
+                    if (newText.toCharArray().length > 1) {
+                        searchDrink(newText);
+                    }
+                    return false;
+                }
+            });
+    }
+
+    private void setupAdapter(){
+        if (isAdded()){
+            DrinksAdapter drinksAdapter = new DrinksAdapter(getContext(), mDrinks);
+            mRecyclerView.setAdapter(drinksAdapter);
+        }
+    }
+
+    private void searchDrink(String drinkName){
+        MyRequestProviderTask task = new MyRequestProviderTask(this);
+        task.setProgressBar(mProgressBar);
+        task.execute(drinkName);
     }
 }

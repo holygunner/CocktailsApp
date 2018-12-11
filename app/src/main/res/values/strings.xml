@@ -13,13 +13,12 @@
         ingredient5, ingredient6,
        </string>
     <string name="serve">Serve:</string>
-    <string name="gap"/>
     <string name="ingredient_image">Ingredient image</string>
     <string name="drink_image">Drink image</string>
     <string name="show_the_drinks">Show the drinks</string>
     <string name="like_button">Like button</string>
     <string name="failed_connection">Failed connection</string>
-    <string name="like_button_pressed_ok">Added to your fav\'s</string>
+    <string name="like_button_pressed_ok">Saved to your fav\'s</string>
     <string name="like_button_pressed_cancel">Removed from your fav\'s</string>
     <string name="no_chosen_ingredients">Choose at least one ingredient</string>
     <string name="no_fav_drinks">Like at least one drink</string>
@@ -40,4 +39,5 @@
     <string name="drawer_close">drawer close</string>
     <string name="swipe_to_remove">Swipe left to remove</string>
     <string name="remove">Remove</string>
+    <string name="developed_by_chyzh">Developed by Andrew Chyzh 2018</string>
 </resources>

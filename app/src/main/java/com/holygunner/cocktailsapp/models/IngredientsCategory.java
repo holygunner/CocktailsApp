@@ -6,7 +6,7 @@ public class IngredientsCategory {
     private String mCategoryName;
     private List<Ingredient> mIngredients;
 
-    public IngredientsCategory(String categoryName, List<Ingredient> ingredients){
+    IngredientsCategory(String categoryName, List<Ingredient> ingredients){
         mCategoryName = categoryName;
         mIngredients = ingredients;
     }
@@ -15,9 +15,9 @@ public class IngredientsCategory {
         return mCategoryName;
     }
 
-    public void setCategoryName(String categoryName) {
-        mCategoryName = categoryName;
-    }
+//    public void setCategoryName(String categoryName) {
+//        mCategoryName = categoryName;
+//    }
 
     public List<Ingredient> getIngredients() {
         return mIngredients;

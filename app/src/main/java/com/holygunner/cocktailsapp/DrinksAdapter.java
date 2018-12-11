@@ -72,6 +72,17 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
             itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(mContext, DrinkRecipeActivity.class);
+            intent.putExtra(DRINK_ID_KEY, mDrink.getId());
+            if (mDrink.getIngredientsList().size() > 0){
+                intent.putExtra(DRINK_JSON_KEY,
+                        mJsonParser.serializeDrinkToJsonBar(mDrink));
+            }
+            mContext.startActivity(intent);
+        }
+
         void bindDrink(Drink drink){
             mDrink = drink;
             setIsFav(Saver.isDrinkFav(mContext, mDrink));
@@ -86,17 +97,6 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
             }   else {
                 mHeartImageViewContainer.setVisibility(View.GONE);
             }
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(mContext, DrinkRecipeActivity.class);
-            intent.putExtra(DRINK_ID_KEY, mDrink.getId());
-            if (mDrink.getIngredientsList().size() > 0){
-                intent.putExtra(DRINK_JSON_KEY,
-                        mJsonParser.serializeDrinkToJsonBar(mDrink));
-            }
-            mContext.startActivity(intent);
         }
 
         private void setDrinkChosenIngrsTextView(@NotNull Drink drink){

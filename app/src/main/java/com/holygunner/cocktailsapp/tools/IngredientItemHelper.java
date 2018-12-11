@@ -42,9 +42,9 @@ public abstract class IngredientItemHelper {
         return  (int) (dpWidth / 128);
     }
 
-    public static int calculateNumbOfColumns(@NonNull Context context, int width) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpWidth = width / displayMetrics.density;
-        return  (int) (dpWidth / 128);
-    }
+//    public static int calculateNumbOfColumns(@NonNull Context context, int width) {
+//        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+//        float dpWidth = width / displayMetrics.density;
+//        return  (int) (dpWidth / 128);
+//    }
 }

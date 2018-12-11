@@ -12,8 +12,12 @@ public abstract class URLBuilder {
             = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
     private static final String COCKTAIL_BY_ID
             = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
-    private static final String COCKTAIL_BY_NAME
-            = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
+
+    @NonNull
+    @Contract(pure = true)
+    public static String getMissedIngredientUrl(String name){
+        return "https://www.thecocktaildb.com/images/ingredients/" + name + "-Medium.png";
+    }
 
     @NotNull
     static String getBarByIngredientUrl(String ingredientName){
@@ -36,11 +40,5 @@ public abstract class URLBuilder {
     @NonNull
     private static String underscoresToSpacesIfRequired(@NotNull String name){
         return name.replace(" ", "_");
-    }
-
-    @NonNull
-    @Contract(pure = true)
-    public static String getMissedIngredientUrl(String name){
-        return "https://www.thecocktaildb.com/images/ingredients/" + name + "-Medium.png";
     }
 }

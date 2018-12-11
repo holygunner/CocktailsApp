@@ -17,8 +17,7 @@ public class Saver {
     public static final String CHOSEN_INGREDIENTS_KEY = "chosen_ingredients_key";
     public static final String CHECKED_INGREDIENTS_KEY = "checked_ingredients_key";
     private static final String SELECTED_BAR_KEY = "selected_bar_key";
-    private static final String FAV_DRINKS_ID_SET_KEY = "";
-    private static final String FAV_DRINKS_BAR_KEY = "";
+    private static final String FAV_DRINKS_ID_SET_KEY = "fav_drinks_id_set_key";
 
     public static Set<String> readFavDrinkIdSet(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -29,27 +28,6 @@ public class Saver {
         String drinkId = String.valueOf(drink.getId());
 
         return isDrinkFav(context, drinkId);
-    }
-
-    public static boolean isDrinkFav(Context context, @NonNull String drinkId){
-        return readFavDrinkIdSet(context).contains(drinkId);
-    }
-
-    private static void saveFavDrink(Context context, String drinkId, String drinkJson){
-        if (!isDrinkFav(context, drinkId)){
-            PreferenceManager.getDefaultSharedPreferences(context)
-                    .edit()
-                    .putString(drinkId, drinkJson)
-                    .apply();
-        }
-    }
-
-    private static void removeFavDrink(Context context, String drinkId){
-        if (isDrinkFav(context, drinkId)){
-            PreferenceManager.getDefaultSharedPreferences(context)
-                    .edit().remove(drinkId)
-                    .apply();
-        }
     }
 
     public static Set<String> readFavDrinksJsons(Context context){
@@ -78,13 +56,6 @@ public class Saver {
         }
 
         updFavDrinksIdSet(context, favDrinksIdSet);
-    }
-
-    private static void updFavDrinksIdSet(Context context, Set<String> updFavDrinksIdSet){
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putStringSet(FAV_DRINKS_ID_SET_KEY, updFavDrinksIdSet)
-                .apply();
     }
 
     public static Set<String> readIngredients(Context context, String key){
@@ -141,6 +112,34 @@ public class Saver {
         }
         updIngredients(context, savedNames, CHOSEN_INGREDIENTS_KEY);
         return result;
+    }
+
+    private static void updFavDrinksIdSet(Context context, Set<String> updFavDrinksIdSet){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putStringSet(FAV_DRINKS_ID_SET_KEY, updFavDrinksIdSet)
+                .apply();
+    }
+
+    private static boolean isDrinkFav(Context context, @NonNull String drinkId){
+        return readFavDrinkIdSet(context).contains(drinkId);
+    }
+
+    private static void saveFavDrink(Context context, String drinkId, String drinkJson){
+        if (!isDrinkFav(context, drinkId)){
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit()
+                    .putString(drinkId, drinkJson)
+                    .apply();
+        }
+    }
+
+    private static void removeFavDrink(Context context, String drinkId){
+        if (isDrinkFav(context, drinkId)){
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit().remove(drinkId)
+                    .apply();
+        }
     }
 
     private static void updIngredients(Context context, Set<String> savedNames, String key){
