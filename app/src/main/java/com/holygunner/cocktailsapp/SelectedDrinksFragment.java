@@ -40,7 +40,6 @@ public class SelectedDrinksFragment extends Fragment {
     private BarManager mBarManager;
     private int howMuchChecked;
 
-    public static final String DRINK_ID_KEY = "drink_id_key";
     private static final String SELECTED_DRINKS_SAVED_STATE_KEY = "selected_drinks_saved_state_key";
     private Parcelable savedRecyclerViewState;
 
@@ -142,19 +141,6 @@ public class SelectedDrinksFragment extends Fragment {
                 }
             }
     }
-
-//    private boolean ifOnlyOneDrinkFound(){
-//        if (mDrinks.size() == 1){
-//            // intent
-//            Context context = Objects.requireNonNull(getActivity()).getBaseContext();
-//            Intent intent = new Intent(context, DrinkRecipeActivity.class);
-//            intent.putExtra(DRINK_ID_KEY, mDrinks.get(0).getId());
-//            context.startActivity(intent);
-//            return true;
-//        }   else {
-//            return false;
-//        }
-//    }
 
     protected static class MyRequestProviderTask
             extends RequestProviderAsyncTask<String, Integer, List<Bar>> {

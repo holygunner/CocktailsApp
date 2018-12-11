@@ -41,6 +41,8 @@ import java.util.Set;
 
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
+import static com.holygunner.cocktailsapp.values.BundleKeys.DRINK_ID_KEY;
+import static com.holygunner.cocktailsapp.values.BundleKeys.DRINK_JSON_KEY;
 
 public class DrinkRecipeFragment extends Fragment implements View.OnClickListener {
     private RecyclerView mRecyclerView;
@@ -109,7 +111,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         drinkImageView = v.findViewById(R.id.drink_imageView);
         likeImageButton = v.findViewById(R.id.like_imageButton);
         likeImageButton.setOnClickListener(this);
-
         recipeCardView = v.findViewById(R.id.recipe_cardView);
         ingredientsListCardView = v.findViewById(R.id.ingredients_list_cardView);
         drinkNameTextView = v.findViewById(R.id.drink_name_textView);
@@ -118,8 +119,8 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
         serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
         mRecyclerView = v.findViewById(R.id.drink_ingredients_recyclerGridView);
-
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), calculateSpanCount()));
+
         final ProgressBar progressBar = v.findViewById(R.id.app_progress_bar);
 
         if (savedInstanceState != null){
@@ -158,10 +159,22 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     }
 
     private void loadDrink(@NotNull ProgressBar progressBar){
-        int drinkId = Objects.requireNonNull(getActivity()).getIntent().getIntExtra(SelectedDrinksFragment.DRINK_ID_KEY, 0);
-        RecipeProviderTask task = new RecipeProviderTask(this);
-        task.setProgressBar(progressBar);
-        task.execute(drinkId);
+        int drinkId = Objects.requireNonNull(getActivity())
+                .getIntent().getIntExtra(DRINK_ID_KEY, 0);
+
+        String drinkJson = tryToLoadSavedJson();
+        if (drinkJson != null){
+            setupDrinkRecipe(drinkJson, true);
+        }   else {
+            RecipeProviderTask task = new RecipeProviderTask(this);
+            task.setProgressBar(progressBar);
+            task.execute(drinkId);
+        }
+    }
+
+    private String tryToLoadSavedJson(){
+        return Objects.requireNonNull(getActivity())
+                .getIntent().getStringExtra(DRINK_JSON_KEY);
     }
 
     private void setLikeImageButton(){

@@ -39,7 +39,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:textColor="@color/textView_color"
+            android:textColor="@color/text_color"
             android:textStyle="bold"
             android:textSize="24sp"
             android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                         <TextView
                             android:id="@+id/recipe_textView"
                             android:textAlignment="textStart"
-                            android:textColor="@color/textView_color"
+                            android:textColor="@color/text_color"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
@@ -111,7 +111,7 @@
                             android:id="@+id/serve_glass_textView"
                             android:layout_marginTop="8dp"
                             android:textStyle="italic"
-                            android:textColor="@color/textView_color"
+                            android:textColor="@color/text_color"
                             android:gravity="center_horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>

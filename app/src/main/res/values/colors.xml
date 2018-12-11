@@ -2,15 +2,11 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorPrimary2">#af3f51b5</color>
     <color name="colorAccent">#FF4081</color>
     <color name="ingredientColorFill">#af46ff40</color>
-    <color name="ingredientColorFill2">#9646ff40</color>
     <color name="darkBlue">#304e9f</color>
     <color name="light_color">#fffdf1</color>
-    <color name="light_color_top">#616161</color>
-    <color name="gradient_top_color_blue">#afc1ff</color>
-    <color name="gradient_bellow_color_lilac">#fdc7ff</color>
-    <color name="toolBar_grey">#e3767676</color>
-    <color name="textView_color">#41403b</color>
+    <color name="gradient_top_blue">#afc1ff</color>
+    <color name="gradient_bellow_lilac">#fdc7ff</color>
+    <color name="text_color">#41403b</color>
 </resources>

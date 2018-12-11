@@ -47,14 +47,14 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:textColor="@color/textView_color"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/drink_chosen_ingrs_TextView"
                     android:maxLines="3"
                     android:layout_marginTop="8dp"
-                    android:textColor="@color/textView_color"
+                    android:textColor="@color/text_color"
                     android:textStyle="italic"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
                 <TextView
                     android:textSize="10sp"
                     android:id="@+id/drink_position"
-                    android:textColor="@color/textView_color"
+                    android:textColor="@color/text_color"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:gravity="bottom|end"

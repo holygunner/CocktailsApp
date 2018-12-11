@@ -3,7 +3,6 @@ package com.holygunner.cocktailsapp;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,20 +14,24 @@ import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.Ingredient;
 import com.holygunner.cocktailsapp.save.Saver;
 import com.holygunner.cocktailsapp.tools.ImageHelper;
+import com.holygunner.cocktailsapp.tools.JsonParser;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static com.holygunner.cocktailsapp.SelectedDrinksFragment.DRINK_ID_KEY;
+import static com.holygunner.cocktailsapp.values.BundleKeys.DRINK_ID_KEY;
+import static com.holygunner.cocktailsapp.values.BundleKeys.DRINK_JSON_KEY;
 
 public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHolder> {
     private Context mContext;
     private List<Drink> mDrinks;
+    private JsonParser mJsonParser;
 
     DrinksAdapter(Context context, List<Drink> drinks){
         mContext = context;
         mDrinks = drinks;
+        mJsonParser = new JsonParser();
     }
 
     @NonNull
@@ -57,7 +60,6 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
         private TextView drinkChosenIngrsTextView;
         private TextView drinkPositionTextView;
         private ImageView drinkImageView;
-        private CardView drink_CardView;
         private View mHeartImageViewContainer;
 
         DrinksHolder(View itemView) {
@@ -66,7 +68,6 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
             drinkChosenIngrsTextView = itemView.findViewById(R.id.drink_chosen_ingrs_TextView);
             drinkPositionTextView = itemView.findViewById(R.id.drink_position);
             drinkImageView = itemView.findViewById(R.id.drink_imageView);
-            drink_CardView = itemView.findViewById(R.id.drink_CardView);
             mHeartImageViewContainer = itemView.findViewById(R.id.is_drink_liked_container);
             itemView.setOnClickListener(this);
         }
@@ -91,6 +92,10 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
         public void onClick(View v) {
             Intent intent = new Intent(mContext, DrinkRecipeActivity.class);
             intent.putExtra(DRINK_ID_KEY, mDrink.getId());
+            if (mDrink.getIngredientsList().size() > 0){
+                intent.putExtra(DRINK_JSON_KEY,
+                        mJsonParser.serializeDrinkToJsonBar(mDrink));
+            }
             mContext.startActivity(intent);
         }
 

@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.holygunner.cocktailsapp.models.Drink;
+import com.holygunner.cocktailsapp.models.DrinksComparator;
 import com.holygunner.cocktailsapp.save.Saver;
 import com.holygunner.cocktailsapp.tools.DrawerMenuManager;
 import com.holygunner.cocktailsapp.tools.JsonParser;
@@ -30,6 +31,7 @@ import com.holygunner.cocktailsapp.tools.ToolbarHelper;
 import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -106,6 +108,7 @@ public class FavouriteDrinksFragment extends Fragment {
                 mavDrinks.add(favDrink);
             }
         }
+        Collections.sort(mavDrinks, new DrinksComparator());
         return mavDrinks;
     }
 

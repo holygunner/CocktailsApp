@@ -16,8 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
             android:layout_below="@id/toolbar">
 
         <android.support.v7.widget.CardView
@@ -58,7 +56,7 @@
 
         <Button
             android:id="@+id/remove_button"
-            android:text="Remove"
+            android:text="@string/remove"
             android:visibility="invisible"
             style="@style/app_button_land"/>
 

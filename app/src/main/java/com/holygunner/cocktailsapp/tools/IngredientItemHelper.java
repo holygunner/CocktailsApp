@@ -18,10 +18,10 @@ public abstract class IngredientItemHelper {
                     R.color.light_color));
             ingredientNameTextView
                     .setBackground(ContextCompat
-                            .getDrawable(context, R.drawable.ingredient_name_background));
+                            .getDrawable(context, R.drawable.ingredient_name_fill));
         }   else {
             ingredientNameTextView.setTextColor(ContextCompat.getColor(context,
-                    R.color.textView_color));
+                    R.color.text_color));
             ingredientNameTextView.setBackgroundResource(0);
         }
     }
