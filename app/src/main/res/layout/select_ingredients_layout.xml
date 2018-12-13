@@ -30,8 +30,8 @@
 
     <Button
         android:id="@+id/mix_button"
-        style="@style/AppButtonPortrait"
-        android:text="@string/show_the_drinks"/>
+        android:text="@string/show_the_drinks"
+        style="@style/AppButtonPortrait"/>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_from_ingredients_list"

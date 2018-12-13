@@ -9,6 +9,10 @@ import com.holygunner.cocktailsapp.R;
 
 public abstract class ToastBuilder {
 
+    public static Toast getAgeDisclaimerToast(Context context){
+        return buildToast(context, R.string.age_disclaimer);
+    }
+
     public static Toast getFailedConnectionToast(Context context){
         return buildToast(context, R.string.failed_connection);
     }

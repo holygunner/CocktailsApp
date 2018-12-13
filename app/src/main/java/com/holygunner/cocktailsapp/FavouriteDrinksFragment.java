@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.holygunner.cocktailsapp.models.Drink;
 import com.holygunner.cocktailsapp.models.DrinksComparator;
@@ -37,6 +38,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class FavouriteDrinksFragment extends Fragment {
+    private TextView bottomTextView;
     private RecyclerView mRecyclerView;
     private DrinksAdapter mDrinksAdapter;
     private DrawerLayout mDrawerLayout;
@@ -62,6 +64,7 @@ public class FavouriteDrinksFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.favourite_drinks_layout, container, false);
+        bottomTextView = v.findViewById(R.id.bottom_textView);
 
         android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar);
         ToolbarHelper.setToolbar(toolbar,

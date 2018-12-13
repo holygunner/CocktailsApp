@@ -52,6 +52,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
 
     public void onCreate(Bundle onSavedInstanceState){
         super.onCreate(onSavedInstanceState);
+        checkIsVerified();
         setRetainInstance(true);
         setHasOptionsMenu(true);
         mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
@@ -168,6 +169,13 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
             if (savedRecyclerViewState != null){
                 mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
             }
+        }
+    }
+
+    private void checkIsVerified(){
+        if (!Saver.readIsVerificationComplete(getContext())) {
+            startActivity(new Intent(getContext(), AgeVerificationActivity.class));
+            Objects.requireNonNull(getActivity()).finish();
         }
     }
 }

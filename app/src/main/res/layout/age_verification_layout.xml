@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@color/darkBlue">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/are_you_of_legal"
+            android:textSize="24dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:textColor="@color/light_color"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/yes_button"
+                android:text="@string/yes"
+                android:textColor="@color/light_color"
+                android:background="#00ffffff"
+                style="@style/AgeVerificationButton"/>
+
+            <Button
+                android:id="@+id/no_button"
+                android:text="@string/no"
+                android:textColor="@color/light_color"
+                android:background="#00ffffff"
+                android:layout_marginStart="32dp"
+                style="@style/AgeVerificationButton"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

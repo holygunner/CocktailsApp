@@ -24,7 +24,6 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:visibility="visible"
-            android:minHeight="192dp"
             app:cardElevation="4dp"
             style="@style/CardViewStyle">
 
@@ -47,7 +46,7 @@
 
         <Button
             android:id="@+id/remove_button"
-            android:text="Remove"
+            android:text="@string/remove"
             android:visibility="invisible"
             style="@style/AppButtonPortrait"/>
 
@@ -58,11 +57,11 @@
             android:layout_alignParentBottom="true"
             android:textAlignment="center"
             android:textColor="@color/text_color"
-            android:layout_marginBottom="16dp"
-            />
+            android:layout_marginBottom="16dp"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
+            android:background="@color/toolbar_grey"
             app:title="Chosen ingredients"
             style="@style/CustomToolbar"/>
 

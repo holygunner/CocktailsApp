@@ -48,6 +48,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     private RecyclerView mRecyclerView;
     private ImageView drinkImageView;
     private ImageButton likeImageButton;
+    private ViewGroup likeImageButtonContainer;
     private CardView recipeCardView;
     private CardView ingredientsListCardView;
     private TextView drinkNameTextView;
@@ -109,6 +110,8 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         drinkImageView = v.findViewById(R.id.drink_imageView);
         likeImageButton = v.findViewById(R.id.like_imageButton);
         likeImageButton.setOnClickListener(this);
+        likeImageButtonContainer = v.findViewById(R.id.like_button_container);
+        likeImageButtonContainer.setOnClickListener(this);
         recipeCardView = v.findViewById(R.id.recipe_cardView);
         ingredientsListCardView = v.findViewById(R.id.ingredients_list_cardView);
         drinkNameTextView = v.findViewById(R.id.drink_name_textView);
@@ -239,7 +242,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         if (Saver.isDrinkFav(getContext(), mDrink)){
             likeImageButton.setImageResource(R.drawable.like_button_pressed);
         }   else {
-            likeImageButton.setImageResource(R.drawable.like_button_not_pressed);
+            likeImageButton.setImageResource(R.drawable.like_button);
         }
 
     }
@@ -249,7 +252,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
             likeImageButton.setImageResource(R.drawable.like_button_pressed);
             mIsFav = true;
         }   else {
-            likeImageButton.setImageResource(R.drawable.like_button_not_pressed);
+            likeImageButton.setImageResource(R.drawable.like_button);
             mIsFav = false;
         }
         return mIsFav;

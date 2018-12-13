@@ -51,6 +51,7 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
+            android:background="@color/toolbar_grey"
             app:title="Chosen ingredients"
             app:titleTextColor="@color/light_color"
             style="@style/CustomToolbar"/>

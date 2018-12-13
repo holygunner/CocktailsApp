@@ -6,12 +6,27 @@
         irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
         anim id est laborum.</string>
-    <string name="serve_glass">Serve: Cocktail glass</string>
-    <string name="ingredient1_ingredient2_test">
-        ingredient1, ingredient2,
-        ingredient3, ingredient4,
-        ingredient5, ingredient6,
-       </string>
+
+    <string name="help_how_to_use">&#160;Select the ingredients which you like, tap the button
+        and get the drinks that contain them. The drinks with the max number of matches will be
+        on the top of the list, so you always will get the most relevant search result.</string>
+
+    <string name="how_to_manage_ingrs">On the app start screen scroll up or down,
+        choose category of your ingredient and scroll left or right to find it on the card.
+        Tap the ingredient you wish once to select it. Your choice will be stored to the
+        \«Chosen ingredients\» section</string>
+
+    <string name="help_how_to_like">&#160;Just tap the heart on the right upper corner of the drink
+        recipe. From this moment it is saved to your "Favourite drinks" section of the drawer menu.
+    </string>
+
+    <string name="help_how_to_search">&#160;No problem, just use \«Search drink\» section.
+        Start to enter the name and the required drink will appear at once</string>
+
+    <string name="help_clear_ingrs">&#160;Open \«Chosen ingredients\» of the drawer menu,
+        tap the ingredients you wish to clear and press the remove button. Also you can clear
+        an each selected ingredient by tap it again on the start screen.</string>
+
     <string name="serve">Serve:</string>
     <string name="ingredient_image">Ingredient image</string>
     <string name="drink_image">Drink image</string>
@@ -39,5 +54,12 @@
     <string name="drawer_close">drawer close</string>
     <string name="swipe_to_remove">Swipe left to remove</string>
     <string name="remove">Remove</string>
+    <string name="age_disclaimer">Sorry but you have no right to use this app</string>
     <string name="developed_by_chyzh">Developed by Andrew Chyzh 2018</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="are_you_of_legal">Are you of legal drinking age in you country?</string>
+    <string name="if_i_want_to_clear">If I want to clear all selected ingredients or some of them</string>
+    <string name="how_to_save_the_drink_i_ve_liked">How to save the drink I\'ve liked</string>
+    <string name="if_i_d_like_to_find_drink_by_it_s_name">If I\'d like to find drink by it\'s name</string>
 </resources>

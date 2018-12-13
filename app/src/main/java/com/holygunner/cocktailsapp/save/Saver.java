@@ -18,6 +18,21 @@ public class Saver {
     public static final String CHECKED_INGREDIENTS_KEY = "checked_ingredients_key";
     private static final String SELECTED_BAR_KEY = "selected_bar_key";
     private static final String FAV_DRINKS_ID_SET_KEY = "fav_drinks_id_set_key";
+    private static final String USER_AGE_VERIFICATION_KEY = "user_age_verification_key";
+
+    public static boolean readIsVerificationComplete(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(USER_AGE_VERIFICATION_KEY, false);
+    }
+
+    public static void writeVerificationComplete(Context context, boolean isUserAdult){
+        if (isUserAdult){
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit()
+                    .putBoolean(USER_AGE_VERIFICATION_KEY, true)
+                    .apply();
+        }
+    }
 
     public static Set<String> readFavDrinkIdSet(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context)

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.holygunner.cocktailsapp.AboutActivity;
 import com.holygunner.cocktailsapp.ChosenIngredientsActivity;
 import com.holygunner.cocktailsapp.FavouriteDrinksActivity;
+import com.holygunner.cocktailsapp.HelpActivity;
 import com.holygunner.cocktailsapp.R;
 import com.holygunner.cocktailsapp.SearchDrinkActivity;
 import com.holygunner.cocktailsapp.SelectIngredientsActivity;
@@ -60,6 +61,10 @@ public class DrawerMenuManager {
                                         drawerLayout.closeDrawers();
                                         return false;
                                     }
+                                    break;
+                                case R.id.help:
+                                    intent = new Intent(context,
+                                            HelpActivity.class);
                                     break;
                                 case R.id.about:
                                     intent = new Intent(context,

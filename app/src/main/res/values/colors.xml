@@ -4,9 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="ingredientColorFill">#af46ff40</color>
+    <color name="ingredientColorFill2">#af46ff40</color>
     <color name="darkBlue">#304e9f</color>
     <color name="light_color">#fffdf1</color>
     <color name="gradient_top_blue">#afc1ff</color>
     <color name="gradient_bellow_lilac">#fdc7ff</color>
     <color name="text_color">#41403b</color>
+    <color name="toolbar_grey_transparent">#e3767676</color>
+    <color name="toolbar_grey">#767676</color>
 </resources>
