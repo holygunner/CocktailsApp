@@ -46,14 +46,13 @@ import static com.holygunner.cocktailsapp.values.BundleKeys.DRINK_JSON_KEY;
 
 public class DrinkRecipeFragment extends Fragment implements View.OnClickListener {
     private RecyclerView mRecyclerView;
-    private ImageView drinkImageView;
-    private ImageButton likeImageButton;
-    private ViewGroup likeImageButtonContainer;
-    private CardView recipeCardView;
-    private CardView ingredientsListCardView;
-    private TextView drinkNameTextView;
-    private TextView drinkRecipeTextView;
-    private TextView serveGlassTextView;
+    private ImageView mDrinkImageView;
+    private ImageButton mLikeImageButton;
+    private CardView mRecipeCardView;
+    private CardView mIngredientsListCardView;
+    private TextView mDrinkNameTextView;
+    private TextView mDrinkRecipeTextView;
+    private TextView mServeGlassTextView;
     private IngredientManager mIngredientManager;
     private Set<String> chosenIngredientNames;
     private Drink mDrink;
@@ -107,18 +106,18 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
                 (SingleFragmentActivity) Objects.requireNonNull(getActivity()),
                 ToolbarHelper.UP_BUTTON);
 
-        drinkImageView = v.findViewById(R.id.drink_imageView);
-        likeImageButton = v.findViewById(R.id.like_imageButton);
-        likeImageButton.setOnClickListener(this);
-        likeImageButtonContainer = v.findViewById(R.id.like_button_container);
+        mDrinkImageView = v.findViewById(R.id.drink_imageView);
+        mLikeImageButton = v.findViewById(R.id.like_imageButton);
+        mLikeImageButton.setOnClickListener(this);
+        ViewGroup likeImageButtonContainer = v.findViewById(R.id.like_button_container);
         likeImageButtonContainer.setOnClickListener(this);
-        recipeCardView = v.findViewById(R.id.recipe_cardView);
-        ingredientsListCardView = v.findViewById(R.id.ingredients_list_cardView);
-        drinkNameTextView = v.findViewById(R.id.drink_name_textView);
-        drinkRecipeTextView = v.findViewById(R.id.recipe_textView);
-        drinkRecipeTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
-        serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
-        serveGlassTextView = v.findViewById(R.id.serve_glass_textView);
+        mRecipeCardView = v.findViewById(R.id.recipe_cardView);
+        mIngredientsListCardView = v.findViewById(R.id.ingredients_list_cardView);
+        mDrinkNameTextView = v.findViewById(R.id.drink_name_textView);
+        mDrinkRecipeTextView = v.findViewById(R.id.recipe_textView);
+        mDrinkRecipeTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
+        mServeGlassTextView = v.findViewById(R.id.serve_glass_textView);
+        mServeGlassTextView = v.findViewById(R.id.serve_glass_textView);
         mRecyclerView = v.findViewById(R.id.drink_ingredients_recyclerGridView);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), calculateSpanCount()));
 
@@ -155,18 +154,17 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         }   else {
             mIsFav = Saver.isDrinkFav(getContext(), mDrink);
         }
-        mDrink.setFavourite(mIsFav);
         setLikeImageButton();
         setupAdapter(mDrink);
-        ImageHelper.downloadImage(mDrink.getUrlImage(), drinkImageView);
-        recipeCardView.setVisibility(View.VISIBLE);
-        ingredientsListCardView.setVisibility(View.VISIBLE);
-        likeImageButton.setVisibility(View.VISIBLE);
-        drinkNameTextView.setText(mDrink.getName());
+        ImageHelper.downloadImage(mDrink.getUrlImage(), mDrinkImageView);
+        mRecipeCardView.setVisibility(View.VISIBLE);
+        mIngredientsListCardView.setVisibility(View.VISIBLE);
+        mLikeImageButton.setVisibility(View.VISIBLE);
+        mDrinkNameTextView.setText(mDrink.getName());
         String recipe = " " + mDrink.getInstruction();
-        drinkRecipeTextView.setText(recipe);
+        mDrinkRecipeTextView.setText(recipe);
         String serveGlass = getString(R.string.serve) + " " + mDrink.getGlass();
-        serveGlassTextView.setText(serveGlass);
+        mServeGlassTextView.setText(serveGlass);
     }
 
     @Override
@@ -240,19 +238,19 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
 
     private void setLikeImageButton(){
         if (Saver.isDrinkFav(getContext(), mDrink)){
-            likeImageButton.setImageResource(R.drawable.like_button_pressed);
+            mLikeImageButton.setImageResource(R.drawable.like_button_pressed);
         }   else {
-            likeImageButton.setImageResource(R.drawable.like_button);
+            mLikeImageButton.setImageResource(R.drawable.like_button);
         }
 
     }
 
     private boolean changeLikeImageButtonState(){
         if (!mIsFav){
-            likeImageButton.setImageResource(R.drawable.like_button_pressed);
+            mLikeImageButton.setImageResource(R.drawable.like_button_pressed);
             mIsFav = true;
         }   else {
-            likeImageButton.setImageResource(R.drawable.like_button);
+            mLikeImageButton.setImageResource(R.drawable.like_button);
             mIsFav = false;
         }
         return mIsFav;

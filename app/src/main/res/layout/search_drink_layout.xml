@@ -36,7 +36,7 @@
             android:theme="@style/AppSearchView"
             android:elevation="4dp"
             android:layout_below="@id/toolbar"
-            android:background="@color/light_color"
+            android:background="@color/light_background_color"
             android:imeOptions=
                 "actionSearch|flagNoExtractUi|flagNoFullscreen"/>
 

@@ -7,8 +7,6 @@ import android.view.MenuItem;
 
 import com.holygunner.cocktailsapp.tools.ToolbarHelper;
 
-import java.util.Objects;
-
 public class AboutActivity extends AppCompatActivity {
 
     @Override

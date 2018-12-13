@@ -73,12 +73,6 @@ public class IngredientManager {
         }
     }
 
-//    @NonNull
-//    @Contract(pure = true)
-//    public static String getIngredientPath(String folderName, String fileName){
-//        return "file:///android_asset/" + folderName + "/" + fileName + ".png";
-//    }
-
     public void bindIngredientWithImageView(ImageView imageView, String fileName){
         String folderName = findIngredientCategory(fileName);
         String path = getPath(fileName, folderName);
@@ -86,13 +80,6 @@ public class IngredientManager {
                 .load(path)
                 .into(imageView);
     }
-
-//    public void bindIngredientWithImageView(ImageView imageView, String fileName, String folderName){
-//        String path = getPath(fileName, folderName);
-//        Picasso.get()
-//                .load(path)
-//                .into(imageView);
-//    }
 
     @NonNull
     @Contract(pure = true)

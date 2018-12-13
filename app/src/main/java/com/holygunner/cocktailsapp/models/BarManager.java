@@ -41,14 +41,11 @@ public class BarManager {
         }
 
         Collections.sort(mSelectedDrinks, new DrinksComparator());
-
         Bar selectedBar = new Bar();
         Saver.writeIngredients(mContext,
                 Saver.readIngredients(mContext, CHOSEN_INGREDIENTS_KEY),
                 CHECKED_INGREDIENTS_KEY);
-
         selectedBar.drinks = mSelectedDrinks.toArray(new Drink[0]);
-
         Saver.writeSelectedBar(mContext, selectedBar);
 
         return selectedBar;
@@ -74,7 +71,6 @@ public class BarManager {
 
                 }
             }
-
             mSelectedDrinks.addAll(addedBarList);
         }
     }
@@ -98,11 +94,9 @@ public class BarManager {
 
                     while (ingredientIterator.hasNext()) {
                         Ingredient comparedIngr = ingredientIterator.next();
-
                         if (comparedIngr.getName().equals(removedIngrName)) {
                             ingredientIterator.remove();
                         }
-
                         if (drink.getChosenIngredients().size() == 0) {
                             drinkIterator.remove();
                         }

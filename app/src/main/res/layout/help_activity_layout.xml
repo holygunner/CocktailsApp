@@ -29,7 +29,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:text="How to use the app"
+                    android:text="@string/how_to_use_the_app"
                     style="@style/HelpCardHeader"/>
 
                 <TextView
@@ -49,7 +49,7 @@
                 style="@style/HelpCardTextContainer">
 
                 <TextView
-                    android:text="How to manage ingredients"
+                    android:text="@string/how_to_manage_ingredients"
                     style="@style/HelpCardHeader"/>
 
                 <TextView

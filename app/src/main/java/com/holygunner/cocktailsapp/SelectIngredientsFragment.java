@@ -36,7 +36,7 @@ import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 public class SelectIngredientsFragment extends Fragment implements View.OnClickListener{
     private RecyclerView mRecyclerView;
     private Button mMixButton;
-    private ViewGroup parentLayout;
+    private ViewGroup mParentContainer;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private List<IngredientsCategory> mIngredientsCategories = new ArrayList<>();
@@ -81,7 +81,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
                 (SingleFragmentActivity) Objects.requireNonNull(getActivity()),
                 ToolbarHelper.MENU_BUTTON);
 
-        parentLayout = v.findViewById(R.id.parent_layout);
+        mParentContainer = v.findViewById(R.id.parent_layout);
         mMixButton = v.findViewById(R.id.mix_button);
         mDrawerLayout = v.findViewById(R.id.drawer_layout);
         mNavigationView = v.findViewById(R.id.nav_view);
@@ -106,7 +106,6 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
     public void onResume() {
         super.onResume();
         mRecyclerView.getAdapter().notifyDataSetChanged();
-//        setupAdapter();
         setMixButtonVisibility();
         mNavigationView.setCheckedItem(CURRENT_ITEM_ID);
     }
@@ -152,7 +151,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
             TransitionSet set = new TransitionSet()
                     .addTransition(new Fade())
                     .setInterpolator(new FastOutLinearInInterpolator());
-            TransitionManager.beginDelayedTransition(parentLayout, set);
+            TransitionManager.beginDelayedTransition(mParentContainer, set);
             }   else {
             return;
         }

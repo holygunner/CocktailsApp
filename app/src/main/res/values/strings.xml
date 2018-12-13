@@ -14,14 +14,14 @@
     <string name="how_to_manage_ingrs">On the app start screen scroll up or down,
         choose category of your ingredient and scroll left or right to find it on the card.
         Tap the ingredient you wish once to select it. Your choice will be stored to the
-        \«Chosen ingredients\» section</string>
+        \«Chosen ingredients\» section.</string>
 
     <string name="help_how_to_like">&#160;Just tap the heart on the right upper corner of the drink
         recipe. From this moment it is saved to your "Favourite drinks" section of the drawer menu.
     </string>
 
     <string name="help_how_to_search">&#160;No problem, just use \«Search drink\» section.
-        Start to enter the name and the required drink will appear at once</string>
+        Start to enter the name and the required drink will appear at once.</string>
 
     <string name="help_clear_ingrs">&#160;Open \«Chosen ingredients\» of the drawer menu,
         tap the ingredients you wish to clear and press the remove button. Also you can clear
@@ -62,4 +62,22 @@
     <string name="if_i_want_to_clear">If I want to clear all selected ingredients or some of them</string>
     <string name="how_to_save_the_drink_i_ve_liked">How to save the drink I\'ve liked</string>
     <string name="if_i_d_like_to_find_drink_by_it_s_name">If I\'d like to find drink by it\'s name</string>
+    <string name="disclaimer_to_asses_our_app">&#160;DISCLAIMER: To asses our app you must be of legal
+        drinking age in you country or older.</string>
+    <string name="all_data_provided_by">&#160;All information and image resources used by the app
+        is provided by the open source project \«TheCocktailDB\»:
+        <a href="https://www.thecocktaildb.com">https://www.thecocktaildb.com</a>
+    </string>
+    <string name="trademarks_policy">&#160;All mentioned trademarks belong to their respectful
+        owners.</string>
+    <string name="app_privacy_policy">&#160;\«Discover Drinks\» privacy policy:
+        <a href="https://bit.ly/2Euz73N">https://bit.ly/2Euz73N</a>
+    </string>
+    <string name="more_apps">&#160;More apps:
+        <a href="https://play.google.com/store/apps/developer?id=Andrew+Chyzh">
+            https://play.google.com/store/apps/developer?id=Andrew+Chyzh</a>
+    </string>
+    <string name="icon_image_header">icon_image_header</string>
+    <string name="how_to_use_the_app">How to use the app</string>
+    <string name="how_to_manage_ingredients">How to manage ingredients</string>
 </resources>

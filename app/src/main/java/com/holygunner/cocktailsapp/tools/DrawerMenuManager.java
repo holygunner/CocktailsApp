@@ -70,7 +70,6 @@ public class DrawerMenuManager {
                                     intent = new Intent(context,
                                             AboutActivity.class);
                             }
-//                            setDrawerToggle(intent, activity, drawerLayout);
                             if (intent != null) {
                                 final Intent finalIntent = intent;
                                 new Handler().postDelayed(new Runnable() {
@@ -86,30 +85,6 @@ public class DrawerMenuManager {
                     }
                 });
     }
-
-//    private void setDrawerToggle(final Intent intent, final Activity activity,
-//                                        final DrawerLayout drawerLayout){
-//        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(activity, drawerLayout,
-//                R.string.drawer_open, R.string.drawer_close){
-//
-//            /** Called when a drawer has settled in a completely closed state. */
-//            public void onDrawerClosed(View view) {
-//                super.onDrawerClosed(view);
-//
-//                activity.getApplicationContext().startActivity(intent);
-//
-//                Log.i("TAG", "intent is null: " + (intent == null));
-//            }
-//
-//            /** Called when a drawer has settled in a completely open state. */
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//            }
-//        };
-//        if (intent != null) {
-//            drawerLayout.addDrawerListener(drawerToggle);
-//        }
-//    }
 
     private boolean isChosenIngrsAvailable(Context context){
         boolean result = Saver.readIngredients(context, Saver.CHOSEN_INGREDIENTS_KEY).size() > 0;

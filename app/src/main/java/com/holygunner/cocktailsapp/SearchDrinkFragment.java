@@ -35,7 +35,7 @@ public class SearchDrinkFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<Drink> mDrinks = new ArrayList<>();
     private ProgressBar mProgressBar;
-    private SearchView searchView;
+    private SearchView mSearchView;
 
     private final int CURRENT_ITEM_ID = R.id.search_drink;
 
@@ -63,7 +63,7 @@ public class SearchDrinkFragment extends Fragment {
 
         mProgressBar = v.findViewById(R.id.app_progress_bar);
 
-        searchView = v.findViewById(R.id.search_bar);
+        mSearchView = v.findViewById(R.id.search_bar);
         setSearchView();
 
         mDrawerLayout = v.findViewById(R.id.drawer_layout);
@@ -125,10 +125,10 @@ public class SearchDrinkFragment extends Fragment {
     }
 
     private void setSearchView(){
-            searchView.setQueryHint("Enter drink name");
-            searchView.setClipToPadding(true);
-            searchView.setIconifiedByDefault(false);
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            mSearchView.setQueryHint("Enter drink name");
+            mSearchView.setClipToPadding(true);
+            mSearchView.setIconifiedByDefault(false);
+            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
                 @Override
                 public boolean onQueryTextSubmit(String query) {

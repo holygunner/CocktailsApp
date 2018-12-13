@@ -15,7 +15,7 @@ public abstract class IngredientItemHelper {
                                              TextView ingredientNameTextView, boolean isFill){
         if (isFill){
             ingredientNameTextView.setTextColor(ContextCompat.getColor(context,
-                    R.color.light_color));
+                    R.color.light_background_color));
             ingredientNameTextView
                     .setBackground(ContextCompat
                             .getDrawable(context, R.drawable.ingredient_name_fill));
@@ -30,7 +30,7 @@ public abstract class IngredientItemHelper {
                                                  ImageView ingredientImageView, boolean isFill){
         if (isFill){
             ingredientImageView.setColorFilter(ContextCompat.getColor(context,
-                    R.color.ingredientColorFill));
+                    R.color.ingredient_color_fill));
         }   else {
             ingredientImageView.setColorFilter(null);
         }
@@ -41,10 +41,4 @@ public abstract class IngredientItemHelper {
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         return  (int) (dpWidth / 128);
     }
-
-//    public static int calculateNumbOfColumns(@NonNull Context context, int width) {
-//        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-//        float dpWidth = width / displayMetrics.density;
-//        return  (int) (dpWidth / 128);
-//    }
 }

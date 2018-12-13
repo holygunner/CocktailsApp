@@ -133,12 +133,4 @@ public class Drink {
     public void addChosenIngredient(Ingredient ingredient){
         mChosenIngredients.add(ingredient);
     }
-
-    public boolean isFavourite() {
-        return mIsFavourite;
-    }
-
-    public void setFavourite(boolean favourite) {
-        mIsFavourite = favourite;
-    }
 }

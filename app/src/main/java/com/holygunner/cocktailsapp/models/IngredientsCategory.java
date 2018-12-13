@@ -15,10 +15,6 @@ public class IngredientsCategory {
         return mCategoryName;
     }
 
-//    public void setCategoryName(String categoryName) {
-//        mCategoryName = categoryName;
-//    }
-
     public List<Ingredient> getIngredients() {
         return mIngredients;
     }

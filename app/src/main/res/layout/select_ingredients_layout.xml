@@ -6,48 +6,48 @@
                                         android:layout_height="match_parent">
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/parent_layout"
-                android:splitMotionEvents="false"
-                android:background="@drawable/gradient_background"
-                android:orientation="vertical">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/parent_layout"
+                    android:splitMotionEvents="false"
+                    android:background="@drawable/gradient_background"
+                    android:orientation="vertical">
 
-<android.support.v7.widget.RecyclerView
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ingredients_recycler_view"
-    android:splitMotionEvents="false"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:paddingTop="?attr/actionBarSize"
-    android:paddingBottom="100dp"
-    android:clipToPadding="false"
-    android:scrollbars="vertical"
-    tools:context=".SelectIngredientsActivity"/>
+        <android.support.v7.widget.RecyclerView
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/ingredients_recycler_view"
+            android:splitMotionEvents="false"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:paddingTop="?attr/actionBarSize"
+            android:paddingBottom="100dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            tools:context=".SelectIngredientsActivity"/>
 
-    <Button
-        android:id="@+id/mix_button"
-        android:text="@string/show_the_drinks"
-        style="@style/AppButtonPortrait"/>
+            <Button
+                android:id="@+id/mix_button"
+                android:text="@string/show_the_drinks"
+                style="@style/AppButtonPortrait"/>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_from_ingredients_list"
-        app:title="Select ingredients"
-        style="@style/CustomToolbar"/>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_from_ingredients_list"
+                app:title="Select ingredients"
+                style="@style/CustomToolbar"/>
 
-</RelativeLayout>
+    </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        style="@style/CustomDrawerNavigationView"
-        app:headerLayout="@layout/navigation_menu_header"/>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            style="@style/CustomDrawerNavigationView"
+            app:headerLayout="@layout/navigation_menu_header"/>
 
 </android.support.v4.widget.DrawerLayout>

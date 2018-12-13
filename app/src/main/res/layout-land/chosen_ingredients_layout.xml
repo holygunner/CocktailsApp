@@ -53,7 +53,7 @@
             android:id="@+id/toolbar"
             android:background="@color/toolbar_grey"
             app:title="Chosen ingredients"
-            app:titleTextColor="@color/light_color"
+            app:titleTextColor="@color/light_background_color"
             style="@style/CustomToolbar"/>
 
     </RelativeLayout>

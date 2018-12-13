@@ -54,7 +54,6 @@ public abstract class ImageHelper {
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
         canvas.drawRoundRect(rectF, ROUND_FACTOR, ROUND_FACTOR, paint);
-
         paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
 

@@ -32,14 +32,4 @@ public abstract class ToolbarHelper {
                 throw new IllegalArgumentException("Wrong key");
         }
     }
-
-//    public static void setToolbarHome(@NotNull android.support.v7.widget.Toolbar toolbar,
-//                               @NotNull final SingleFragmentActivity activity){
-//        activity.setSupportActionBar(toolbar);
-//        ActionBar actionBar = activity.getSupportActionBar();
-//        assert actionBar != null;
-//
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-//        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-//    }
 }

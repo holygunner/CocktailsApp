@@ -62,7 +62,6 @@ public class SelectIngredientsAdapter extends RecyclerView.Adapter<SelectIngredi
             ingredientImageView = itemView.findViewById(R.id.ingredientImageView);
             ingredientNameTextView.setOnClickListener(this);
             ingredientImageView.setOnClickListener(this);
-//            itemView.setOnClickListener(this);
         }
 
         void bind(Ingredient ingredient){
@@ -70,8 +69,6 @@ public class SelectIngredientsAdapter extends RecyclerView.Adapter<SelectIngredi
             ingredientNameTextView.setText(ingredient.getName());
             ingredientImageView.setImageDrawable(mIngredientManager.getIngredientDrawable(ingredient.getCategory(),
                     ingredient.getName()));
-//            mIngredientManager.bindIngredientWithImageView(ingredientImageView,
-//                    ingredient.getName(), ingredient.getCategory());
             boolean isFill = Saver.isIngredientExists(mContext, ingredient.getName());
             IngredientItemHelper.setColorFilterToImageView(mContext, ingredientImageView, isFill);
             IngredientItemHelper.setFillToNameTextView(mContext, ingredientNameTextView, isFill);

@@ -12,15 +12,13 @@ import com.holygunner.cocktailsapp.save.Saver;
 import com.holygunner.cocktailsapp.tools.ToastBuilder;
 
 public class AgeVerificationActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button yesButton;
-    private Button noButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.age_verification_layout);
-        yesButton = findViewById(R.id.yes_button);
-        noButton = findViewById(R.id.no_button);
+        Button yesButton = findViewById(R.id.yes_button);
+        Button noButton = findViewById(R.id.no_button);
         yesButton.setOnClickListener(this);
         noButton.setOnClickListener(this);
     }

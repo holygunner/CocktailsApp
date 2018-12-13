@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 public class SelectIngredientsActivity extends SingleFragmentActivity {
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();

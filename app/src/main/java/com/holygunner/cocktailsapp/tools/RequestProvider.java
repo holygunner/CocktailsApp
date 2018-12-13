@@ -45,21 +45,6 @@ public class RequestProvider {
         return downloadBars;
     }
 
-//    @Nullable
-//    public Drink downloadDrinkById(Integer drinkId){
-//        if (drinkId != null){
-//            String url = URLBuilder.getCocktailDetailsUrl(drinkId);
-//            Bar bar = mJsonParser.parseJsonToDrinksBar(downloadJsonByRequest(url));
-//
-//            if (bar == null){
-//                return null;
-//            }   else {
-//                return bar.drinks[0];
-//            }
-//        }   else
-//            return null;
-//    }
-
     public String downloadBarByDrinkName(String drinkName){
         if (isDrinkNameCorrect(drinkName)){
             String url = URLBuilder.getBarByDrinkNameUrl(drinkName);
