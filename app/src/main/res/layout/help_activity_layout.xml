@@ -128,7 +128,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        app:title="Help"
+        app:title="@string/help"
         style="@style/CustomToolbar"/>
 
 </RelativeLayout>

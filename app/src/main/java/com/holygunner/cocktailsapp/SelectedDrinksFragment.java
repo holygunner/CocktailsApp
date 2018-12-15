@@ -105,7 +105,7 @@ public class SelectedDrinksFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (mRecyclerView != null) {
-            mRecyclerView.getAdapter().notifyDataSetChanged();
+            Objects.requireNonNull(mRecyclerView.getAdapter()).notifyDataSetChanged();
         }
     }
 
@@ -114,7 +114,7 @@ public class SelectedDrinksFragment extends Fragment {
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putParcelable(SELECTED_DRINKS_SAVED_STATE_KEY,
-                mRecyclerView.getLayoutManager().onSaveInstanceState());
+                Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState());
     }
 
     protected static class MyRequestProviderTask
@@ -171,7 +171,8 @@ public class SelectedDrinksFragment extends Fragment {
             DrinksAdapter drinksAdapter = new DrinksAdapter(getContext(), mDrinks);
             mRecyclerView.setAdapter(drinksAdapter);
             if (savedRecyclerViewState != null) {
-                mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
+                Objects.requireNonNull(mRecyclerView.getLayoutManager())
+                        .onRestoreInstanceState(savedRecyclerViewState);
             }
         }
     }

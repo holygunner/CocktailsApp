@@ -76,7 +76,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
         }
 
         android.support.v7.widget.Toolbar toolbar
-                = v.findViewById(R.id.toolbar_from_ingredients_list);
+                = v.findViewById(R.id.toolbar);
         ToolbarHelper.setToolbar(toolbar,
                 (SingleFragmentActivity) Objects.requireNonNull(getActivity()),
                 ToolbarHelper.MENU_BUTTON);
@@ -105,7 +105,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+        Objects.requireNonNull(mRecyclerView.getAdapter()).notifyDataSetChanged();
         setMixButtonVisibility();
         mNavigationView.setCheckedItem(CURRENT_ITEM_ID);
     }
@@ -114,13 +114,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putParcelable(SELECT_INGRS_SAVED_STATE_KEY,
-                mRecyclerView.getLayoutManager().onSaveInstanceState());
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Objects.requireNonNull(getActivity()).invalidateOptionsMenu(); // is really need here?
+                Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState());
     }
 
     @Override
@@ -166,7 +160,8 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
             mRecyclerView.setAdapter(adapter);
 
             if (savedRecyclerViewState != null){
-                mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
+                Objects.requireNonNull(mRecyclerView.getLayoutManager())
+                        .onRestoreInstanceState(savedRecyclerViewState);
             }
         }
     }

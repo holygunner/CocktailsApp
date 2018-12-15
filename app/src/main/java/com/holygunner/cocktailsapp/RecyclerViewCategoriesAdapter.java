@@ -25,7 +25,8 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
     private SnapHelper mSnapHelper;
     private SelectIngredientsFragment mFragment;
 
-    RecyclerViewCategoriesAdapter(SelectIngredientsFragment fragment, IngredientManager ingredientManager,
+    RecyclerViewCategoriesAdapter(SelectIngredientsFragment fragment,
+                                  IngredientManager ingredientManager,
                                   List<IngredientsCategory> ingredientsCategories){
         mFragment = fragment;
         mIngredientManager = ingredientManager;
@@ -38,8 +39,8 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
     @NonNull
     @Override
     public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mFragment.getContext()).inflate(R.layout.ingredients_section_card_item,
-                parent, false);
+        View view = LayoutInflater.from(mFragment.getContext())
+                .inflate(R.layout.ingredients_section_card_item, parent, false);
         mSnapHelper = new LinearSnapHelper();
         CategoryHolder holder = new CategoryHolder(view);
         holder.mRecyclerView.setRecycledViewPool(mRecycledViewPool);
@@ -49,13 +50,15 @@ public class RecyclerViewCategoriesAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder holder, int position) {
         final String categoryName = mIngredientsCategories.get(position).getCategoryName();
-        List<Ingredient> singleCategoryIngredients = mIngredientsCategories.get(position).getIngredients();
+        List<Ingredient> singleCategoryIngredients
+                = mIngredientsCategories.get(position).getIngredients();
         holder.categoryNameTextView.setText(categoryName);
-        SelectIngredientsAdapter selectIngredientsAdapter = new SelectIngredientsAdapter(mFragment, singleCategoryIngredients,
+        SelectIngredientsAdapter selectIngredientsAdapter
+                = new SelectIngredientsAdapter(mFragment, singleCategoryIngredients,
                 mIngredientManager);
         holder.mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager manager = new LinearLayoutManager(mFragment.getActivity(), LinearLayoutManager.HORIZONTAL,
-                false);
+        LinearLayoutManager manager = new LinearLayoutManager(mFragment.getActivity(),
+                LinearLayoutManager.HORIZONTAL, false);
         manager.setInitialPrefetchItemCount(3);
         holder.mRecyclerView.setLayoutManager(manager);
         holder.mRecyclerView.setAdapter(selectIngredientsAdapter);

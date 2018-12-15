@@ -12,7 +12,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/parent_layout"
-                    android:splitMotionEvents="false"
                     android:background="@drawable/gradient_background"
                     android:orientation="vertical">
 
@@ -34,8 +33,8 @@
                 style="@style/AppButtonPortrait"/>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_from_ingredients_list"
-                app:title="Select ingredients"
+                android:id="@+id/toolbar"
+                app:title="@string/select_ingredients"
                 style="@style/CustomToolbar"/>
 
     </RelativeLayout>

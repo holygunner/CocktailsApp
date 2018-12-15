@@ -18,13 +18,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class SelectIngredientsAdapter extends RecyclerView.Adapter<SelectIngredientsAdapter.IngredientHolder> {
+public class SelectIngredientsAdapter
+        extends RecyclerView.Adapter<SelectIngredientsAdapter.IngredientHolder> {
     private Context mContext;
     private SelectIngredientsFragment mFragment;
     private List<Ingredient> mIngredients;
     private IngredientManager mIngredientManager;
 
-    SelectIngredientsAdapter(@NotNull SelectIngredientsFragment fragment, List<Ingredient> ingredients,
+    SelectIngredientsAdapter(@NotNull SelectIngredientsFragment fragment,
+                             List<Ingredient> ingredients,
                              IngredientManager ingredientManager){
         mFragment = fragment;
         mContext = fragment.getContext();
@@ -51,7 +53,8 @@ public class SelectIngredientsAdapter extends RecyclerView.Adapter<SelectIngredi
         return mIngredients.size();
     }
 
-    protected class IngredientHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    protected class IngredientHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener{
         private TextView ingredientNameTextView;
         private ImageView ingredientImageView;
         private Ingredient mIngredient;
@@ -67,7 +70,8 @@ public class SelectIngredientsAdapter extends RecyclerView.Adapter<SelectIngredi
         void bind(Ingredient ingredient){
             mIngredient = ingredient;
             ingredientNameTextView.setText(ingredient.getName());
-            ingredientImageView.setImageDrawable(mIngredientManager.getIngredientDrawable(ingredient.getCategory(),
+            ingredientImageView.setImageDrawable(mIngredientManager
+                            .getIngredientDrawable(ingredient.getCategory(),
                     ingredient.getName()));
             boolean isFill = Saver.isIngredientExists(mContext, ingredient.getName());
             IngredientItemHelper.setColorFilterToImageView(mContext, ingredientImageView, isFill);

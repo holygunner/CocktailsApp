@@ -128,14 +128,14 @@ public class FavouriteDrinksFragment extends Fragment {
 
             @Contract(pure = true)
             @Override
-            public boolean onMove(RecyclerView recyclerView,
-                                  RecyclerView.ViewHolder viewHolder,
-                                  RecyclerView.ViewHolder target) {
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.LEFT || direction == ItemTouchHelper.RIGHT){
                     int position = viewHolder.getAdapterPosition();
                     Drink drink = mFavDrinks.get(position);
@@ -148,7 +148,7 @@ public class FavouriteDrinksFragment extends Fragment {
             }
 
             @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView,
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView,
                                     @NonNull RecyclerView.ViewHolder viewHolder,
                                     float dX, float dY, int actionState,
                                     boolean isCurrentlyActive) {

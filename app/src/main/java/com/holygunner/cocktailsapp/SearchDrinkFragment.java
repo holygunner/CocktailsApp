@@ -82,7 +82,7 @@ public class SearchDrinkFragment extends Fragment {
         super.onResume();
         mNavigationView.setCheckedItem(CURRENT_ITEM_ID);
         if (mRecyclerView != null) {
-            mRecyclerView.getAdapter().notifyDataSetChanged();
+            Objects.requireNonNull(mRecyclerView.getAdapter()).notifyDataSetChanged();
         }
     }
 

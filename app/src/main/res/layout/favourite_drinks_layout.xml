@@ -23,7 +23,7 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            app:title="Favourite drinks"
+            app:title="@string/favourite_drinks"
             style="@style/CustomToolbar"/>
 
     </RelativeLayout>

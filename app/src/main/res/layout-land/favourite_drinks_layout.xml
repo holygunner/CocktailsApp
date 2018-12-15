@@ -16,17 +16,17 @@
 
         <TextView
             android:id="@+id/bottom_textView"
-            style="@style/FavDrinksBottomTextView"
+            android:text="@string/swipe_to_remove"
             android:layout_width="wrap_content"
             android:paddingRight="24dp"
             android:paddingLeft="24dp"
             android:gravity="center_vertical"
             android:layout_centerHorizontal="true"
-            android:text="@string/swipe_to_remove"/>
+            style="@style/FavDrinksBottomTextView"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            app:title="Favourite drinks"
+            app:title="@string/favourite_drinks"
             style="@style/CustomToolbar"/>
 
     </RelativeLayout>

@@ -19,14 +19,13 @@
             android:layout_height="match_parent"
             android:paddingTop="112dp"
             android:clipToPadding="false"
-            android:scrollbars="vertical"
-            xmlns:android="http://schemas.android.com/apk/res/android"/>
+            android:scrollbars="vertical"/>
 
         <include layout="@layout/app_progress_bar"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            app:title="Search drink"
+            app:title="@string/search_drink"
             style="@style/CustomToolbar"/>
 
         <android.support.v7.widget.SearchView

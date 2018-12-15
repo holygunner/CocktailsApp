@@ -136,7 +136,8 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putParcelable(CHOSEN_INGRS_SAVED_STATE_KEY,
-                mRecyclerView.getLayoutManager().onSaveInstanceState());
+                Objects.requireNonNull(mRecyclerView.getLayoutManager())
+                        .onSaveInstanceState());
 
         savedInstanceState.putStringArray(FILLED_POSITIONS_SAVED_KEY,
                 mFilledIngrs.toArray(new String[0]));
@@ -164,7 +165,8 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
             mIngredientsAdapter = new IngredientsAdapter(mChosenIngrs);
             mRecyclerView.setAdapter(mIngredientsAdapter);
             if (savedRecyclerViewState != null){
-                mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerViewState);
+                Objects.requireNonNull(mRecyclerView.getLayoutManager())
+                        .onRestoreInstanceState(savedRecyclerViewState);
             }
         }
     }
