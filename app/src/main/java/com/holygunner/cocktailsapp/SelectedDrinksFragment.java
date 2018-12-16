@@ -35,13 +35,12 @@ import static com.holygunner.cocktailsapp.save.Saver.CHECKED_INGREDIENTS_KEY;
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 public class SelectedDrinksFragment extends Fragment {
+    private static final String SELECTED_DRINKS_SAVED_STATE_KEY = "selected_drinks_saved_state_key";
+    private Parcelable savedRecyclerViewState;
     private RecyclerView mRecyclerView;
     private List<Drink> mDrinks = new ArrayList<>();
     private BarManager mBarManager;
     private int howMuchChecked;
-
-    private static final String SELECTED_DRINKS_SAVED_STATE_KEY = "selected_drinks_saved_state_key";
-    private Parcelable savedRecyclerViewState;
 
     @NonNull
     public static SelectedDrinksFragment newInstance(){
@@ -162,7 +161,6 @@ public class SelectedDrinksFragment extends Fragment {
 
         MyRequestProviderTask task = new MyRequestProviderTask(this);
         task.setProgressBar(progressBar);
-
         task.execute(added);
     }
 

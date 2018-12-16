@@ -45,6 +45,8 @@ import static com.holygunner.cocktailsapp.values.BundleKeys.DRINK_ID_KEY;
 import static com.holygunner.cocktailsapp.values.BundleKeys.DRINK_JSON_KEY;
 
 public class DrinkRecipeFragment extends Fragment implements View.OnClickListener {
+    private static final String SAVED_DRINK_KEY = "saved_drink_key";
+    private static final String IS_FAV_KEY = "is_fav_key";
     private RecyclerView mRecyclerView;
     private ImageView mDrinkImageView;
     private ImageButton mLikeImageButton;
@@ -58,8 +60,6 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     private Drink mDrink;
     private boolean mIsFav;
     private JsonParser mJsonParser;
-    private static final String SAVED_DRINK_KEY = "saved_drink_key";
-    private static final String IS_FAV_KEY = "is_fav_key";
 
     @NotNull
     public static Fragment newInstance(){
@@ -142,7 +142,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         super.onPause();
         // save isFavourite
         if (mDrink != null) {
-            Saver.updFavDrinkId(getContext(), mDrink.getId(), mIsFav,
+            Saver.updFavouriteDrinkId(getContext(), mDrink.getId(), mIsFav,
                     mJsonParser.serializeDrinkToJsonBar(mDrink));
         }
     }
@@ -152,7 +152,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
         if (isFav != null){
             mIsFav = isFav;
         }   else {
-            mIsFav = Saver.isDrinkFav(getContext(), mDrink);
+            mIsFav = Saver.isDrinkFavourite(getContext(), mDrink);
         }
         setLikeImageButton();
         setupAdapter(mDrink);
@@ -237,7 +237,7 @@ public class DrinkRecipeFragment extends Fragment implements View.OnClickListene
     }
 
     private void setLikeImageButton(){
-        if (Saver.isDrinkFav(getContext(), mDrink)){
+        if (Saver.isDrinkFavourite(getContext(), mDrink)){
             mLikeImageButton.setImageResource(R.drawable.like_button_pressed);
         }   else {
             mLikeImageButton.setImageResource(R.drawable.like_button);

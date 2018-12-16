@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestProvider {
+    private final static String WRONG_RESPONSE = "{\"drinks\":null}";
     private JsonParser mJsonParser;
     private OkHttpClient mHttpClient;
-
-    private final static String WRONG_RESPONSE = "{\"drinks\":null}";
 
     public RequestProvider(){
         mJsonParser = new JsonParser();

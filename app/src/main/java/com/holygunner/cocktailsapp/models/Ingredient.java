@@ -1,12 +1,11 @@
 package com.holygunner.cocktailsapp.models;
 
-import android.graphics.drawable.Drawable;
+import org.jetbrains.annotations.Contract;
 
 public class Ingredient {
     private String mName;
     private String mCategory;
     private String mMeasure;
-    private Drawable mDrawable;
     private boolean mIsFill;
 
     public Ingredient(String ingredientName, String ingredientMeasure){
@@ -26,6 +25,7 @@ public class Ingredient {
         return mMeasure;
     }
 
+    @Contract(value = "null -> false", pure = true)
     @Override
     public boolean equals(Object ingredient) {
         return ingredient instanceof Ingredient
@@ -34,14 +34,6 @@ public class Ingredient {
 
     public String getCategory() {
         return mCategory;
-    }
-
-    public Drawable getDrawable() {
-        return mDrawable;
-    }
-
-    public void setDrawable(Drawable drawable) {
-        mDrawable = drawable;
     }
 
     public boolean isFill() {

@@ -30,14 +30,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class SearchDrinkFragment extends Fragment {
+    private final int CURRENT_ITEM_ID = R.id.search_drink;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private RecyclerView mRecyclerView;
     private List<Drink> mDrinks = new ArrayList<>();
     private ProgressBar mProgressBar;
     private SearchView mSearchView;
-
-    private final int CURRENT_ITEM_ID = R.id.search_drink;
 
     @NonNull
     public static SearchDrinkFragment newInstance(){

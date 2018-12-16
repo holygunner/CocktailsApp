@@ -6,15 +6,11 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class URLBuilder {
-
     private static final String PERSONAL_API_KEY = "1834";
-
     private static final String GET_BY_INGR
             = "/filter.php?i=";
-
     private static final String GET_BY_DRINK_NAME
             = "/search.php?s=";
-
     private static final String GET_BY_DRINK_ID
             = "/lookup.php?i=";
 

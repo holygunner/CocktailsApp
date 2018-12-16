@@ -19,6 +19,7 @@ import com.holygunner.cocktailsapp.SelectIngredientsActivity;
 import com.holygunner.cocktailsapp.save.Saver;
 
 public class DrawerMenuManager {
+    private static final int START_ACTIVITY_DELAY = 300;
 
     public void setNavigationMenu(final FragmentActivity activity, final DrawerLayout drawerLayout,
                                          @NonNull final NavigationView navigationView,
@@ -77,7 +78,7 @@ public class DrawerMenuManager {
                                     public void run() {
                                         activity.startActivity(finalIntent);
                                     }
-                                }, 300);
+                                }, START_ACTIVITY_DELAY);
                             }
                             drawerLayout.closeDrawers();
                         }
@@ -98,7 +99,7 @@ public class DrawerMenuManager {
     }
 
     private boolean isFavDrinksExist(Context context){
-        boolean result = Saver.readFavDrinkIdSet(context).size() > 0;
+        boolean result = Saver.readFavouriteDrinkIdSet(context).size() > 0;
 
         if (result){
             return true;

@@ -37,13 +37,12 @@ import java.util.Objects;
 import java.util.Set;
 
 public class FavouriteDrinksFragment extends Fragment {
+    private final int CURRENT_ITEM_ID = R.id.favourite_drinks;
     private RecyclerView mRecyclerView;
     private DrinksAdapter mDrinksAdapter;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private List<Drink> mFavDrinks = new ArrayList<>();
-
-    private final int CURRENT_ITEM_ID = R.id.favourite_drinks;
     private JsonParser mJsonParser;
 
     @NonNull
@@ -98,7 +97,7 @@ public class FavouriteDrinksFragment extends Fragment {
     }
 
     private List<Drink> getFavDrinks(){
-        Set<String> favDrinksJsons = Saver.readFavDrinksJsons(getContext());
+        Set<String> favDrinksJsons = Saver.readFavouriteDrinksJsons(getContext());
         List<Drink> mavDrinks = new ArrayList<>();
 
 
@@ -140,7 +139,7 @@ public class FavouriteDrinksFragment extends Fragment {
                     int position = viewHolder.getAdapterPosition();
                     Drink drink = mFavDrinks.get(position);
                     mFavDrinks.remove(position);
-                    Saver.updFavDrinkId(getContext(), drink.getId(), false, "");
+                    Saver.updFavouriteDrinkId(getContext(), drink.getId(), false, "");
                     mDrinksAdapter.notifyItemRemoved(position);
                     mDrinksAdapter.notifyItemRangeChanged(position, mFavDrinks.size());
                     closeIfEmpty();
@@ -197,7 +196,7 @@ public class FavouriteDrinksFragment extends Fragment {
                 public void run() {
                     ToastBuilder.favDrinksListEmptyToast(getContext()).show();
                 }
-            }, 300);
+            }, ToastBuilder.SHOW_TOAST_DELAY);
         }
     }
 }

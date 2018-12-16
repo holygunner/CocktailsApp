@@ -57,7 +57,7 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
     protected class DrinksHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Drink mDrink;
         private TextView drinkNameTextView;
-        private TextView drinkChosenIngrsTextView;
+        private TextView drinkChosenIngredientsTextView;
         private TextView drinkPositionTextView;
         private ImageView drinkImageView;
         private View mHeartImageViewContainer;
@@ -65,7 +65,8 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
         DrinksHolder(View itemView) {
             super(itemView);
             drinkNameTextView = itemView.findViewById(R.id.drink_name_TextView);
-            drinkChosenIngrsTextView = itemView.findViewById(R.id.drink_chosen_ingrs_TextView);
+            drinkChosenIngredientsTextView
+                    = itemView.findViewById(R.id.drink_chosen_ingredients_textView);
             drinkPositionTextView = itemView.findViewById(R.id.drink_position);
             drinkImageView = itemView.findViewById(R.id.drink_imageView);
             mHeartImageViewContainer = itemView.findViewById(R.id.is_drink_liked_container);
@@ -85,13 +86,13 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
 
         void bindDrink(Drink drink){
             mDrink = drink;
-            setIsFav(Saver.isDrinkFav(mContext, mDrink));
+            setIsFavourite(Saver.isDrinkFavourite(mContext, mDrink));
             drinkImageView.setTag(ImageHelper.downloadImage(drink.getUrlImage(), drinkImageView));
             drinkNameTextView.setText(drink.getName());
-            setDrinkChosenIngrsTextView(drink);
+            setDrinkChosenIngredientsTextView(drink);
         }
 
-        private void setIsFav(boolean isFav){
+        private void setIsFavourite(boolean isFav){
             if (isFav){
                 mHeartImageViewContainer.setVisibility(View.VISIBLE);
             }   else {
@@ -99,7 +100,7 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
             }
         }
 
-        private void setDrinkChosenIngrsTextView(@NotNull Drink drink){
+        private void setDrinkChosenIngredientsTextView(@NotNull Drink drink){
             StringBuilder text = new StringBuilder();
 
             List<Ingredient> ingredients;
@@ -115,7 +116,7 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksHold
             }
 
             text.delete(text.length()-2, text.length()-1);
-            drinkChosenIngrsTextView.setText(text);
+            drinkChosenIngredientsTextView.setText(text);
         }
     }
 }

@@ -34,6 +34,10 @@ import java.util.Objects;
 import static com.holygunner.cocktailsapp.save.Saver.CHOSEN_INGREDIENTS_KEY;
 
 public class SelectIngredientsFragment extends Fragment implements View.OnClickListener{
+    private final int CURRENT_ITEM_ID = R.id.select_ingredients;
+    private static final String SELECT_INGREDIENTS_SAVED_STATE_KEY
+            = "select_ingredients_saved_state";
+    private Parcelable savedRecyclerViewState;
     private RecyclerView mRecyclerView;
     private Button mMixButton;
     private ViewGroup mParentContainer;
@@ -41,9 +45,6 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
     private NavigationView mNavigationView;
     private List<IngredientsCategory> mIngredientsCategories = new ArrayList<>();
     private IngredientManager mIngredientManager;
-    private final int CURRENT_ITEM_ID = R.id.select_ingredients;
-    private Parcelable savedRecyclerViewState;
-    private static final String SELECT_INGRS_SAVED_STATE_KEY = "select_ingrs_saved_state";
 
     @NonNull
     public static SelectIngredientsFragment newInstance(){
@@ -63,7 +64,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null){
-            savedRecyclerViewState = savedInstanceState.getParcelable(SELECT_INGRS_SAVED_STATE_KEY);
+            savedRecyclerViewState = savedInstanceState.getParcelable(SELECT_INGREDIENTS_SAVED_STATE_KEY);
         }
     }
 
@@ -72,7 +73,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
         View v = inflater.inflate(R.layout.select_ingredients_layout, container, false);
 
         if (savedInstanceState != null){
-            savedRecyclerViewState = savedInstanceState.getParcelable(SELECT_INGRS_SAVED_STATE_KEY);
+            savedRecyclerViewState = savedInstanceState.getParcelable(SELECT_INGREDIENTS_SAVED_STATE_KEY);
         }
 
         android.support.v7.widget.Toolbar toolbar
@@ -113,7 +114,7 @@ public class SelectIngredientsFragment extends Fragment implements View.OnClickL
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putParcelable(SELECT_INGRS_SAVED_STATE_KEY,
+        savedInstanceState.putParcelable(SELECT_INGREDIENTS_SAVED_STATE_KEY,
                 Objects.requireNonNull(mRecyclerView.getLayoutManager()).onSaveInstanceState());
     }
 

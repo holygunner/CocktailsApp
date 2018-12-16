@@ -46,6 +46,9 @@ import java.util.Objects;
 import java.util.Set;
 
 public class ChosenIngredientsFragment extends Fragment implements View.OnClickListener {
+    private static final String CHOSEN_INGREDIENTS_SAVED_STATE_KEY = "chosen_ingrs_saved_state_key";
+    private static final String FILLED_POSITIONS_SAVED_KEY = "filled_position_saved_key";
+    private final int CURRENT_ITEM_ID = R.id.chosen_ingredients;
     private RecyclerView mRecyclerView;
     private IngredientsAdapter mIngredientsAdapter;
     private IngredientManager mIngredientManager;
@@ -53,12 +56,9 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
     private DrawerLayout mDrawerLayout;
     private ViewGroup parentLayout;
     private NavigationView mNavigationView;
-    private final int CURRENT_ITEM_ID = R.id.chosen_ingredients;
-    private List<Ingredient> mChosenIngrs = new LinkedList<>();
-    private Set<String> mFilledIngrs = new HashSet<>();
+    private List<Ingredient> mChosenIngredients = new LinkedList<>();
+    private Set<String> mFilledIngredients = new HashSet<>();
     private Parcelable savedRecyclerViewState;
-    private static final String CHOSEN_INGRS_SAVED_STATE_KEY = "chosen_ingrs_saved_state_key";
-    private static final String FILLED_POSITIONS_SAVED_KEY = "filled_position_saved_key";
 
     @NotNull
     public static Fragment newInstance(){
@@ -71,8 +71,8 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
         setRetainInstance(true);
         setHasOptionsMenu(true);
         mIngredientManager = new IngredientManager(Objects.requireNonNull(getContext()));
-        mChosenIngrs = mIngredientManager
-                .chosenNameToIngrList(Saver.readIngredients(getContext(),
+        mChosenIngredients = mIngredientManager
+                .chosenNameToIngredientsList(Saver.readIngredients(getContext(),
                         Saver.CHOSEN_INGREDIENTS_KEY));
     }
 
@@ -82,11 +82,11 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
 
         if (savedInstanceState != null){
             savedRecyclerViewState = savedInstanceState
-                    .getParcelable(CHOSEN_INGRS_SAVED_STATE_KEY);
-            mFilledIngrs = new HashSet<>(Arrays.asList(Objects
+                    .getParcelable(CHOSEN_INGREDIENTS_SAVED_STATE_KEY);
+            mFilledIngredients = new HashSet<>(Arrays.asList(Objects
                     .requireNonNull(savedInstanceState
                             .getStringArray(FILLED_POSITIONS_SAVED_KEY))));
-            setButtonVisibility((mFilledIngrs.size() > 0));
+            setButtonVisibility((mFilledIngredients.size() > 0));
         }
     }
 
@@ -98,7 +98,7 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
 
         if (savedInstanceState != null){
             savedRecyclerViewState = savedInstanceState
-                    .getParcelable(CHOSEN_INGRS_SAVED_STATE_KEY);
+                    .getParcelable(CHOSEN_INGREDIENTS_SAVED_STATE_KEY);
         }
 
         android.support.v7.widget.Toolbar toolbar
@@ -135,12 +135,12 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
 
-        savedInstanceState.putParcelable(CHOSEN_INGRS_SAVED_STATE_KEY,
+        savedInstanceState.putParcelable(CHOSEN_INGREDIENTS_SAVED_STATE_KEY,
                 Objects.requireNonNull(mRecyclerView.getLayoutManager())
                         .onSaveInstanceState());
 
         savedInstanceState.putStringArray(FILLED_POSITIONS_SAVED_KEY,
-                mFilledIngrs.toArray(new String[0]));
+                mFilledIngredients.toArray(new String[0]));
     }
 
     @Override
@@ -161,8 +161,8 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
 
     private void setupAdapter() {
         if (isAdded()){
-            Collections.sort(mChosenIngrs, new IngredientsComparator());
-            mIngredientsAdapter = new IngredientsAdapter(mChosenIngrs);
+            Collections.sort(mChosenIngredients, new IngredientsComparator());
+            mIngredientsAdapter = new IngredientsAdapter(mChosenIngredients);
             mRecyclerView.setAdapter(mIngredientsAdapter);
             if (savedRecyclerViewState != null){
                 Objects.requireNonNull(mRecyclerView.getLayoutManager())
@@ -181,22 +181,22 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
             if (ingredient.isFill()){
                 int position = mIngredientsAdapter.mIngredients.indexOf(ingredient);
                 mIngredientsAdapter.notifyItemRemoved(position);
-                mIngredientsAdapter.notifyItemRangeChanged(position, mChosenIngrs.size());
+                mIngredientsAdapter.notifyItemRangeChanged(position, mChosenIngredients.size());
                 iterator.remove();
                 Saver.updChosenIngredient(getContext(), ingredient.getName());
             }
         }
-        mFilledIngrs.clear();
+        mFilledIngredients.clear();
         setButtonVisibility(false);
 
-        if (mChosenIngrs.size() == 0){
+        if (mChosenIngredients.size() == 0){
             startActivity(new Intent(getContext(), SelectIngredientsActivity.class));
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     ToastBuilder.chosenIngrsListEmptyToast(getContext()).show();
                 }
-            }, 300);
+            }, ToastBuilder.SHOW_TOAST_DELAY);
         }
     }
 
@@ -218,7 +218,7 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
         @Override
         public void onBindViewHolder(@NonNull IngredientsHolder holder, int position) {
             Ingredient ingredient = mIngredients.get(position);
-            if (mFilledIngrs.contains(ingredient.getName())){
+            if (mFilledIngredients.contains(ingredient.getName())){
                 holder.setHolderFill(true);
                 ingredient.setFill(true);
             }
@@ -243,7 +243,6 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
             ingredientNameTextView = itemView.findViewById(R.id.ingredientTextView);
             ingredientImageView.setOnClickListener(this);
             ingredientNameTextView.setOnClickListener(this);
-//            itemView.setOnClickListener(this);
         }
 
         void bindIngredient(Ingredient ingredient) {
@@ -261,16 +260,16 @@ public class ChosenIngredientsFragment extends Fragment implements View.OnClickL
         @Override
         public void onClick(View v) {
             if (mIngredient.isFill()){
-                mFilledIngrs.remove(mIngredient.getName());
+                mFilledIngredients.remove(mIngredient.getName());
                 mIngredient.setFill(false);
                 setHolderFill(false);
             }   else {
-                mFilledIngrs.add(mIngredient.getName());
+                mFilledIngredients.add(mIngredient.getName());
                 mIngredient.setFill(true);
                 setHolderFill(true);
             }
 
-            setButtonVisibility((mFilledIngrs.size() > 0));
+            setButtonVisibility((mFilledIngredients.size() > 0));
         }
 
         private void setHolderFill(boolean isFill){

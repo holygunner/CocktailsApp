@@ -31,16 +31,14 @@ public class IngredientManager {
         mAssetManager = context.getAssets();
     }
 
-    public List<Ingredient> chosenNameToIngrList(Set<String> chosenNames){
-        List<Ingredient> chosenIngrList = new LinkedList<>();
+    public List<Ingredient> chosenNameToIngredientsList(Set<String> chosenNames){
+        List<Ingredient> chosenIngredientsList = new LinkedList<>();
 
         for (String name : chosenNames){
-            String category = findIngredientCategory(name);
             Ingredient ingredient = new Ingredient(name);
-            ingredient.setDrawable(getIngredientDrawable(category, name));
-            chosenIngrList.add(ingredient);
+            chosenIngredientsList.add(ingredient);
         }
-        return chosenIngrList;
+        return chosenIngredientsList;
     }
 
     public List<IngredientsCategory> getAllIngredients(){

@@ -12,6 +12,7 @@ import com.holygunner.cocktailsapp.save.Saver;
 import com.holygunner.cocktailsapp.tools.ToastBuilder;
 
 public class AgeVerificationActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final int FINISH_APP_DELAY = 1000;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class AgeVerificationActivity extends AppCompatActivity implements View.O
                     public void run() {
                         finish();
                     }
-                }, 1000);
+                }, FINISH_APP_DELAY);
                 break;
         }
     }

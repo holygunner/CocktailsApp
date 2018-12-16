@@ -43,7 +43,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/drink_chosen_ingrs_TextView"
+                    android:id="@+id/drink_chosen_ingredients_textView"
                     android:maxLines="3"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/text_color"

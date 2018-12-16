@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.holygunner.cocktailsapp.R;
 
 public abstract class IngredientItemHelper {
+    private static final int MATERIAL_COEFFICIENT = 128;
 
     public static void setFillToNameTextView(Context context,
                                              TextView ingredientNameTextView, boolean isFill){
@@ -39,6 +40,6 @@ public abstract class IngredientItemHelper {
     public static int calculateNumbOfColumns(@NonNull Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        return  (int) (dpWidth / 128);
+        return  (int) (dpWidth / MATERIAL_COEFFICIENT);
     }
 }

@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.holygunner.cocktailsapp.R;
 
 public abstract class ToastBuilder {
+    public static final int SHOW_TOAST_DELAY = 300;
 
     public static Toast getAgeDisclaimerToast(Context context){
         return buildToast(context, R.string.age_disclaimer);
